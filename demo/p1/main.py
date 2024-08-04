@@ -4,10 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as plta
 
-# problems:
-# slow animation rendering
-# detail has impact on animation speed
-
 DX = 0.01 # spatial step
 N = 24 # size of rod (has influence to the speed to heat propagation)
 T = 400 # number of time steps to simulate

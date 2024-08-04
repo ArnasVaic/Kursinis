@@ -4,10 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as plta
 
-# problems:
-# slow animation rendering
-# detail has impact on animation speed
-
 DX = DY = 1 # spatial step
 N = np.array([24, 24]) # sheet resolution
 T = 400 # number of time steps to simulate
