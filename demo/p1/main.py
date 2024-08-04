@@ -44,8 +44,10 @@ def render(frame):
   plt.clf()  
   plt.plot(xs, u[:, frame])
   ax = plt.gca()
+  plt.xlabel('x')
+  plt.ylabel('u')
   ax.set_ylim([-0.05 * max(T1, T2), 1.05 * max(T1, T2)])
-  plt.title(f'Frame {1 + frame}/{T}')
+  plt.title(fr'Frame {1 + frame}/{T}')
 
 animation = plta.FuncAnimation(plt.gcf(), render, frames=T, interval=20)
 plt.rcParams['animation.ffmpeg_path'] = 'C:\\ProgramData\\chocolatey\\lib\\ffmpeg\\tools\\ffmpeg\\bin\\ffmpeg.exe'

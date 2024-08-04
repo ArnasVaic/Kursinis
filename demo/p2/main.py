@@ -9,7 +9,7 @@ import matplotlib.animation as plta
 # detail has impact on animation speed
 
 DX = DY = 0.01 # spatial step
-N = (100, 100) # sheet resolution
+N = (24, 24) # sheet resolution
 T = 400 # number of time steps to simulate
 K = 1 # thermal diffusivity
 
@@ -45,6 +45,8 @@ def render(frame):
   plt.imshow(u[:, :, frame].T, extent=[0, 1, 0, 1], cmap='hot')
   plt.colorbar()
   plt.title(f'Frame {1 + frame}/{T}')
+  plt.xlabel('x')
+  plt.ylabel('y')
 
 animation = plta.FuncAnimation(plt.gcf(), render, frames=T, interval=20)
 plt.rcParams['animation.ffmpeg_path'] = 'C:\\ProgramData\\chocolatey\\lib\\ffmpeg\\tools\\ffmpeg\\bin\\ffmpeg.exe'
