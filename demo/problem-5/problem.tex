@@ -4,7 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 
-\title{Problem 4}
+\title{Problem 5}
 \author{Arnas Vaicekauskas}
 
 \begin{document}
@@ -21,11 +21,11 @@ $$
 
 \begin{equation}
     \begin{aligned}
-        u(x, y, 0) = 0,\quad x\in[0,L],\quad y\in[0,L]\\
-        u(0, y, t) = 100,\quad y\in[0,L],\quad t\in[0,T] \\
-        u(x, L, t) = 0,\quad x\in[0,L],\quad t\in[0,T]\\
-        \frac{\partial u}{\partial x}\Big|_{x=L}=0,\quad y\in[0,L],\quad t\in[0,T]\\
-        \frac{\partial u}{\partial y}\Big|_{y=0}=0,\quad x\in[0,L],\quad t\in[0,T]\\
+        A = [0,0.5L]\times[0,0.5L]\cup[0.5L,L]\times[0.5L,L]\\
+        u(x, y, 0) = 100,\quad (x, y)\in A\\
+        u(x, y, 0) = 0,\quad (x, y)\notin A\\
+        \frac{\partial u}{\partial x}\Big|_{x=0}=\frac{\partial u}{\partial x}\Big|_{x=L}=0,\quad y\in[0,L],\quad t\in[0,T]\\
+        \frac{\partial u}{\partial y}\Big|_{y=0}=\frac{\partial u}{\partial y}\Big|_{y=L}=0,\quad x\in[0,L],\quad t\in[0,T]\\
     \end{aligned}
 \end{equation}
 
