@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+\title{Problem 6}
+\author{Arnas Vaicekauskas}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem formulation}
+
+\begin{equation}
+    \begin{cases}
+        \dot c_1=D\Delta c_1 - 3c_1c_2\\
+        \dot c_2=D\Delta c_2 - 5c_1c_2\\
+        \dot c_3=2c_1c_2
+    \end{cases}
+\end{equation}
+
+where $\dot c$ is the time derivative $\frac{\partial c}{\partial t}$ and $\Delta$ 
+is the Laplace operator $\Delta = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}$.
+
+\subsection{Initial conditions}
+
+\begin{equation}
+    \begin{aligned}
+        c_1(x, y, 0) &= 
+        \begin{cases}
+            1, \text{if } x\in A\\
+            0, \text{otherwise}
+        \end{cases}&, \quad (x, y)\in[0,L]\times[0,L]\\
+        c_2(x, y, 0) &= 
+        \begin{cases}
+            1, \text{if } x\notin A\\
+            0, \text{otherwise}
+        \end{cases}&, \quad (x, y)\in[0,L]\times[0,L]\\
+        c_3(x, y, 0) &= 0&, \quad (x, y)\in[0,L]\times[0,L]
+    \end{aligned}
+\end{equation}
+
+where $A=[0,0.5L]\times[0,0.5L]\cup[0.5L,L]\times[0.5L,L]$.
+
+\subsection{Boundary conditions}
+
+\begin{equation}
+    \begin{split}
+        \frac{\partial u}{\partial x}\Big|_{x=0}=\frac{\partial u}{\partial x}\Big|_{x=L}=0,\quad y\in[0,L],\quad t\in[0,T]\\
+        \frac{\partial u}{\partial y}\Big|_{y=0}=\frac{\partial u}{\partial y}\Big|_{y=L}=0,\quad x\in[0,L],\quad t\in[0,T]\\
+    \end{split}
+\end{equation}
+
+\end{document}
