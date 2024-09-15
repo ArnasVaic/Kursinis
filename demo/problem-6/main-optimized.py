@@ -44,7 +44,7 @@ DIFF_KERNEL = np.array([
 
 
 def laplacian(c: npt.NDArray[np.float64]) -> np.float64: 
-  convolve2d
+  convolve2d(c, DIFF_KERNEL, mode='same', boundary=)
 
 
   return lap_x + lap_y
