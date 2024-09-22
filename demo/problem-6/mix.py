@@ -38,5 +38,10 @@ def mix(grids):
   rotations = np.random.randint(4, size=4)
   # random permutation of 4 blocks
   block_order = np.random.permutation(4)
+
+  # best theoretical mix
+  rotations = [0, 0, 0, 0]
+  block_order = [1, 0, 3, 2]
+
   # mix each block
   return [ mix_single(g, rotations, block_order) for g in grids ]
