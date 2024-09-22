@@ -10,7 +10,7 @@ config.read('simulation-parameters.ini')
 params = config['DEFAULT']
 
 filename = simulation_identifier(params, 'npy')
-c = np.load(f'saves/suboptimal/{filename}')
+c = np.load(f'saves/optimized/{filename}')
 c1, c2, c3 = c[0], c[1], c[2]
 
 T = int(params['T'])
