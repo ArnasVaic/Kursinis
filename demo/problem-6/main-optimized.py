@@ -42,27 +42,18 @@ DIFF_KERNEL = np.array([
   [0, ONE_OVER_DY2, 0]
 ])
 
-
-def laplacian(c: npt.NDArray[np.float64]) -> np.float64: 
-  convolve2d(c, DIFF_KERNEL, mode='same', boundary=)
-
-
-  return lap_x + lap_y
+def laplacian(c: npt.NDArray[np.float64]) -> np.float64:
+  padded = np.pad(c, (1, 1), 'edge')
+  return convolve2d(padded, DIFF_KERNEL, mode='valid')
 
 for t in range(T - 1):
-  
+  # Note: for overall quantity of elements to stay constant the coefficients
+  # in front of c1c2 should sum to 0
+  c1[:, :, t + 1] = c1[:, :, t] + DT * D * laplacian(c1[:, :, t]) - 3 * DT * c1[:, :, t] * c2[:, :, t]
+  c2[:, :, t + 1] = c2[:, :, t] + DT * D * laplacian(c2[:, :, t]) - 5 * DT * c1[:, :, t] * c2[:, :, t]
+  c3[:, :, t + 1] = c3[:, :, t] + 8 * c1[:, :, t] * c2[:, :, t] * DT
 
-
-  for x in range(SIZE_X):
-    for y in range(SIZE_Y):
-      # Note: for overall quantity of elements to stay constant the coefficients
-      # in front of c1c2 should sum to 0
-      c1[x, y, t + 1] = c1[x, y, t] + DT * D * laplacian(c1, x, y, t) - 3 * DT * c1[x, y, t] * c2[x, y, t]
-      c2[x, y, t + 1] = c2[x, y, t] + DT * D * laplacian(c2, x, y, t) - 5 * DT * c1[x, y, t] * c2[x, y, t]
-      c3[x, y, t + 1] = c3[x, y, t] + 8 * c1[x, y, t] * c2[x, y, t] * DT
-
-np.save(f'saves/c1_{SIZE_X}x{SIZE_Y}_t{T}-adjusted-coef.npy', c1)
-np.save(f'saves/c2_{SIZE_X}x{SIZE_Y}_t{T}-adjusted-coef.npy', c2)
-np.save(f'saves/c3_{SIZE_X}x{SIZE_Y}_t{T}-adjusted-coef.npy', c3)
-
+c = np.stack((c1, c2, c3), axis=0)
+print(c.shape)
+np.save(f'saves/optimized/[n,t,cs]=[{SIZE_X},{T},0]-optimized.npy', c)
 # %%
