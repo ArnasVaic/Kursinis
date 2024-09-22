@@ -29,7 +29,7 @@ c2_quantity = np.sum(c2, axis=(0, 1))
 c3_quantity = np.sum(c3, axis=(0, 1))
 
 ts = np.linspace(0, T * DT, T)
-plt.title(f'Quantity of elements $c_1$, $c_2$, $c_3$ over time.\n Configuration: {simulation_identifier(params)}')
+plt.title(f'Quantity of elements $c_1$, $c_2$, $c_3$ over time.\n{simulation_identifier(params)}')
 plt.xlabel('$t$')
 plt.ylabel('$c_1$, $c_2$, $c_3$ quantity')
 plt.plot(ts, c1_quantity, label=f'$c_1$')
