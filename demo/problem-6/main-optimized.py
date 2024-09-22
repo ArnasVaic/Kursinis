@@ -1,7 +1,7 @@
 # %%
 
 import numpy as np
-import numpy.typing as npt
+from tqdm import tqdm
 from scipy.signal import convolve2d
 
 # Simulation configurations
@@ -32,21 +32,19 @@ DT2 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 5 * np.max(c1[:, :, 0]))
 DT = np.min([DT1, DT2]) 
 
 # Convolving with this kernel gives laplacian
-
 ONE_OVER_DX2 = 1 / DX**2
 ONE_OVER_DY2 = 1 / DY**2
-
 DIFF_KERNEL = np.array([
   [0, ONE_OVER_DY2, 0],
   [ONE_OVER_DX2, -2 * ( ONE_OVER_DX2 + ONE_OVER_DY2 ), ONE_OVER_DX2],
   [0, ONE_OVER_DY2, 0]
 ])
 
-def laplacian(c: npt.NDArray[np.float64]) -> np.float64:
+def laplacian(c):
   padded = np.pad(c, (1, 1), 'edge')
   return convolve2d(padded, DIFF_KERNEL, mode='valid')
 
-for t in range(T - 1):
+for t in tqdm(range(T - 1)):
   # Note: for overall quantity of elements to stay constant the coefficients
   # in front of c1c2 should sum to 0
   c1[:, :, t + 1] = c1[:, :, t] + DT * D * laplacian(c1[:, :, t]) - 3 * DT * c1[:, :, t] * c2[:, :, t]

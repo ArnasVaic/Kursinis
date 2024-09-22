@@ -2,10 +2,11 @@
 
 import numpy as np
 import numpy.typing as npt
+from tqdm import tqdm
 
 # Simulation configurations
-L, T = 1, 10000
-DX, DY = 0.01, 0.01
+L, T = 1, 100
+DX, DY = 0.1, 0.1
 # Thermal diffusivity α (alpha)
 D = 1/4
 
@@ -72,7 +73,7 @@ def laplacian(
 
   return lap_x + lap_y
 
-for t in range(T - 1):
+for t in tqdm(range(T - 1)):
   for x in range(SIZE_X):
     for y in range(SIZE_Y):
       # Note: for overall quantity of elements to stay constant the coefficients
@@ -81,8 +82,9 @@ for t in range(T - 1):
       c2[x, y, t + 1] = c2[x, y, t] + DT * D * laplacian(c2, x, y, t) - 5 * DT * c1[x, y, t] * c2[x, y, t]
       c3[x, y, t + 1] = c3[x, y, t] + 8 * c1[x, y, t] * c2[x, y, t] * DT
 
-np.save(f'saves/c1_{SIZE_X}x{SIZE_Y}_t{T}-adjusted-coef.npy', c1)
-np.save(f'saves/c2_{SIZE_X}x{SIZE_Y}_t{T}-adjusted-coef.npy', c2)
-np.save(f'saves/c3_{SIZE_X}x{SIZE_Y}_t{T}-adjusted-coef.npy', c3)
+c = np.stack((c1, c2, c3), axis=0)
+print(c.shape)
+print('Saving results')
+np.save(f'saves/suboptimal/[n,t,cs]=[{SIZE_X},{T},0].npy', c)
 
 # %%
