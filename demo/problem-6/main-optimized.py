@@ -3,7 +3,7 @@
 import numpy as np
 from tqdm import tqdm
 from scipy.signal import convolve2d
-
+from mix import mix
 import configparser
 from simid import simulation_identifier
 
@@ -19,9 +19,15 @@ D = float(params['D'])
 K1 = float(params['K1'])
 K2 = float(params['K2'])
 K3 = float(params['K3'])
+MIXING_ENABLED = params['MIXING_ENABLED'] == 'True'
+T_MIX = int(params['T_MIX'])
 
 # Discretized plate size
 SIZE_X, SIZE_Y = int(L / DX), int(L / DY)
+
+if MIXING_ENABLED:
+  # size must be multiple of 4, else no good way to subdivide when mixing
+  assert SIZE_X % 4 == 0 and SIZE_Y % 4 == 0
 
 # c_i(x, y, t), (x, y, t) ∈ [0, L] x [0, L] x [0, T]
 c1 = np.zeros([SIZE_X, SIZE_Y, T])
@@ -30,11 +36,13 @@ c3 = np.zeros([SIZE_X, SIZE_Y, T])
 
 # Initial conditions at t = 0:
 # 4 non-overlapping blocks of different materials (c1 and c2)
-c1[:int(SIZE_X/2), :int(SIZE_Y/2), 0] = 1
-c1[int(SIZE_X/2):, int(SIZE_Y/2):, 0] = 1
+HALF_SX, HALF_SY = int(SIZE_X/2), int(SIZE_Y/2)
 
-c2[int(SIZE_X/2):, :int(SIZE_Y/2), 0] = 1
-c2[:int(SIZE_X/2), int(SIZE_Y/2):, 0] = 1
+c1[:HALF_SX, :HALF_SY, 0] = 1
+c1[HALF_SX:, HALF_SY:, 0] = 1
+
+c2[HALF_SX:, :HALF_SY, 0] = 1
+c2[:HALF_SX, HALF_SY:, 0] = 1
 
 # DT size depends on the maximum c1/c2 value
 DT1 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 3 * np.max(c2[:, :, 0]))
@@ -55,6 +63,11 @@ def laplacian(c):
   return convolve2d(padded, DIFF_KERNEL, mode='valid')
 
 for t in tqdm(range(T - 1)):
+
+  if MIXING_ENABLED and t > 0 and t % int(T / (T_MIX + 1)) == 0:
+    # mix once in a while
+    c1[:, :, t], c2[:, :, t], c3[:, :, t] = mix([c1[:, :, t], c2[:, :, t], c3[:, :, t]])
+
   # Note: for overall quantity of elements to stay constant the coefficients in front of
   # c1 * c2 must sum to 0 (K1 + K2 + K3 = 0)
   c1c2 = c1[:, :, t] * c2[:, :, t]
