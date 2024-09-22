@@ -36,11 +36,11 @@ def laplacian(
   y: int, 
   t: int) -> np.float64: 
   # When x,y is on the boundary some
-  # of the neighbours will not exist
-  # and will need to be choosen specifically
+  # of the neighbors will not exist
+  # and will need to be chosen specifically
   # to ensure boundary conditions. In this case
   # we want to make it so dc\dn=0, where n is the normal
-  # along the boundary so if one of the neighbours goes
+  # along the boundary so if one of the neighbors goes
   # out of bounds, we set its value to be the same
   # as the current cell c[x, y, t]
 
