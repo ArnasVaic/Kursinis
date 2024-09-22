@@ -4,11 +4,21 @@ import numpy as np
 from tqdm import tqdm
 from scipy.signal import convolve2d
 
-# Simulation configurations
-L, T = 1, 10000
-DX, DY = 0.01, 0.01
-# Thermal diffusivity α (alpha)
-D = 1/4
+import configparser
+from simid import simulation_identifier
+
+config = configparser.ConfigParser() 
+config.read('simulation-parameters.ini')
+params = config['DEFAULT']
+
+L = float(params['L'])
+T = int(params['T'])
+DX = float(params['DX'])
+DY = float(params['DY'])
+D = float(params['D'])
+K1 = float(params['K1'])
+K2 = float(params['K2'])
+K3 = float(params['K3'])
 
 # Discretized plate size
 SIZE_X, SIZE_Y = int(L / DX), int(L / DY)
@@ -45,13 +55,15 @@ def laplacian(c):
   return convolve2d(padded, DIFF_KERNEL, mode='valid')
 
 for t in tqdm(range(T - 1)):
-  # Note: for overall quantity of elements to stay constant the coefficients
-  # in front of c1c2 should sum to 0
-  c1[:, :, t + 1] = c1[:, :, t] + DT * D * laplacian(c1[:, :, t]) - 3 * DT * c1[:, :, t] * c2[:, :, t]
-  c2[:, :, t + 1] = c2[:, :, t] + DT * D * laplacian(c2[:, :, t]) - 5 * DT * c1[:, :, t] * c2[:, :, t]
-  c3[:, :, t + 1] = c3[:, :, t] + 8 * c1[:, :, t] * c2[:, :, t] * DT
+  # Note: for overall quantity of elements to stay constant the coefficients in front of
+  # c1 * c2 must sum to 0 (K1 + K2 + K3 = 0)
+  c1c2 = c1[:, :, t] * c2[:, :, t]
+  c1[:, :, t + 1] = c1[:, :, t] + K1 * DT * c1c2 + DT * D * laplacian(c1[:, :, t])
+  c2[:, :, t + 1] = c2[:, :, t] + K2 * DT * c1c2 + DT * D * laplacian(c2[:, :, t])
+  c3[:, :, t + 1] = c3[:, :, t] + K3 * DT * c1c2
 
 c = np.stack((c1, c2, c3), axis=0)
 print(c.shape)
-np.save(f'saves/optimized/[n,t,cs]=[{SIZE_X},{T},0]-optimized.npy', c)
+filename = simulation_identifier(params, 'npy')
+np.save(f'saves/optimized/{filename}', c)
 # %%

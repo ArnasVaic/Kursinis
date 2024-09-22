@@ -2,13 +2,22 @@
 
 import numpy as np
 import numpy.typing as npt
+import configparser
 from tqdm import tqdm
+from simid import simulation_identifier
 
-# Simulation configurations
-L, T = 1, 100
-DX, DY = 0.1, 0.1
-# Thermal diffusivity α (alpha)
-D = 1/4
+config = configparser.ConfigParser() 
+config.read('simulation-parameters.ini')
+params = config['DEFAULT']
+
+L = float(params['L'])
+T = int(params['T'])
+DX = float(params['DX'])
+DY = float(params['DY'])
+D = float(params['D'])
+K1 = float(params['K1'])
+K2 = float(params['K2'])
+K3 = float(params['K3'])
 
 # Discretized plate size
 SIZE_X, SIZE_Y = int(L / DX), int(L / DY)
@@ -29,62 +38,44 @@ c2[:int(SIZE_X/2), int(SIZE_Y/2):, 0] = 1
 # DT size depends on the maximum c1/c2 value
 DT1 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 3 * np.max(c2[:, :, 0]))
 DT2 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 5 * np.max(c1[:, :, 0]))
-DT = np.min([DT1, DT2]) 
+DT = np.min([DT1, DT2])
 
-def laplacian(
-  c: npt.NDArray[np.float64], 
-  x: int, 
-  y: int, 
-  t: int) -> np.float64: 
-  # When x,y is on the boundary some
-  # of the neighbors will not exist
-  # and will need to be chosen specifically
-  # to ensure boundary conditions. In this case
-  # we want to make it so dc\dn=0, where n is the normal
-  # along the boundary so if one of the neighbors goes
-  # out of bounds, we set its value to be the same
-  # as the current cell c[x, y, t]
+def laplacian(f: npt.NDArray[np.float64], x0: int, y0: int) -> np.float64:
+  """Calculate the Laplacian of function f at point (x0, y0). Additionally, assume boundary conditions to be df/dn=0 where n is the normal vector along the boundary. 
 
-  c_center = c[x, y, t]
+  Args:
+      f (npt.NDArray[np.float64]): Function
+      x0 (int): x coordinate
+      y0 (int): y coordinate
 
-  # c_{i-1,j}^n
-  # left edge has dc\dx = 0, so value 
-  # "beyond" border should match c_center
-  c_left = c_center if x == 0 else c[x - 1, y, t]
+  Returns:
+      np.float64: Value of the laplacian at point (x0, y0) for function f.
+  """
+  center = f[x0, y0]
+  left = center if x0 == 0 else f[x0 - 1, y0]
+  right = center if x0 == SIZE_X - 1 else f[x0 + 1, y0]
+  top = center if y0 == 0 else f[x0, y0 - 1]
+  bottom = center if y0 == SIZE_Y - 1 else f[x0, y0 + 1]
 
-  # u_{i+1,j}^n
-  # right edge has dc\dx = 0, so value 
-  # "beyond" border should match c_center
-  c_right = c_center if x == SIZE_X - 1 else c[x + 1, y, t]
-
-  # c_{i,j+1}^n
-  # top edge has dc\dy = 0, so value 
-  # "beyond" border should match c_center
-  c_top = c_center if y == 0 else c[x, y - 1, t]
-
-  # c_{i,j-1}^n
-  # bottom edge has dc\dy = 0, so value 
-  # "beyond" border should match c_center
-  c_bottom = c_center if y == SIZE_Y - 1 else c[x, y + 1, t]
-
-  # laplacian components of each dimension (to keep line length small)
-  lap_x = (c_left - 2 * c_center + c_right) / (DX**2)
-  lap_y = (c_top - 2 * c_center + c_bottom) / (DY**2)
-
-  return lap_x + lap_y
+  # laplacian components of each dimension
+  d2fdx2 = (left - 2 * center + right) / DX**2
+  d2fdy2 = (top - 2 * center + bottom) / DY**2
+  return d2fdx2 + d2fdy2
 
 for t in tqdm(range(T - 1)):
   for x in range(SIZE_X):
     for y in range(SIZE_Y):
-      # Note: for overall quantity of elements to stay constant the coefficients
-      # in front of c1c2 should sum to 0
-      c1[x, y, t + 1] = c1[x, y, t] + DT * D * laplacian(c1, x, y, t) - 3 * DT * c1[x, y, t] * c2[x, y, t]
-      c2[x, y, t + 1] = c2[x, y, t] + DT * D * laplacian(c2, x, y, t) - 5 * DT * c1[x, y, t] * c2[x, y, t]
-      c3[x, y, t + 1] = c3[x, y, t] + 8 * c1[x, y, t] * c2[x, y, t] * DT
+      # Note: for overall quantity of elements to stay constant the coefficients in front of
+      # c1 * c2 must sum to 0 (K1 + K2 + K3 = 0)
+      c1c2 = c1[x, y, t] * c2[x, y, t]
+      c1[x, y, t + 1] = c1[x, y, t] + K1 * DT * c1c2 + DT * D * laplacian(c1[:, :, t], x, y)
+      c2[x, y, t + 1] = c2[x, y, t] + K2 * DT * c1c2 + DT * D * laplacian(c2[:, :, t], x, y)
+      c3[x, y, t + 1] = c3[x, y, t] + K3 * DT * c1c2
 
 c = np.stack((c1, c2, c3), axis=0)
 print(c.shape)
 print('Saving results')
-np.save(f'saves/suboptimal/[n,t,cs]=[{SIZE_X},{T},0].npy', c)
+filename = simulation_identifier(params, 'npy')
+np.save(f'saves/suboptimal/{filename}', c)
 
 # %%

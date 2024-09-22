@@ -1,7 +1,15 @@
 {
     "cSpell.words": [
+        "cmap",
+        "colorbar",
+        "imshow",
+        "simid",
         "tqdm",
+        "vmax",
+        "vmin",
         "xlabel",
         "ylabel"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "editor.insertSpaces": true
 }
