@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage[parfill]{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+\title{Problem 4}
+\author{Arnas Vaicekauskas}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem formulation}
+
+$$
+\frac{\partial u}{\partial t}=\alpha\Delta u
+$$
+
+\section{Boundary and initial conditions}
+
+\begin{equation}
+    \begin{aligned}
+        u(x, y, 0) = 0,\quad x\in[0,L],\quad y\in[0,L]\\
+        u(0, y, t) = 100,\quad y\in[0,L],\quad t\in[0,T] \\
+        u(x, L, t) = 0,\quad x\in[0,L],\quad t\in[0,T]\\
+        \frac{\partial u}{\partial x}\Big|_{x=L}=0,\quad y\in[0,L],\quad t\in[0,T]\\
+        \frac{\partial u}{\partial y}\Big|_{y=0}=0,\quad x\in[0,L],\quad t\in[0,T]\\
+    \end{aligned}
+\end{equation}
+
+Where $L$ is the side length of the plate and $T$ is the duration of the simulation.
+
+\section{Numerical models}
+
+We will use explicit finite difference method to get a solution for the heat function
+
+\begin{equation}
+    \begin{aligned}
+        \frac{u^{n+1}_{i,j}-u^{n}_{i,j}}{\Delta t}=\alpha\left(\frac{u^n_{i+1,j}-2u^n_{i,j}+u^n_{i-1,j}}{\Delta x^2}+\frac{u^n_{i,j+1}-2u^n_{i,j}+u^n_{i,j-1}}{\Delta y^2}\right)\\
+        u^{n+1}_{i,j}=u^{n}_{i,j}-\alpha\Delta t\left(\frac{2u^n_{i,j}}{\Delta x^2}+\frac{2u^n_{i,j}}{\Delta y^2}\right)+\alpha\Delta t\left(\frac{u^n_{i+1,j}+u^n_{i-1,j}}{\Delta x^2}+\frac{u^n_{i,j+1}+u^n_{i,j-1}}{\Delta y^2}\right)\\
+        u^{n+1}_{i,j}=\left(1-2\alpha\Delta t\left(\frac{1}{\Delta x^2}+\frac{1}{\Delta y^2}\right)\right)u^{n}_{i,j}+\alpha\Delta t\left(\frac{u^n_{i+1,j}+u^n_{i-1,j}}{\Delta x^2}+\frac{u^n_{i,j+1}+u^n_{i,j-1}}{\Delta y^2}\right)
+    \end{aligned}
+\end{equation}
+
+To ensure numerical stability we need to make sure the coefficient in front of $u_{i,j}^n$ is always positive so
+\begin{equation}
+    \begin{aligned}
+        1-2\alpha\Delta t\left(\frac{1}{\Delta x^2}+\frac{1}{\Delta y^2}\right)\geqslant 0\\
+        \frac{1}{2}\geqslant\alpha\Delta t\left(\frac{1}{\Delta x^2}+\frac{1}{\Delta y^2}\right)\\
+        \Delta t\leqslant\frac{1}{2\alpha}\left(\frac{\Delta x^2\Delta y^2}{\Delta x^2+\Delta y^2}\right)
+    \end{aligned}
+\end{equation}
+
+\end{document}

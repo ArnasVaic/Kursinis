@@ -1,1 +1,8 @@
 .venv
+**.npy
+**.aux
+**.log
+**.fls
+**.fdb_latexmk
+**.gz
+__pycache__/
