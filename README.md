@@ -35,3 +35,12 @@ Conclusion - interpretation of the results.
 
 Don't make conclusion about yourself (I learned ...).
 
+## Useful reading
+
+### Research papers
+
+Anything that has surnames Ivanauskas, Kareiva.
+
+### Advanced numerical methods
+
+Alternating direction method
