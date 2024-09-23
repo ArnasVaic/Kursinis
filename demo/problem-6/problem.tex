@@ -2,29 +2,37 @@
 \usepackage[margin=0.7in]{geometry}
 \usepackage[parfill]{parskip}
 \usepackage[utf8]{inputenc}
+\usepackage[lithuanian]{babel}
+\usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 
-\title{Problem 6}
+\title{6 Uždavinys}
 \author{Arnas Vaicekauskas}
 
 \begin{document}
 
 \maketitle
 
-\section{Problem formulation}
+\section{Bedimensis modelis}
 
 \begin{equation}
-    \begin{cases}
-        \dot c_1=D\Delta c_1 - 3c_1c_2\\
-        \dot c_2=D\Delta c_2 - 5c_1c_2\\
-        \dot c_3=2c_1c_2
-    \end{cases}
+\begin{subequations} \label{nodim}
+    \begin{align}
+    \frac{\partial c_1}{\partial t}&=-3c_1c_2+D\Delta c_1\\
+    \frac{\partial c_2}{\partial t}&=-5c_1c_2+D\Delta c_2\\
+    \frac{\partial c_3}{\partial t}&=2c_1c_2
+    \end{align}
+\end{subequations}
 \end{equation}
 
-where $\dot c$ is the time derivative $\frac{\partial c}{\partial t}$ and $\Delta$ 
-is the Laplace operator $\Delta = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}$.
+kur $c_1,c_2,c_3$ yra bedimensė medžiagų koncentracija, 
+$\Delta$ - Laplaso operatorius, $t$ - laikas, 
+$D$ - bedimensis medžiagų $c_1$ ir $c_2$ difuzijos koeficientas.
 
-\subsection{Initial conditions}
+
+\subsection{Elementų maišymasis stačiakampio gretasienio skerspjūvyje}
+
+Pritaikius \ref{nodim}
 
 \begin{equation}
     \begin{aligned}
