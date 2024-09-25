@@ -8,6 +8,7 @@
         "vmax",
         "vmin",
         "xlabel",
+        "yaxis",
         "ylabel"
     ],
     "python.analysis.typeCheckingMode": "basic",

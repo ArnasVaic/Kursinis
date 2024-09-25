@@ -44,7 +44,7 @@ def animate_parametrized(frame: int, f: npt.NDArray[np.float64], c_index: int):
   plt.xlabel('$x$')
   plt.ylabel('$y$')
   plt.title(f'$c_{c_index}(x,y,t)$ at time $t={DT * (t + frame_stride):.02f}$\n{simulation_identifier(params)}')
-  plt.imshow(f[:, :, t].T, cmap='inferno', extent=(0, L, 0, L), vmin=0, vmax=1)
+  plt.imshow(f[:, :, t].T, cmap='inferno', extent=(0, L, L, 0), vmin=0, vmax=1, origin="upper")
   plt.colorbar()
 
 FFwriter = plta.FFMpegWriter(fps=30, extra_args=['-vcodec', 'libx264'])
