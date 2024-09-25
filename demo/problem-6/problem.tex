@@ -5,6 +5,7 @@
 \usepackage[lithuanian]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{tikz}
 
 \title{6 Uždavinys}
 \author{Arnas Vaicekauskas}
@@ -13,7 +14,9 @@
 
 \maketitle
 
-\section{Bedimensis modelis}
+\section{Matematinis modelis}
+
+\subsection{Bedimensis modelis}
 
 \begin{subequations} \label{nodim}
     \begin{align}
@@ -27,11 +30,11 @@ kur $c_1,c_2,c_3$ yra bedimensė medžiagų koncentracija,
 $\Delta$ - Laplaso operatorius, $t$ - laikas, 
 $D$ - bedimensis medžiagų $c_1$ ir $c_2$ difuzijos koeficientas.
 
-\subsection{Elementų maišymasis stačiakampio gretasienio skerspjūvyje}
+\subsection{Elementų maišymasis dviejose dimensijose}
 
 Interpretavus bedimensį modelį \eqref{nodim} dviejose dimensijose gauname lygtis
 
-\begin{subequations} \label{nodim}
+\begin{subequations} \label{rect}
     \begin{align}
     \frac{\partial c_1}{\partial t}&=-3c_1c_2+D\left(\frac{\partial^2c_1}{\partial x^2}+\frac{\partial^2c_1}{\partial y^2}\right)\\
     \frac{\partial c_2}{\partial t}&=-5c_1c_2+D\left(\frac{\partial^2c_2}{\partial x^2}+\frac{\partial^2c_2}{\partial y^2}\right)\\
@@ -39,33 +42,78 @@ Interpretavus bedimensį modelį \eqref{nodim} dviejose dimensijose gauname lygt
     \end{align}
 \end{subequations}
 
-\subsection{Pradinės sąlygos}
+Šiam modeliui yra taikomos šios pradinės ir kraštinės sąlygos:
 
-\begin{equation}
-    \begin{aligned}
-        c_1(x, y, 0) &= 
-        \begin{cases}
-            1, \text{if } x\in A\\
-            0, \text{otherwise}
-        \end{cases}&, \quad (x, y)\in[0,L]\times[0,L]\\
-        c_2(x, y, 0) &= 
-        \begin{cases}
-            1, \text{if } x\notin A\\
-            0, \text{otherwise}
-        \end{cases}&, \quad (x, y)\in[0,L]\times[0,L]\\
-        c_3(x, y, 0) &= 0&, \quad (x, y)\in[0,L]\times[0,L]
-    \end{aligned}
-\end{equation}
+\begin{align*} \label{2d-init-cond}
+    \frac{\partial c_1}{\partial x}\Big|_{x=0}&=\frac{\partial c_1}{\partial x}\Big|_{x=L}=\frac{\partial c_2}{\partial x}\Big|_{x=0}=\frac{\partial c_2}{\partial x}\Big|_{x=L}=0, &y&\in[0,L], t\in[0,T]\\
+    \frac{\partial c_1}{\partial y}\Big|_{y=0}&=\frac{\partial c_1}{\partial y}\Big|_{y=L}=\frac{\partial c_2}{\partial y}\Big|_{y=0}=\frac{\partial c_2}{\partial y}\Big|_{y=L}=0, &x&\in[0,L], t\in[0,T]\\
+    c_1(x, y, 0) &= 
+    \begin{cases}
+        1, \text{jei } x\in A\\
+        0, \text{kitaip}
+    \end{cases}
+    c_2(x, y, 0) = 
+    \begin{cases}
+        1, \text{if } x\notin A\\
+        0, \text{otherwise}
+    \end{cases},&(x, y)&\in[0,L]^2, A=\left[0, \tfrac{L}{2}\right]^2\cup\left[\tfrac{L}{2},L\right]^2\\
+    c_3(x, y, 0) &= 0,&(x, y)&\in[0,L]^2,
+\end{align*}
 
-where $A=[0,0.5L]\times[0,0.5L]\cup[0.5L,L]\times[0.5L,L]$.
+kur $L$ - bedimensis kubo kraštinės ilgis, $T$ - bedimensė proceso trukmė.
 
-\subsection{Boundary conditions}
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[scale=2.0]
+        \draw[fill=white] (0,0) rectangle (1,1);
+        \draw[fill=white] (1,1) rectangle (2,2);
+        \draw[fill=gray!50] (0,1) rectangle (1,2);
+        \draw[fill=gray!50] (1,0) rectangle (2,1);
+        
+        % Draw the boundary of the square
+        \draw[thick] (0,0) rectangle (2,2);
+    
+        % Draw axes
+        \draw[->] (-0.5,2) -- (2.5,2) node[anchor=north west] {$x$};  % x-axis
+        \draw[<-] (0,-0.5) node[anchor=south east] {$y$} -- (0,2.5);  % y-axis
+    
+        % Mark the origin
+        \node[anchor=south east] at (0,2) {$(0, 0)$};
+        
+        % Mark the side length L
+        \draw[-] (2,0) -- (2,2) node[midway, right] {$L$};
+        \draw[-] (0,0) -- (2,0) node[midway, below] {$L$};
+        \draw (0.5, 1.5) node[anchor=center] {$c_1$};
+        \draw (1.5, 0.5) node[anchor=center] {$c_1$};
+        \draw (1.5, 1.5) node[anchor=center] {$c_2$};
+        \draw (0.5, 0.5) node[anchor=center] {$c_2$};
+    \end{tikzpicture}
+    \caption{Dvimačio modelio pradinės sąlygos laiku $t=0$. Pilka spalva žymi plotą priklausantį aibei $A$. }
+\end{figure}
 
-\begin{equation}
-    \begin{split}
-        \frac{\partial u}{\partial x}\Big|_{x=0}=\frac{\partial u}{\partial x}\Big|_{x=L}=0,\quad y\in[0,L],\quad t\in[0,T]\\
-        \frac{\partial u}{\partial y}\Big|_{y=0}=\frac{\partial u}{\partial y}\Big|_{y=L}=0,\quad x\in[0,L],\quad t\in[0,T]\\
-    \end{split}
-\end{equation}
+\newpage
+\section{Skaitiniai modeliai}
 
+Remiantis išreikštiniu baigtinių skirtumų metodu iš dvimačio modelio galima gauti skaitinį modelį.
+\begin{subequations} \label{numerical-eqs}
+\begin{align}
+\frac{c^{n+1}_{1,i,j}-c^n_{1,i,j}}{\Delta t}&=
+-3c^{n}_{1,i,j}c^{n}_{2,i,j}
++D\left(\frac{c^n_{1,i-1,j}-2c^n_{1,i,j}+c^n_{1,i+1,j}}{(\Delta x)^2}+\frac{c^n_{1,i,j-1}-2c^n_{1,i,j}+c^n_{1,i,j+1}}{(\Delta y)^2}\right)\\
+\frac{c^{n+1}_{2,i,j}-c^n_{2,i,j}}{\Delta t}&=
+-5c^{n}_{1,i,j}c^{n}_{2,i,j}
++D\left(\frac{c^n_{2,i-1,j}-2c^n_{2,i,j}+c^n_{2,i+1,j}}{(\Delta x)^2}+\frac{c^n_{2,i,j-1}-2c^n_{2,i,j}+c^n_{2,i,j+1}}{(\Delta y)^2}\right)\\
+\frac{c^{n+1}_{3,i,j}-c^n_{3,i,j}}{\Delta t}&=5c^{n}_{1,i,j}c^{n}_{2,i,j},
+\end{align}
+\end{subequations}
+
+kur $n\in[0, T)$ - laiko momentas, 
+$i\in[0,N_L)$ - diskrečios erdvės taško koordinatė $x$ ašyje,
+$j\in[0,N_L)$ - diskrečios erdvės taško koordinatė $y$ ašyje,
+$c^n_{1,i,j}$ - pirmos medžiagos kiekis diskrečios erdvės taške $i$, $j$ laiko momentu $n$,
+$c^n_{2,i,j}$ - antros medžiagos kiekis diskrečios erdvės taške $i$, $j$ laiko momentu $n$,
+$c^n_{3,i,j}$ - trečios medžiagos kiekis diskrečios erdvės taške $i$, $j$ laiko momentu $n$,
+$\Delta t$ - laiko žingsnis,
+$\Delta x$ - diskrečios erdvės žingsnis $x$ ašimi,
+$\Delta y$ - diskrečios erdvės žingsnis $y$ ašimi.
 \end{document}
