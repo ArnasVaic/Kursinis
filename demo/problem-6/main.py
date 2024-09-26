@@ -36,8 +36,8 @@ c2[int(SIZE_X/2):, :int(SIZE_Y/2), 0] = 1
 c2[:int(SIZE_X/2), int(SIZE_Y/2):, 0] = 1
 
 # DT size depends on the maximum c1/c2 value
-DT1 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 3 * np.max(c2[:, :, 0]))
-DT2 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 5 * np.max(c1[:, :, 0]))
+DT1 = 1 / (2 * D * (1/DX**2 + 1/DY**2) - K1 * np.max(c2[:, :, 0]))
+DT2 = 1 / (2 * D * (1/DX**2 + 1/DY**2) - K2 * np.max(c1[:, :, 0]))
 DT = np.min([DT1, DT2])
 
 def laplacian(f: npt.NDArray[np.float64], x0: int, y0: int) -> np.float64:
