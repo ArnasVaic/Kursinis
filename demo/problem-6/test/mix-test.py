@@ -1,5 +1,11 @@
 # %% 
 import numpy as np
+
+import os
+import sys
+# insert root directory into python module search path
+sys.path.insert(1, os.getcwd())
+
 from mix import mix
 
 a = np.reshape(np.arange(4**2), shape=(4, 4))
