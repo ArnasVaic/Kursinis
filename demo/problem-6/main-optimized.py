@@ -78,5 +78,5 @@ for t in tqdm(range(T - 1)):
 c = np.stack((c1, c2, c3), axis=0)
 print(c.shape)
 filename = simulation_identifier(params, 'npy')
-np.save(f'saves/optimized/{filename}', c)
+np.save(f'saves/{filename}', c)
 # %%

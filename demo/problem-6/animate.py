@@ -17,7 +17,7 @@ config.read('simulation-parameters.ini')
 params = config['DEFAULT']
 
 filename = simulation_identifier(params, 'npy')
-c = np.load(f'saves/optimized/{filename}')
+c = np.load(f'saves/{filename}')
 print(f'Loaded configuration: {simulation_identifier(params)}')
 
 L = float(params['L'])
@@ -50,7 +50,7 @@ def animate_parametrized(frame: int, f: npt.NDArray[np.float64], c_index: int):
 FFwriter = plta.FFMpegWriter(fps=30, extra_args=['-vcodec', 'libx264'])
 
 video_dir = simulation_identifier(params)
-video_path = Path(f'videos/optimized/{video_dir}')
+video_path = Path(f'videos/{video_dir}')
 if not video_path.exists():
   video_path.mkdir(parents=True, exist_ok=True)
 
