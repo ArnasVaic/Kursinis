@@ -2,60 +2,46 @@
 
 from pathlib import Path
 from typing import Callable
-import configparser
 import numpy as np
-from tqdm import tqdm
 import numpy.typing as npt
 import matplotlib.pyplot as plt
 import matplotlib.animation as plta
-from simid import simulation_identifier 
+from solver_config import *
+from solver import *
 
 plt.rcParams['animation.ffmpeg_path'] = 'C:\\ProgramData\\chocolatey\\lib\\ffmpeg\\tools\\ffmpeg\\bin\\ffmpeg.exe'
 
-config = configparser.ConfigParser() 
-config.read('simulation-parameters.ini')
-params = config['DEFAULT']
+id = solver_config_id()
+c1, c2, c3 = np.load(f'saves/{id}.npy')
+print(f'Loaded configuration: {id}')
 
-filename = simulation_identifier(params, 'npy')
-c = np.load(f'saves/{filename}')
-print(f'Loaded configuration: {simulation_identifier(params)}')
+W, H = solver_config['W'], solver_config['H']
+dx, dy = solver_config['dx'], solver_config['dy']
+D = solver_config['D']
 
-H = float(params['H'])
-L = float(params['L'])
-T = int(params['T'])
-DX = float(params['DX'])
-DY = float(params['DY'])
-D = float(params['D'])
-K1 = float(params['K1'])
-K2 = float(params['K2'])
-K3 = float(params['K3'])
-SIZE_X, SIZE_Y = c.shape[1], c.shape[2]
+dt = get_dt(dx, dy, D, c1[0].max(), c2[0].max())
 
-c1, c2, c3 = c[0], c[1], c[2]
+T, N, M = c3.shape
+FRAME_STRIDE = 15
 
-DT1 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 3 * np.max(c2[:, :, 0]))
-DT2 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 5 * np.max(c1[:, :, 0]))
-DT = np.min([DT1, DT2]) 
-
-FRAME_STRIDE = int(params['FRAME_STRIDE'])
+c_max = [ c1.max(), c2.max(), c3.max() ]
 
 def animate_parametrized(frame: int, f: npt.NDArray[np.float64], c_index: int):
   t = frame * FRAME_STRIDE
   plt.clf()
   plt.xlabel('$x$')
   plt.ylabel('$y$')
-  plt.title(f'$c_{c_index}(x,y,t)$ at time $t={DT * (t + FRAME_STRIDE):.02f}$\n{simulation_identifier(params)}')
-  plt.imshow(f[:, :, frame].T, cmap='inferno', extent=(0, L, H, 0), vmin=0, vmax=1, origin="upper")
+  plt.title(f'$c_{c_index}(x,y,t)$ at time $t={dt * (t + FRAME_STRIDE):.02f}$\n{id}')
+  plt.imshow(f[frame, :, :].T, cmap='inferno', extent=(0, W, H, 0), vmin=0, vmax=c_max[c_index - 1], origin="upper")
   plt.colorbar()
 
 FFwriter = plta.FFMpegWriter(fps=30, extra_args=['-vcodec', 'libx264'])
 
-video_dir = simulation_identifier(params)
-video_path = Path(f'videos/{video_dir}')
+video_path = Path(f'videos/{id}')
 if not video_path.exists():
   video_path.mkdir(parents=True, exist_ok=True)
 
-for i, c in tqdm(enumerate([c1, c2, c3])):
+for i, c in enumerate([c1, c2, c3]):
   #print(f'Animating c{i + 1}')
   animate_func: Callable[[int], None] = lambda frame: animate_parametrized(frame, c, i+1)
   animation = plta.FuncAnimation(plt.gcf(), animate_func, frames=int(T/FRAME_STRIDE), interval=20)

@@ -1,10 +1,11 @@
 import numpy as np
 from scipy.signal import convolve2d
+from mixer import mix
 
 def get_dt(dx, dy, D, c1_max, c2_max):
   return 1 / (2 * D * (dx ** -2 + dy ** -2) - min(3 * c2_max, 5 * c1_max))
 
-def solve(W, H, dx, dy, D, c1_init, c2_init, debug=False):
+def solve(W, H, dx, dy, D, c1_init, c2_init, t_mix=None, debug=False):
 
   laplacian_filter = np.array([
     [        0,                  dy ** -2 ,        0 ],
@@ -29,6 +30,9 @@ def solve(W, H, dx, dy, D, c1_init, c2_init, debug=False):
   t = 0
 
   while True:
+
+    if t_mix is not None and abs(t * dt - t_mix) <= dt / 2:
+      c1[t], c2[t], c3[t] = mix([c1[t], c2[t], c3[t]])
 
     c1c2 = c1[t][:, :] * c2[t][:, :]
     c1.append(c1[t][:, :] - 3 * dt * c1c2 + dt * D * laplacian(c1[t][:, :]))
