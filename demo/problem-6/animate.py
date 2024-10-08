@@ -20,6 +20,7 @@ filename = simulation_identifier(params, 'npy')
 c = np.load(f'saves/{filename}')
 print(f'Loaded configuration: {simulation_identifier(params)}')
 
+H = float(params['H'])
 L = float(params['L'])
 T = int(params['T'])
 DX = float(params['DX'])
@@ -36,15 +37,15 @@ DT1 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 3 * np.max(c2[:, :, 0]))
 DT2 = 1 / (2 * D * (1/DX**2 + 1/DY**2) + 5 * np.max(c1[:, :, 0]))
 DT = np.min([DT1, DT2]) 
 
-frame_stride = int(params['FrameStride'])
+FRAME_STRIDE = int(params['FRAME_STRIDE'])
 
 def animate_parametrized(frame: int, f: npt.NDArray[np.float64], c_index: int):
-  t = frame * frame_stride
+  t = frame * FRAME_STRIDE
   plt.clf()
   plt.xlabel('$x$')
   plt.ylabel('$y$')
-  plt.title(f'$c_{c_index}(x,y,t)$ at time $t={DT * (t + frame_stride):.02f}$\n{simulation_identifier(params)}')
-  plt.imshow(f[:, :, t].T, cmap='inferno', extent=(0, L, L, 0), vmin=0, vmax=1, origin="upper")
+  plt.title(f'$c_{c_index}(x,y,t)$ at time $t={DT * (t + FRAME_STRIDE):.02f}$\n{simulation_identifier(params)}')
+  plt.imshow(f[:, :, frame].T, cmap='inferno', extent=(0, L, H, 0), vmin=0, vmax=1, origin="upper")
   plt.colorbar()
 
 FFwriter = plta.FFMpegWriter(fps=30, extra_args=['-vcodec', 'libx264'])
@@ -57,7 +58,7 @@ if not video_path.exists():
 for i, c in tqdm(enumerate([c1, c2, c3])):
   #print(f'Animating c{i + 1}')
   animate_func: Callable[[int], None] = lambda frame: animate_parametrized(frame, c, i+1)
-  animation = plta.FuncAnimation(plt.gcf(), animate_func, frames=int(T/frame_stride), interval=20)
+  animation = plta.FuncAnimation(plt.gcf(), animate_func, frames=int(T/FRAME_STRIDE), interval=20)
   FFwriter = plta.FFMpegWriter(fps=30, extra_args=['-vcodec', 'libx264'])
 
   filename = Path(f'c{i + 1}.mp4')
