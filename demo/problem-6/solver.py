@@ -19,19 +19,27 @@ def solve(W, H, dx, dy, D, c1_init, c2_init, t_mix=None, debug=False):
 
   dt = get_dt(dx, dy, D, c1_init.max(), c2_init.max())
 
+  if debug:
+    print(f'dt = {dt}')
+    print(f"approximate frame of mixing: {int(t_mix / dt)}")
+
   width, height = int(W / dx) + 1, int(H / dy) + 1
   c1, c2, c3 = [ c1_init ], [ c2_init ], [ np.zeros((width, height)) ]
  
   # stop reaction when ratio of elements c1, c2 
   # to the initial amount reaches threshold 
-  threshold = 0.30
+  threshold = 0.3
   c1c2_qnt0 = (c1_init[:, :] + c2_init[:, :]).sum()
 
   t = 0
 
+  mixing_done = False
+
   while True:
 
-    if t_mix is not None and abs(t * dt - t_mix) <= dt / 2:
+    if t_mix is not None and abs(t * dt - t_mix) <= dt / 2 and not mixing_done:
+      if debug:
+        print(f'mixing at t = {t * dt} (frame: {t})')
       c1[t], c2[t], c3[t] = mix([c1[t], c2[t], c3[t]])
 
     c1c2 = c1[t][:, :] * c2[t][:, :]
@@ -43,7 +51,7 @@ def solve(W, H, dx, dy, D, c1_init, c2_init, t_mix=None, debug=False):
 
     if debug:
       if t % 1000 == 0:
-        print(f'q = {c1c2_qnt / c1c2_qnt0}')
+        print(f'Q({t * dt}) = {c1c2_qnt / c1c2_qnt0}')
 
     if c1c2_qnt / c1c2_qnt0 <= threshold:
       break

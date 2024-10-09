@@ -1,9 +1,10 @@
 solver_config = {
   'W': 1.0,
   'H': 1.0,
-  'dx': 1/9,
-  'dy': 1/29,
-  'D': 0.01
+  'dx': 1/39,
+  'dy': 1/39,
+  'D': 0.01,
+  't_mix': 1.5
 }
 
 def solver_config_id():
