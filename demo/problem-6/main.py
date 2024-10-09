@@ -13,9 +13,18 @@ hw, hh = int(w/2), int(h/2)
 
 # Initial conditions at t = 0: 4 non-overlapping blocks
 c1, c2 = np.zeros((w, h)), np.zeros([w, h])
-c1[:hw, :hh] = c1[hw:, hh:] = 2 / ( w * h )
-c2[hw:, :hh] = c2[:hw, hh:] = 2 / ( w * h )
+c1[:hw, :hh] = c1[hw:, hh:] = 5 * 20 / ( w * h )
+c2[hw:, :hh] = c2[:hw, hh:] = 3 * 20 / ( w * h )
 
-c = solve(W ,H, dx, dy, D, c1, c2, t_mix, True)
+c = solve(W ,H, dx, dy, D, c1, c2, 0.02, t_mix, True)
+
+# skip as many frames as needed
+# to keep file sizes small and 
+# frame count around 200
+stride = int(c.shape[1] / 200)
+c = c[:, ::stride, :, :]
+
+print(f'stride: {stride}')
+
 np.save(f'saves/{solver_config_id()}.npy', c)
 # %%

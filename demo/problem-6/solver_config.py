@@ -4,7 +4,7 @@ solver_config = {
   'dx': 1/39,
   'dy': 1/39,
   'D': 0.01,
-  't_mix': 1.5
+  't_mix': 500  
 }
 
 def solver_config_id():

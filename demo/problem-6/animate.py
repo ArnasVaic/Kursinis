@@ -25,9 +25,7 @@ print(f'dt = {dt}')
 
 T, N, M = c3.shape
 
-T = 1000
-
-FRAME_STRIDE = 5
+FRAME_STRIDE = 1
 
 c_max = [ c1.max(), c2.max(), c3.max() ]
 
@@ -36,8 +34,9 @@ def animate_parametrized(frame: int, f: npt.NDArray[np.float64], c_index: int):
   plt.clf()
   plt.xlabel('$x$')
   plt.ylabel('$y$')
-  plt.title(f'$c_{c_index}(x,y,t)$ at time $t={dt * t:.02f}$\n{id}')
-  plt.imshow(f[t, :, :].T, cmap='inferno', extent=(0, W, H, 0), vmin=0, vmax=c_max[c_index - 1], origin="upper")
+  plt.title(f'$c_{c_index}(x,y,t)$ at time $t={dt * t * 25:.02f}$\n{id}')
+  #plt.imshow(f[t, :, :].T, cmap='inferno', extent=(0, W, H, 0), vmin=0, vmax=c_max[c_index - 1], origin="upper")
+  plt.imshow(f[t, :, :].T, cmap='inferno', extent=(0, W, H, 0), origin="upper")
   plt.colorbar()
 
 FFwriter = plta.FFMpegWriter(fps=30, extra_args=['-vcodec', 'libx264'])

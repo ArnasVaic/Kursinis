@@ -5,7 +5,7 @@ from mixer import mix
 def get_dt(dx, dy, D, c1_max, c2_max):
   return 1 / (2 * D * (dx ** -2 + dy ** -2) - min(3 * c2_max, 5 * c1_max))
 
-def solve(W, H, dx, dy, D, c1_init, c2_init, t_mix=None, debug=False):
+def solve(W, H, dx, dy, D, c1_init, c2_init, threshold, t_mix=None, debug=False):
 
   laplacian_filter = np.array([
     [        0,                  dy ** -2 ,        0 ],
@@ -26,9 +26,7 @@ def solve(W, H, dx, dy, D, c1_init, c2_init, t_mix=None, debug=False):
   width, height = int(W / dx) + 1, int(H / dy) + 1
   c1, c2, c3 = [ c1_init ], [ c2_init ], [ np.zeros((width, height)) ]
  
-  # stop reaction when ratio of elements c1, c2 
-  # to the initial amount reaches threshold 
-  threshold = 0.3
+  
   c1c2_qnt0 = (c1_init[:, :] + c2_init[:, :]).sum()
 
   t = 0
@@ -50,9 +48,14 @@ def solve(W, H, dx, dy, D, c1_init, c2_init, t_mix=None, debug=False):
     c1c2_qnt = (c1[t + 1][:, :] + c2[t + 1][:, :]).sum()
 
     if debug:
-      if t % 1000 == 0:
-        print(f'Q({t * dt}) = {c1c2_qnt / c1c2_qnt0}')
+      if t % 5000 == 0:
+        q1 = c1[t + 1][:, :].sum() / c1_init[:, :].sum()
+        q2 = c2[t + 1][:, :].sum() / c2_init[:, :].sum()
+        q = c1c2_qnt / c1c2_qnt0
+        print(f'(t: {t * dt:02f})[q1,q2,q]=[{q1:02f},{q2:02f},{q:02f}]')
 
+    # stop reaction when ratio of elements c1, c2 
+    # to the initial amount reaches threshold 
     if c1c2_qnt / c1c2_qnt0 <= threshold:
       break
 
