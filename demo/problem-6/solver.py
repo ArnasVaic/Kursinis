@@ -89,6 +89,7 @@ def solve(W, H, dx, dy, D, c1_init, c2_init, threshold, t_mix=None, debug=False)
 
     t = t + 1
 
+  # convert python lists to numpy lists
   c1 = np.stack(c1, axis=0)
   c2 = np.stack(c2, axis=0)
   c3 = np.stack(c3, axis=0)
