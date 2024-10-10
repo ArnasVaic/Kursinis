@@ -1,10 +1,11 @@
 solver_config = {
   'W': 1.0,
   'H': 1.0,
-  'dx': 1/39,
-  'dy': 1/39,
-  'D': 0.01,
-  't_mix': 500  
+  'dx': 1/19,
+  'dy': 1/19,
+  'D': 0.0001,
+  't_mix': 50,
+  'out_stride': 1
 }
 
 def solver_config_id():

@@ -18,6 +18,7 @@ print(f'Loaded configuration: {id}')
 W, H = solver_config['W'], solver_config['H']
 dx, dy = solver_config['dx'], solver_config['dy']
 D = solver_config['D']
+stride = solver_config['out_stride']
 
 dt = get_dt(dx, dy, D, c1[0].max(), c2[0].max())
 
@@ -34,9 +35,8 @@ def animate_parametrized(frame: int, f: npt.NDArray[np.float64], c_index: int):
   plt.clf()
   plt.xlabel('$x$')
   plt.ylabel('$y$')
-  plt.title(f'$c_{c_index}(x,y,t)$ at time $t={dt * t * 25:.02f}$\n{id}')
-  #plt.imshow(f[t, :, :].T, cmap='inferno', extent=(0, W, H, 0), vmin=0, vmax=c_max[c_index - 1], origin="upper")
-  plt.imshow(f[t, :, :].T, cmap='inferno', extent=(0, W, H, 0), origin="upper")
+  plt.title(f'$c_{c_index}(x,y,t)$ at time $t={dt * t * stride:.02f}$\n{id}')
+  plt.imshow(f[t, :, :].T, cmap='inferno', extent=(0, W, H, 0), vmin=0, vmax=c_max[c_index - 1], origin="upper")
   plt.colorbar()
 
 FFwriter = plta.FFMpegWriter(fps=30, extra_args=['-vcodec', 'libx264'])
