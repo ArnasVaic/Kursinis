@@ -27,6 +27,6 @@ for M in tqdm([40, 36, 28, 24, 20, 16, 10]):
   dt = get_dt(dx, dy, D, c1_init.max(), c2_init.max())
   ts = np.linspace(0, T * dt, c3.shape[0])
   q = c3.sum(axis=(1, 2))
-  plt.plot(ts, q, label=f'$\\Delta y=\\frac{{{W}}}{{{N-1}}}$')
+  plt.plot(ts, q, label=f'$\\Delta y=\\frac{{{H}}}{{{M-1}}}$')
 plt.legend()
 # %%
