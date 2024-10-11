@@ -22,7 +22,11 @@ https://mif.vu.lt/lt3/dokumentai/dokumentai/PS/2023-10-30_Kursinio_darbo_metodin
 
 https://biblioteka.vu.lt/studijoms/dalyko-bibliotekininkas/matematikos-ir-informatikos-fakultetas
 
+lietuvos elektronine biblioteka
+
 ## Most important things
+
+Tekstas dėstomas trečiu asmeniu
 
 Have a clear definition of done.
 
@@ -34,6 +38,10 @@ Result - factual result what was found/observed.
 Conclusion - interpretation of the results.
 
 Don't make conclusion about yourself (I learned ...).
+
+More than 10 citations
+
+Cite papers which have been published in journals with high impact factors
 
 ## Useful reading
 
