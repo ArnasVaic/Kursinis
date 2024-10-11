@@ -43,7 +43,7 @@ def solve(
   c2_init, 
   threshold, 
   t_mix=None, 
-  mix_blocks=(2, 2), 
+  B=2, 
   debug=False):
 
   laplacian_filter = np.array([
@@ -64,7 +64,8 @@ def solve(
   if debug:
     print(f'discrete grid size: ({width}, {height})')
     print(f'dt = {dt}')
-    print(f"approximate frame of mixing: {int(t_mix / dt)}")
+    if t_mix is not None:
+      print(f"approximate frame of mixing: {int(t_mix / dt)}")
   
   c1c2_qnt0 = (c1_init[:, :] + c2_init[:, :]).sum()
 
@@ -77,7 +78,7 @@ def solve(
     if t_mix is not None and abs(t * dt - t_mix) <= dt / 2 and not mixing_done:
       if debug:
         print(f'mixing at t = {t * dt:.02f} (frame: {t})')
-      c1[t], c2[t], c3[t] = mix([c1[t], c2[t], c3[t]], subdivisions=mix_blocks, debug=debug)
+      c1[t], c2[t], c3[t] = mix([c1[t], c2[t], c3[t]], B=B, debug=False)
 
     c1c2 = c1[t][:, :] * c2[t][:, :]
     c1.append(c1[t][:, :] - 3 * dt * c1c2 + dt * D * laplacian(c1[t][:, :]))
