@@ -20,7 +20,7 @@ c2[hw:, :hh] = c2[:hw, hh:] = 5 * 200 / ( w * h )
 print(f"c1 cell value: {c1[0,0]}, q1(0) = {c1.sum()}")
 print(f"c2 cell value: {c2[-1,0]}, q2(0) = {c2.sum()}")
 
-c = solve(W ,H, dx, dy, D, c1, c2, 0.02, t_mix, True)
+c = solve(W ,H, dx, dy, D, c1, c2, 0.02, t_mix, mix_blocks=(4, 4), debug=True)
 
 # skip as many frames as needed
 # to keep file sizes small and 

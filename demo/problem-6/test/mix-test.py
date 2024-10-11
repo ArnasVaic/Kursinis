@@ -1,10 +1,10 @@
 # %% 
 import numpy as np
 
-import os
-import sys
+#import os
+#import sys
 # insert root directory into python module search path
-sys.path.insert(1, os.getcwd())
+#sys.path.insert(1, os.getcwd())
 
 from mixer import mix
 
@@ -14,4 +14,5 @@ c = np.roll(b, -1, axis=1)
 A, B, C = mix([a, b, c])
 #a, b, c, A, B, C
 [print(m) for m in [a, b, c, A, B, C]]
+
 # %%

@@ -72,3 +72,5 @@ plt.show()
 
 array = np.column_stack((ts_mix, ts_end))
 np.save('saves/mix-times_other.npy', array)
+
+# %%

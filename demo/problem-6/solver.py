@@ -33,7 +33,18 @@ def check_solution(c):
   assert 0 <= c3.min() <= sys.float_info.epsilon
   assert np.all(q3dt >= 0)
 
-def solve(W, H, dx, dy, D, c1_init, c2_init, threshold, t_mix=None, debug=False):
+def solve(
+  W, 
+  H, 
+  dx, 
+  dy, 
+  D, 
+  c1_init, 
+  c2_init, 
+  threshold, 
+  t_mix=None, 
+  mix_blocks=(2, 2), 
+  debug=False):
 
   laplacian_filter = np.array([
     [        0,                  dy ** -2 ,        0 ],
@@ -66,7 +77,7 @@ def solve(W, H, dx, dy, D, c1_init, c2_init, threshold, t_mix=None, debug=False)
     if t_mix is not None and abs(t * dt - t_mix) <= dt / 2 and not mixing_done:
       if debug:
         print(f'mixing at t = {t * dt:.02f} (frame: {t})')
-      c1[t], c2[t], c3[t] = mix([c1[t], c2[t], c3[t]])
+      c1[t], c2[t], c3[t] = mix([c1[t], c2[t], c3[t]], subdivisions=mix_blocks, debug=debug)
 
     c1c2 = c1[t][:, :] * c2[t][:, :]
     c1.append(c1[t][:, :] - 3 * dt * c1c2 + dt * D * laplacian(c1[t][:, :]))

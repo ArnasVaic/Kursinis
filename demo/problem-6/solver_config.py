@@ -4,7 +4,8 @@ solver_config = {
   'dx': 1/19,
   'dy': 1/19,
   'D': 0.0001,
-  't_mix': 50,
+  't_mix': 250,
+  'mix_blocks': (4, 4),
   'out_stride': 1
 }
 
