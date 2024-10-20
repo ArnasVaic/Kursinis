@@ -6,3 +6,4 @@
 **.fdb_latexmk
 **.gz
 __pycache__/
+/paper/out
