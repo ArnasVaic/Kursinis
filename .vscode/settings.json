@@ -3,6 +3,7 @@
         "cmap",
         "colorbar",
         "imshow",
+        "Laplaso",
         "simid",
         "tqdm",
         "vmax",
