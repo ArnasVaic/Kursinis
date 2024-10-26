@@ -13,5 +13,6 @@
         "ylabel"
     ],
     "python.analysis.typeCheckingMode": "basic",
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "python.languageServer": "Pylance"
 }
