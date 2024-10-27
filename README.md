@@ -1,54 +1,51 @@
-# Research paper
+# Kursinis
 
-## Schedule
+## Tvarkaraštis
 
-4 lectures through the entire semester, one each month.
+4 paskaitos per semestra, po vieną per mėnesį.
 
-## Contacts
+## Kontaktai
 
-Email: Vytautas.Aseris@gmail.com
+**Kurso dėstytojas**\
+El. paštas: Vytautas.Aseris@gmail.com
 
-## Deadlines
+**Kursinio darbo vadovas**\
+El. paštas: rokas.astrauskas@mif.vu.lt
 
-- [x] Topic, 2024-09-24
 
-## Paper requirements
+## Terminai
 
-Important links:
+- [x] Tema, 2024-09-24
+- [ ] Gynimai, 2025-01-20
 
-https://mif.vu.lt/lt3/studijos/bakalaurams#program%C5%B3-sistemos
+## Reikalavimai darbui
 
-https://mif.vu.lt/lt3/dokumentai/dokumentai/PS/2023-10-30_Kursinio_darbo_metodiniai_nurodymai_2023.pdf
+Naudingos nuorodos:
 
-https://biblioteka.vu.lt/studijoms/dalyko-bibliotekininkas/matematikos-ir-informatikos-fakultetas
+- [PS bakalaurams](https://mif.vu.lt/lt3/studijos/bakalaurams#program%C5%B3-sistemos)
+- [Metodiniai nurodymai](https://mif.vu.lt/lt3/dokumentai/dokumentai/PS/2023-10-30_Kursinio_darbo_metodiniai_nurodymai_2023.pdf)
+- [Dalyko bibliotekininkas](https://biblioteka.vu.lt/studijoms/dalyko-bibliotekininkas/matematikos-ir-informatikos-fakultetas)
+- [Lietuvos elektroninė biblioteka](https://ibiblioteka.lt/metis/)
 
-lietuvos elektronine biblioteka
+## Svarbiausi dalykai
 
-## Most important things
+- Tekstas dėstomas trečiu asmeniu.
+- Have a clear definition of done.
+Turėti aišku apibrėžimą, ką reiškia 'done'
+- Senos nuorodos įtartinos,turėti gerą priežastį jas naudojant, nes reikia pagrįsti, kad darbas yra aktualus ir buvo padaryta kažkas naujo.
+- Rezultatas vs Išvada
+  - Rezultatas - faktai, kas buvo atrasta.
+  - Išvada - rezultatų interpretacija.
+- Jokiu būdų nerašyti, kad "aš sužinojau, išmokau ir t.t.
+- Daugiau nei 10 citatų
+- Cituoti straipsnius iš žurnalų su "high impact factor"
 
-Tekstas dėstomas trečiu asmeniu
+## Skaitymas
 
-Have a clear definition of done.
+### Moksliniai straipsniai
 
-Very old sources are suspicious, if any are used have a good enough reason, because the paper has to be novel and somewhat relevant.
+Pagal pavardes: Ivanauskas, Kareiva.
 
-Results(rezultas) vs conclusion (išvada)
+### Sudėtingi skaitiniai metodai
 
-Result - factual result what was found/observed.
-Conclusion - interpretation of the results.
-
-Don't make conclusion about yourself (I learned ...).
-
-More than 10 citations
-
-Cite papers which have been published in journals with high impact factors
-
-## Useful reading
-
-### Research papers
-
-Anything that has surnames Ivanauskas, Kareiva.
-
-### Advanced numerical methods
-
-Alternating direction method
+- Alternating direction method
