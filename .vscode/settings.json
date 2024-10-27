@@ -1,5 +1,8 @@
 {
+    "cSpell.language": "lt,en",
     "cSpell.words": [
+        "argmax",
+        "argmin",
         "cmap",
         "colorbar",
         "imshow",
