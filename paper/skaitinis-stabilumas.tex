@@ -1,73 +1,65 @@
 \subsection{Modelio skaitinis stabilumas}
 
-Norint užtikrinti skaitinį programos stabilumą, reikia užtikrinti, kad visais laiko momentais, visuose diskretizuotos erdvės taškuose, visų medžiagų koncentracijos išliktų ne neigiamos. Parodysime, kad tai užtikrinti, reikia pasirinkti pakankamai mažą laiko žingsnį $\Delta t$. Pirmiausia įvedame porą konstantų: 
+Norint užtikrinti skaitinį programos stabilumą, reikia užtikrinti, kad visais laiko momentais, visuose diskretizuotos erdvės taškuose, visų medžiagų koncentracijos išliktų ne neigiamos. Parodysime, kad tai užtikrinti, užtenka pasirinkti pakankamai mažą laiko žingsnį $\Delta t$. Pirmiausia įvedame porą konstantų:
 \begin{align*}
 \mu_x = \frac{D\Delta t}{(\Delta x)^2}, \quad
 \mu_y = \frac{D\Delta t}{(\Delta y)^2}
 \end{align*}
 
-Tada dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} galima užrašyti taip:
+Tada pertvarkome dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} taip, kad kairėsė lygčių pusėse liktų medžiagų koncentracija laiko momentu $n+1$, o dešinėse lygčių pusėse sugrupuojame narius pagal medžiagų koncentracija skirtinguose diskretizuotos erdvės taškuose:
 
-\begin{subequations}
+\begin{subequations} \label{eqs:r-coefs}
     \begin{align}
-    c^{n+1}_{1,i,j}&=c^n_{1,i,j}-3\Delta tc^{n}_{1,i,j} c^{n}_{2,i,j}+\mu_x(c^n_{1,i-1,j}-2c^n_{1,i,j}+c^n_{1,i+1,j})+\mu_y(c^n_{1,i,j-1}-2c^n_{1,i,j}+c^n_{1,i,j+1})\\
-    c^{n+1}_{2,i,j}&=c^n_{2,i,j}-5\Delta tc^{n}_{1,i,j} c^{n}_{2,i,j}+\mu_x(c^n_{2,i-1,j}-2c^n_{2,i,j}+c^n_{2,i+1,j})+\mu_y(c^n_{2,i,j-1}-2c^n_{2,i,j}+c^n_{2,i,j+1})\\
-    c^{n+1}_{3,i,j}&=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j}
+    c^{n+1}_{1,i,j}&=\underbrace{(1-3\Delta tc^{n}_{2,i,j}-2(\mu_x+\mu_y))}_{R_1}c^n_{1,i,j}+\mu_xc^n_{1,i-1,j}+\mu_xc^n_{1,i+1,j}+\mu_yc^n_{1,i,j-1}+\mu_yc^n_{1,i,j+1} \label{r-coefs1}\\
+    c^{n+1}_{2,i,j}&=\underbrace{(1-5\Delta tc^{n}_{1,i,j}-2(\mu_x+\mu_y))}_{R_2}c^n_{2,i,j}+\mu_xc^n_{2,i-1,j}+\mu_xc^n_{2,i+1,j}+\mu_yc^n_{2,i,j-1}+\mu_yc^n_{2,i,j+1} \label{r-coefs2}\\
+    c^{n+1}_{3,i,j}&=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j} \label{r-coefs3}
     \end{align}
 \end{subequations}
 
-Dėl iteratyvios skaitinio modelio prigimties galime pasinaudoti indukcija. Baziniu atveju, kai $n=0$ sąlyga yra tenkinama, nes visų medžiagų koncentracija visuose taškuose yra ne neigiama $c^0_{k, i,j}>0$ pagal pradinę uždavinio sąlygą \eqref{}.
+% \begin{subequations} \label{mu-eqs}
+%     \begin{align}
+%     c^{n+1}_{1,i,j}&=c^n_{1,i,j}-3\Delta tc^{n}_{1,i,j} c^{n}_{2,i,j}+\mu_x(c^n_{1,i-1,j}-2c^n_{1,i,j}+c^n_{1,i+1,j})+\mu_y(c^n_{1,i,j-1}-2c^n_{1,i,j}+c^n_{1,i,j+1})\\
+%     c^{n+1}_{2,i,j}&=c^n_{2,i,j}-5\Delta tc^{n}_{1,i,j} c^{n}_{2,i,j}+\mu_x(c^n_{2,i-1,j}-2c^n_{2,i,j}+c^n_{2,i+1,j})+\mu_y(c^n_{2,i,j-1}-2c^n_{2,i,j}+c^n_{2,i,j+1})\\
+%     c^{n+1}_{3,i,j}&=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j}
+%     \end{align}
+% \end{subequations}
 
-Indukcijos hipotezė:
+Baziniu atveju, kai $n=0$, medžiagų koncentracija visuose taškuose yra ne neigiama, kaip numatyta pradinėje sąlygoje \eqref{intial-cond}. Darome indukcijos hipotezės prielaidą, kad medžiagų koncentracija visuose diskretizuotos erdvės taškuose, laiko momentu $n$ bus ne neigiama:
 
-Jei 
+\begin{align} \label{induction-assumption}
+    c^n_{k,i,j} \geqslant 0, \quad k=1,2,3,\quad i=0,1,\dots,N-1,\quad j=0,1,\dots,M-1
+\end{align}
 
-parinkti tokį laiko žingsnį $\Delta t$, kuris utikrintų, kad kiekvienos medžiagos koncentracija sekančiu laiko momentu netaptų
-
-Norint užtikrinti skaitinį simuliacijos stabilumą reikia parinkti tokį laiko žingsnį $\Delta t$, kad visų medžiagų koncentracija kiekviname diskretizuotos erdvės taške, visais laiko momentais būtų ne neigiama.Parodyti, kad 
-
-
-
-Sugrupavus dešines lygčių puses pagal medžiagos kiekį šį laiko momentą skirtinguose diskretizuotos erdvės taškuose gauname naujas lygtis:
-
-\begin{subequations}
-    \begin{align}
-    c^{n+1}_{1,i,j}&=\underbrace{(1-3\Delta tc^{n}_{2,i,j}-2(\mu_x+\mu_y))}_{R_1}c^n_{1,i,j}+\mu_xc^n_{1,i-1,j}+\mu_xc^n_{1,i+1,j}+\mu_yc^n_{1,i,j-1}+\mu_yc^n_{1,i,j+1}\\
-    c^{n+1}_{2,i,j}&=\underbrace{(1-5\Delta tc^{n}_{1,i,j}-2(\mu_x+\mu_y))}_{R_2}c^n_{2,i,j}+\mu_xc^n_{1,i-1,j}+\mu_xc^n_{1,i+1,j}+\mu_yc^n_{1,i,j-1}+\mu_yc^n_{1,i,j+1}\\
-    c^{n+1}_{3,i,j}&=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j}
-    \end{align}
-\end{subequations}
-
-Iš čia nesunku pastebėti, kad medžiagų koncentracija sekantį laiko momentą $c^{n+1}_{k,i,j}$ gali įgauti neigiamas reikšmes tik tada, jei atitinkami koeficientai taptų neigiamais $R_k<0$, nes koeficientai $\mu_x,\mu_y$ visada yra teigiami, o medžiagų koncentracijas praėjusiais laiko momentais l
-
-
-Pertvarkius skaitinio modelio lygtis \eqref{numerical-eqs} taip, kad kairėje lygties pusėje liktų medžiagos kiekis sekančiu laiko momentu ir sugrupavus pastovius narius pagal medžiagos kiekį praėjusį laiko momentą, gauname išraiška koeficiento, kuris nusako kiek medžiagos koncentracijos, esančios taške $i,j$, persikels į sekantį laiko momentą. 
-
-\begin{subequations}
-    \begin{align}
-    c^{n+1}_{1,i,j}&=\underbrace{\left(1-\Delta t\left(3c^{n}_{2,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\right)}_{R_1}c^n_{1,i,j}\notag\\
-    &+D\Delta t\left(\frac{c^n_{1,i-1,j}+c^n_{1,i+1,j}}{(\Delta x)^2}
-    +\frac{c^n_{1,i,j-1}+c^n_{1,i,j+1}}{(\Delta y)^2}\right)\\
-    c^{n+1}_{2,i,j}&=
-    \underbrace{\left(1-\Delta t\left(5c^{n}_{1,i,j}
-    +2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\right)}_{R_2}c^n_{2,i,j}\notag\\
-    &+D\Delta t\left(\frac{c^n_{2,i-1,j}+c^n_{2,i+1,j}}{(\Delta x)^2}+\frac{c^n_{2,i,j-1}+c^n_{2,i,j+1}}{(\Delta y)^2}\right)\\
-    c^{n+1}_{3,i,j}&=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j}
-    \end{align}
-\end{subequations}
-
-
-
-Norint užtikrinti modelio skaitmeninį stabiluma reikia pasirinkti tokį laiko žingsnį $\Delta t$, kad koeficientai būtų neneigiami.
-Trečioje lygtyje medžiagos kiekio koeficientas nepriklauso nuo laiko žingsnio $\Delta t$, todėl turime dvi nelygybes, kurias
-galime išreikšti per laiko žingsnį $\Delta t$.
+Akivaizdu, kad lygtyje \eqref{r-coefs3}, medžiagos koncentracija $c^{n+1}_{3,i,j}$ negali tapti neigiama dėl prielaidos \eqref{induction-assumption} ir fakto, kad $\Delta t>0$. Pirmos medžiagos lygtyje \eqref{r-coefs1}, galima pastebėti, kad dėmenys su medžiagų koncentracijomis iš aplinkinių diskretizuotos erdvės taškų visada bus ne neigiami dėl prielaidos \eqref{induction-assumption} ir fakto, kad $\mu_x>0$ ir $\mu_y>0$:
 
 \begin{align*}
-    1-\Delta t\left(3c^{n}_{2,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\geq 0\implies
-    \Delta t\leq\frac{1}{3c^{n}_{2,i,j}+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}\\
-    1-\Delta t\left(5c^{n}_{1,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\geq 0\implies
-    \Delta t\leq\frac{1}{5c^{n}_{1,i,j}+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
+    \mu_xc^n_{1,i-1,j}+\mu_xc^n_{1,i+1,j}+\mu_yc^n_{1,i,j-1}+\mu_yc^n_{1,i,j+1}\geqslant 0
 \end{align*}
+
+Taigi $c^{n+1}_{1,i,j}$ ženklą lemia tik koeficientas $R_1$, todėl įvedame ribojimą, kad $R_1\geqslant 0$. Analogiškai, iš antros medžiagos lygties \eqref{r-coefs2} gauname, kad $R_2\geqslant 0$ ir turime neligybių sistemą:
+
+\begin{align}
+  \begin{cases}
+    (1-3\Delta tc^{n}_{2,i,j}-2(\mu_x+\mu_y))\geqslant 0\\
+    (1-5\Delta tc^{n}_{1,i,j}-2(\mu_x+\mu_y))\geqslant 0
+  \end{cases}, \quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1
+\end{align}
+
+Pertvarke neligybes gauname:
+
+\begin{align}
+  \begin{cases}
+    \Delta t \leqslant (3c^{n}_{2,i,j}+2D((\Delta x)^{-2}+(\Delta y)^{-2}))^{-1}\\
+    \Delta t \leqslant (5c^{n}_{1,i,j}+2D((\Delta x)^{-2}+(\Delta y)^{-2}))^{-1}
+  \end{cases}
+\end{align}
+
+% \begin{cases}
+%     1-\Delta t\left(3c^{n}_{2,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\geq 0\implies
+%     \Delta t\leq\frac{1}{3c^{n}_{2,i,j}+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}\\
+%     1-\Delta t\left(5c^{n}_{1,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\geq 0\implies
+%     \Delta t\leq\frac{1}{5c^{n}_{1,i,j}+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
+% \end{cases}
 
 \newpage
 Galima panaikinti laiko žingsnio $\Delta t$ priklausomybę nuo einamojo diskrečios erdvės taško padarius pastebėjimą,
