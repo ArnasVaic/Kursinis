@@ -10,11 +10,14 @@
 % \usepackage{hyperref}  % Nuorodų aktyvavimas
 \usepackage{url}
 
+\usepackage{gensymb}
 \usepackage{acro}
 \usepackage{tikz}
 \usetikzlibrary{decorations.pathreplacing}
 \usepackage{amssymb,amsthm}
+\usepackage[version=4]{mhchem}
 
+\setlength{\jot}{8px} 
 
 % Titulinio aprašas
 \university{Vilniaus universitetas}
@@ -37,8 +40,8 @@ chemical reactions}
 \bibliography{bibliografija} 
 
 \DeclareAcronym{yag}{
-    short   = YAG,
-    long    = Itrio aliuminio granatas    
+  short   = YAG,
+  long    = Itrio aliuminio granatas    
 }
 
 \begin{document}
@@ -48,11 +51,43 @@ chemical reactions}
 
 \sectionnonum{Sąvokų apibrėžimai}
 
+\begin{itemize}
+\item Stoichiometrinis mišinys - tai toks mišinys, kuriame medžiagų proporcijos yra tokios, kokių reikia, kad jos reakcijos metu visiškai sureaguotų
+\end{itemize}
+
 % Sutartinių ženklų, simbolių, vienetų ir terminų sutrumpinimų sąrašas (jeigu
 % ženklų, simbolių, vienetų ir terminų bendras skaičius didesnis nei 10 ir
 % kiekvienas iš jų tekste kartojasi daugiau nei 3 kartus).
 
 \include{ivadas}
+
+\section{\acs{yag} reakcijos matematinis modeliavimas}
+
+\subsection{\acs{yag} sintezė}
+
+% gal blogai nes realiai visas paragrafas yra tiesiog pacituotas......... AAAAAAAAAAAAAAAA
+
+\acs{yag} milteliai gali būti sintezuojami keleta skirtingų būdų: Zolis-Gelis procesu, nusodinimu, solvoterminiu procesu, terminio purškimo procesu bei kietafaze reakcija, kuri lieka viena dažniausiai taikomų dėl savo paprastumo bei galimybės pritaikyti masinei gamybai \cite{zhangNovelSynthesisYAG2005}.
+
+\subsection{Kietafazė reakcija}
+
+Šiame darbe yra modeliuojama paskutinė kietafazės reakcija, kurios metu reaguodami itrio ir aliuminio oksidai sudaro itrio aliuminio granato kristalus arba tiesiog \acs{yag}:
+\begin{align*}
+  \ce{3Y_2O_3 + 5Al_2O_3 -> 2Y_3Al_5O_12}
+\end{align*}
+
+Prieš pradedant reakciją metalų oksidai yra sutrinami iki smulkiagrūdžių miltelių. Metalų oksidų mišinys yra nuolat kaitinamas 1600\degree C laipsnių temperatūroje ir periodiškai maišomas. Eksperimentiniu būdu išmatuota,kad individualių dalelių turiai prie 1600\degree C temperatūros siekia apie $\sqrt{10}\mu\text{m}^3$ \cite{ivanauskasComputationalModellingYAG2009}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.25\linewidth]{assets/metal_oxides_mixture.png}
+  \label{fig:metal-oxides-mixuter}
+  \caption{Priartinto metalų oksidų mišinio iliustracija \cite{}}
+\end{figure}
+
+Modeliavimo 
+
+Tokioje temperatūroje metalų oksidai lydosi ir vyksta difūzija, dėl šios priežasties cheminei reakcija yra modeliuojama su difūzijos-reakcijos sistema.
 
 \section{Matematinis modelis}
 
@@ -68,7 +103,13 @@ chemical reactions}
 
 kur $c_1,c_2,c_3$ yra bedimensė medžiagų koncentracija, 
 $\Delta$ - Laplaso operatorius, $t$ - laikas, 
-$D$ - bedimensis medžiagų $c_1$ ir $c_2$ difuzijos koeficientas.
+$D$ - bedimensis medžiagų $c_1$ ir $c_2$ difuzijos koeficientas. Modeliui yra taikoma kraštinė sąlygą:
+
+\begin{equation} \label{general-boundary-cond}
+  \nabla c_k(\textbf{x}, t)\cdot\vec{n}=0, \textbf{x}\in\partial\Omega
+\end{equation}
+
+Čia $\nabla c_k$ yra medžiagos $c_k$ gradientas, $\textbf{x}$ - erdvės koordinatė, $\partial\Omega$ - simuliuojamos erdvės srities paviršius, o $\vec{n}$ - simuliuojamos erdvės paviršiaus normalė.
 
 \subsection{Elementų maišymasis dviejose dimensijose}
 
@@ -82,23 +123,29 @@ Interpretavus bedimensį modelį \eqref{nodim} dviejose dimensijose gauname lygt
     \end{align}
 \end{subequations}
 
-Šiam modeliui yra taikomos šios pradinės ir kraštinės sąlygos:
+Šiam modeliui yra taikomos šios pradinės sąlygos:
 
-\begin{align*} \label{2d-init-cond}
-    \frac{\partial c_1}{\partial x}\Big|_{x=0}&=\frac{\partial c_1}{\partial x}\Big|_{x=L}=\frac{\partial c_2}{\partial x}\Big|_{x=0}=\frac{\partial c_2}{\partial x}\Big|_{x=L}=0, &y&\in[0,L], t\in[0,T]\\
-    \frac{\partial c_1}{\partial y}\Big|_{y=0}&=\frac{\partial c_1}{\partial y}\Big|_{y=L}=\frac{\partial c_2}{\partial y}\Big|_{y=0}=\frac{\partial c_2}{\partial y}\Big|_{y=L}=0, &x&\in[0,L], t\in[0,T]\\
-    c_1(x, y, 0) &= 
-    \begin{cases}
-        1, \text{jei } x\in A\\
-        0, \text{kitaip}
-    \end{cases}
-    c_2(x, y, 0) = 
-    \begin{cases}
-        1, \text{jei } x\notin A\\
-        0, \text{kitaip}
-    \end{cases},&(x, y)&\in[0,L]^2, A=\left[0, \tfrac{L}{2}\right]^2\cup\left[\tfrac{L}{2},L\right]^2\\
-    c_3(x, y, 0) &= 0,&(x, y)&\in[0,L]^2,
-\end{align*}
+% pradinės sąlygos medžiagų koncentracijai turėtų aprašyti stoichiometrinį mišinį
+
+\begin{equation} \label{intial-cond}
+  \begin{aligned}
+  c_1(x, y, 0) &= \begin{cases} 1, & \text{jei } x \in A \\ 0, & \text{kitaip} \end{cases}, 
+  &\quad (x, y) &\in [0,L]^2, \quad A = \left[0,\tfrac{L}{2}\right]^2 \cup \left[\tfrac{L}{2},L\right]^2, \\
+  c_2(x, y, 0) &= \begin{cases} 1, & \text{jei } x \notin A \\ 0, & \text{kitaip} \end{cases}, 
+  &\quad (x, y) &\in [0,L]^2, \quad A = \left[0,\tfrac{L}{2}\right]^2 \cup \left[\tfrac{L}{2},L\right]^2, \\
+  c_3(x, y, 0) &= 0, 
+  &\quad (x, y) &\in [0,L]^2.
+  \end{aligned}
+  \end{equation}
+  
+kraštinės sąlygos \eqref{general-boundary-cond} dviejose dimensijose virsta:
+
+\begin{equation} \label{boundary-cond}
+\begin{split}
+\frac{\partial c_1}{\partial x}\Big|_{x=0}&=\frac{\partial c_1}{\partial x}\Big|_{x=L}=\frac{\partial c_2}{\partial x}\Big|_{x=0}=\frac{\partial c_2}{\partial x}\Big|_{x=L}=0, &y&\in[0,L], t\in[0,T]\\
+\frac{\partial c_1}{\partial y}\Big|_{y=0}&=\frac{\partial c_1}{\partial y}\Big|_{y=L}=\frac{\partial c_2}{\partial y}\Big|_{y=0}=\frac{\partial c_2}{\partial y}\Big|_{y=L}=0, &x&\in[0,L], t\in[0,T]
+\end{split}
+\end{equation}
 
 kur $L$ - bedimensis kubo kraštinės ilgis, $T$ - bedimensė proceso trukmė.
 
@@ -133,58 +180,7 @@ kur $L$ - bedimensis kubo kraštinės ilgis, $T$ - bedimensė proceso trukmė.
 
 \section{Skaitinis modelis}
 
-\subsection{Erdvės diskretizavimas Dekarto koordinačių sistemoje}
-
-Dviejų dimensijų skaitiniam modeliui erdvė buvo padalinta į $N \times M$ taškų 
-nutolusių vienas nuo kito fiksuotais $\Delta x$ ir $\Delta y$ atstumais.
-
-\begin{figure}[!h]
-\centering
-\begin{tikzpicture}
-
-   % Set up styles for the grid
-  \tikzset{
-      node/.style={circle, draw, fill=gray, inner sep=2pt},
-      ellipsis/.style={draw=none, fill=none}
-  }
-
-  \draw[->] (0, -0.5) -- (4.5, -0.5) node[anchor=north west] {$x$};  % x-axis
-  % x-axis ticks
-  \draw[-] (1, -0.55) -- (1, -0.45) node[anchor=south] {$0$};
-  \draw[-] (2, -0.55) -- (2, -0.45) node[anchor=south] {$\Delta x$};
-  \draw[-] (4, -0.55) -- (4, -0.45) node[anchor=south] {$W$};
-  
-  \draw[<-] (0.5,-4.5) node[anchor=north west] {$y$} -- (0.5, 0);  % y-axis
-  % y-axis ticks
-  \draw[-] (0.45, -1) -- (0.55, -1) node[anchor=east] {$0$};
-  \draw[-] (0.45, -2) -- (0.55, -2) node[anchor=east] {$\Delta y$};
-  \draw[-] (0.45, -4) -- (0.55, -4) node[anchor=east] {$H$};
-
-
-  % Draw the 3x3 grid of colored circles in a 4x4 layout
-  \foreach \x in {1, 2, 4} {
-      \foreach \y in {1, 2, 4} {
-          \node[node] at (\x, -\y) {};
-      }
-  }
-
-  % Add ellipses in the 4th row and column for continuation
-
-  \node[ellipsis] at (3, -1) {$\cdots$};
-  \node[ellipsis] at (3, -2) {$\cdots$};
-  \node[ellipsis] at (3, -4) {$\cdots$};
-
-  \node[ellipsis] at (1, -3) {$\vdots$};
-  \node[ellipsis] at (2, -3) {$\vdots$};
-  \node[ellipsis] at (4, -3) {$\vdots$};
-
-  \node[ellipsis] at (3, -3) {$\ddots$};
-
-\end{tikzpicture}
-\caption{ diskretizuota erdvė }
-\end{figure}
-
-Čia 
+\include{diskretizavimas}
 
 \newpage
 \subsection{Dviejų dimensijų skaitinis modelis Dekarto koordinačių sistemoje}
@@ -212,69 +208,9 @@ $\Delta t$ - laiko žingsnis,
 $\Delta x$ - diskrečios erdvės žingsnis $x$ ašimi,
 $\Delta y$ - diskrečios erdvės žingsnis $y$ ašimi.
 
-\newpage
-\subsubsection{Laiko žingsnio pasirinkimas}
-
-Pertvarkius skaitinio modelio lygtis \eqref{numerical-eqs} taip, kad kairėje lygties pusėje liktų 
-medžiagos kiekis sekančiu laiko momentu ir sugrupavus pastovius narius pagal medžiagos kiekio
-praėjusį laiko momentą gauname išraiška koeficiento, kuris nusako kiek medžiagos
-ląstelėje $i,j$ persikels į sekantį laiko momentą.     
-
-\begin{subequations}
-    \begin{align}
-    c^{n+1}_{1,i,j}&=
-    \left(1-\Delta t\left(3c^{n}_{2,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\right)c^n_{1,i,j}\notag\\
-    &+D\Delta t\left(\frac{c^n_{1,i-1,j}+c^n_{1,i+1,j}}{(\Delta x)^2}+\frac{c^n_{1,i,j-1}+c^n_{1,i,j+1}}{(\Delta y)^2}\right)\\
-    c^{n+1}_{2,i,j}&=
-    \left(1-\Delta t\left(5c^{n}_{1,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\right)c^n_{2,i,j}\notag\\
-    &+D\Delta t\left(\frac{c^n_{2,i-1,j}+c^n_{2,i+1,j}}{(\Delta x)^2}+\frac{c^n_{2,i,j-1}+c^n_{2,i,j+1}}{(\Delta y)^2}\right)\\
-    c^{n+1}_{3,i,j}&=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j}
-    \end{align}
-\end{subequations}
-
-Norint užtikrinti modelio skaitmeninį reikia pasirinkti tokį laiko žingsnį $\Delta t$, kad koeficientai būtų neneigiami.
-Trečioje lygtyje medžiagos kiekio koeficientas nepriklauso nuo laiko žingsnio $\Delta t$, todėl turime dvi nelygybes, kurias
-galime išreikšti per laiko žingsnį $\Delta t$.
-
-\begin{align*}
-    1-\Delta t\left(3c^{n}_{2,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\geq 0\implies
-    \Delta t\leq\frac{1}{3c^{n}_{2,i,j}+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}\\
-    1-\Delta t\left(5c^{n}_{1,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\geq 0\implies
-    \Delta t\leq\frac{1}{5c^{n}_{1,i,j}+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
-\end{align*}
-
-\newpage
-Galima panaikinti laiko žingsnio $\Delta t$ priklausomybę nuo einamojo diskrečios erdvės taško padarius pastebėjimą,
-kad laiko žingsnis su didžiausiomis medžiagų kiekių $c^n_{1,i,j}$ bei $c^n_{2,i,j}$ reikšmėmis užtikrintų stabilumą visiem
-likusiems diskrečios erdvės taškams, taigi:
-
-\begin{align*}
-    \Delta t\leq\min\left(
-    \frac{1}{3\max\limits_{(i,j,n)\in[0,N)\times[0,M)\times[0,T)}c^{n}_{2,i,j}
-    +2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)},\right.\\
-    \left. \frac{1}{5\max\limits_{(i,j,n)\in[0,N)\times[0,M)\times[0,T)}c^{n}_{1,i,j}
-    +2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
-    \right)
-\end{align*}
-
-Taip pat galime atsikratyti laiko žingsnio $\Delta t$ priklausomybės nuo einamojo laiko momento, nes
-pagal duotas kraštines sąlygas į sistemą laikui einant nepatenka joks naujas medžiagų $c_1$ ir $c_2$ kiekis.
-Taip pat vykstant medžiagų $c_1$ ir $c_2$ reakcijai, bendri šių medžiagų kiekiai uždaroje sistemoje mažės, todėl:
-
-\begin{align*}
-    \Delta t\leq\min\left(
-        \frac{1}{3\max\limits_{(i,j)\in[0,N)\times[0,M)}c^{0}_{2,i,j}
-        +2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)},\right. \\
-        \left. \frac{1}{5\max\limits_{(i,j)\in[0,N)\times[0,M)}c^{0}_{1,i,j}
-        +2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
-    \right)
-\end{align*}
-
-Šiuo atveju, iš pradinių sąlygų $\max\limits_{(i,j)\in[0,N)\times[0,M)}c^{0}_{2,i,j}=\max\limits_{(i,j)\in[0,N)\times[0,M)}c^{0}_{1,i,j}=1$, taigi
-
-\begin{align*}
-    \Delta t\leq\frac{1}{5+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
-\end{align*}
+\include{skaitinis-stabilumas}
+\include{palyginimas}
+\include{maisymas}
 
 % \subsubsection{Skirsnis}
 % \subsubsubsection{Straipsnis}
