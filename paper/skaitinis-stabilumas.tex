@@ -16,14 +16,6 @@ Tada pertvarkome dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} taip
     \end{align}
 \end{subequations}
 
-% \begin{subequations} \label{mu-eqs}
-%     \begin{align}
-%     c^{n+1}_{1,i,j}&=c^n_{1,i,j}-3\Delta tc^{n}_{1,i,j} c^{n}_{2,i,j}+\mu_x(c^n_{1,i-1,j}-2c^n_{1,i,j}+c^n_{1,i+1,j})+\mu_y(c^n_{1,i,j-1}-2c^n_{1,i,j}+c^n_{1,i,j+1})\\
-%     c^{n+1}_{2,i,j}&=c^n_{2,i,j}-5\Delta tc^{n}_{1,i,j} c^{n}_{2,i,j}+\mu_x(c^n_{2,i-1,j}-2c^n_{2,i,j}+c^n_{2,i+1,j})+\mu_y(c^n_{2,i,j-1}-2c^n_{2,i,j}+c^n_{2,i,j+1})\\
-%     c^{n+1}_{3,i,j}&=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j}
-%     \end{align}
-% \end{subequations}
-
 Baziniu atveju, kai $n=0$, medžiagų koncentracija visuose taškuose yra ne neigiama, kaip numatyta pradinėje sąlygoje \eqref{intial-cond}. Darome indukcijos hipotezės prielaidą, kad medžiagų koncentracija visuose diskretizuotos erdvės taškuose, laiko momentu $n$ bus ne neigiama:
 
 \begin{align} \label{induction-assumption}
@@ -38,29 +30,64 @@ Akivaizdu, kad lygtyje \eqref{r-coefs3}, medžiagos koncentracija $c^{n+1}_{3,i,
 
 Taigi $c^{n+1}_{1,i,j}$ ženklą lemia tik koeficientas $R_1$, todėl įvedame ribojimą, kad $R_1\geqslant 0$. Analogiškai, iš antros medžiagos lygties \eqref{r-coefs2} gauname, kad $R_2\geqslant 0$ ir turime neligybių sistemą:
 
-\begin{align}
+\begin{align} \label{impl-ineqs}
   \begin{cases}
-    (1-3\Delta tc^{n}_{2,i,j}-2(\mu_x+\mu_y))\geqslant 0\\
-    (1-5\Delta tc^{n}_{1,i,j}-2(\mu_x+\mu_y))\geqslant 0
+    1-3\Delta tc^{n}_{2,i,j}-2(\mu_x+\mu_y)\geqslant 0\\
+    1-5\Delta tc^{n}_{1,i,j}-2(\mu_x+\mu_y)\geqslant 0
   \end{cases}, \quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1
 \end{align}
 
-Pertvarke neligybes gauname:
+Išreiške neligybes \eqref{impl-ineqs} per laiko žingsnį $\Delta t$ gauname:
 
-\begin{align}
+\begin{align} \label{dt-ineq}
   \begin{cases}
     \Delta t \leqslant (3c^{n}_{2,i,j}+2D((\Delta x)^{-2}+(\Delta y)^{-2}))^{-1}\\
     \Delta t \leqslant (5c^{n}_{1,i,j}+2D((\Delta x)^{-2}+(\Delta y)^{-2}))^{-1}
   \end{cases}
 \end{align}
 
+Gautas neligybes galima apjungti dėl jų panašios struktūros. Norint, kad apjungta neligybė tenkintų sistemą \eqref{dt-ineq}, reikia išrinkti mažiausią įmanomą laiko žingsnį $\Delta t$, o taip bus tada, kai trupmenos vardiklis bus kuo įmanoma didesnis. Dėl to gauta neligybę įgaus formą:
 
-% \begin{cases}
-%     1-\Delta t\left(3c^{n}_{2,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\geq 0\implies
-%     \Delta t\leq\frac{1}{3c^{n}_{2,i,j}+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}\\
-%     1-\Delta t\left(5c^{n}_{1,i,j}+2D\left(\frac{1}{(\Delta x)^2}+\frac{1}{(\Delta y)^2}\right)\right)\geq 0\implies
-%     \Delta t\leq\frac{1}{5c^{n}_{1,i,j}+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
-% \end{cases}
+\begin{align}
+  \Delta t \leqslant \left(\max(3c^{n}_{2,i,j}, 5c^{n}_{1,i,j})+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
+\end{align}
+
+Taigi parodėme, kad išvengti neigiamų sprendinio reikšmių, užtenka pasirinkti pakankamai mažą laiko žingsnį $\Delta t$. Tačiau čia sustoti būtų nenaudinga, nes turime rekursyvią priklausomybę -- norint pasirinkti $\Delta t$, reikia žinoti maksimalią medžiagų reikšmę simuliacijoje, o jai sužinoti reikia atlikti simuliaciją su pasirinktu laiko žingsniu $\Delta t$.
+
+Parodysime, kad galima panakinti laiko žingsio priklausomybę nuo laiko momento $n$ ir kad $\Delta t$ priklauso tik nuo pradinių sąlygų $c^0_{1,i,j}$ ir $c^0_{2,i,j}$. Medžiagos kiekio pokytis per laiką sistemoje gali būti apskaičiuoti taip:
+
+\begin{align}
+  \frac{\partial q_k}{\partial t} = \int_\Omega \frac{\partial c_k}{\partial t} dA
+\end{align}
+
+Įstatom bedimensio modelio lygtis \eqref{nodim1}, \eqref{nodim2}:
+
+\begin{align}
+  \frac{\partial q_1}{\partial t}=-3\int_\Omega c_1c_2\,dA + \int_\Omega \Delta c_1\,dA=-3\int_\Omega c_1c_2\,dA + \int_\Omega \nabla \cdot (\nabla c_1)\,dA\\
+  \frac{\partial q_2}{\partial t}=-5\int_\Omega c_1c_2\,dA + \int_\Omega \Delta c_2\,dA=-5\int_\Omega c_1c_2\,dA + \int_\Omega \nabla \cdot (\nabla c_2)\,dA
+\end{align}
+
+\newpage
+Pagal Gauso divergencijos teoremą ir kraštinę sąlygą \eqref{general-boundary-cond} gauname, kad:
+
+\begin{align}
+\int_\Omega \nabla \cdot (\nabla c_k) dA = \int_{\partial\Omega} \nabla c_k \cdot \vec{n}\, ds = 0,\quad k=1,2
+\end{align}
+
+Todėl pirmos ir antros medžiagų kiekio pokytis per laiką bus ne teigiamas:
+
+\begin{align}
+  \frac{\partial q_1}{\partial t}=-3\int_\Omega c_1c_2\,dA \leqslant 0\\
+  \frac{\partial q_2}{\partial t}=-5\int_\Omega c_1c_2\,dA\leqslant 0
+\end{align}
+
+Tai reiškia, kad maksimalios pirmos ir antros medžiagų reikšmės bus laiko momente $n=0$, tad neligybę galime supaprastinti iki šios formos:
+
+\begin{align}
+  \Delta t \leqslant \left(\max(3c^{0}_{2,i,j}, 5c^{0}_{1,i,j})+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
+\end{align}
+
+Laiko žingsnis čia vis dar priklauso nuo diskretizuotos erdvės koordinatės $(i, j)$, o ją panaikinti galima būtų tokiu pat principu kaip 
 
 \newpage
 Galima panaikinti laiko žingsnio $\Delta t$ priklausomybę nuo einamojo diskrečios erdvės taško padarius pastebėjimą,

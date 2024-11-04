@@ -95,8 +95,8 @@ Tokioje temperatūroje metalų oksidai lydosi ir vyksta difūzija, dėl šios pr
 
 \begin{subequations} \label{nodim}
     \begin{align}
-    \frac{\partial c_1}{\partial t}&=-3c_1c_2+D\Delta c_1\\
-    \frac{\partial c_2}{\partial t}&=-5c_1c_2+D\Delta c_2\\
+    \frac{\partial c_1}{\partial t}&=-3c_1c_2+D\Delta c_1 \label{nodim1}\\
+    \frac{\partial c_2}{\partial t}&=-5c_1c_2+D\Delta c_2 \label{nodim2}\\
     \frac{\partial c_3}{\partial t}&=2c_1c_2
     \end{align}
 \end{subequations}
@@ -123,21 +123,49 @@ Interpretavus bedimensį modelį \eqref{nodim} dviejose dimensijose gauname lygt
     \end{align}
 \end{subequations}
 
-Šiam modeliui yra taikomos šios pradinės sąlygos:
+\newpage
+Šiam modeliui yra taikomos stoichiometrinės pradinės sąlygos:
 
 % pradinės sąlygos medžiagų koncentracijai turėtų aprašyti stoichiometrinį mišinį
 
 \begin{equation} \label{intial-cond}
   \begin{aligned}
-  c_1(x, y, 0) &= \begin{cases} 1, & \text{jei } x \in A \\ 0, & \text{kitaip} \end{cases}, 
-  &\quad (x, y) &\in [0,L]^2, \quad A = \left[0,\tfrac{L}{2}\right]^2 \cup \left[\tfrac{L}{2},L\right]^2, \\
-  c_2(x, y, 0) &= \begin{cases} 1, & \text{jei } x \notin A \\ 0, & \text{kitaip} \end{cases}, 
-  &\quad (x, y) &\in [0,L]^2, \quad A = \left[0,\tfrac{L}{2}\right]^2 \cup \left[\tfrac{L}{2},L\right]^2, \\
-  c_3(x, y, 0) &= 0, 
-  &\quad (x, y) &\in [0,L]^2.
-  \end{aligned}
-  \end{equation}
+  c_1(x, y, 0) &= \begin{cases} 5c_0, & \text{jei } x \in A \\ 0, & \text{kitaip} \end{cases}\\
+  c_2(x, y, 0) &= \begin{cases} 3c_0, & \text{jei } x \notin A \\ 0, & \text{kitaip} \end{cases}\\
+  c_3(x, y, 0) &= 0,\\ 
+  (x, y) &\in \Omega, \quad\Omega=[0,W]\times[0,H],\quad A=\left[0,\tfrac{W}{2}\right]\times\left[0,\tfrac{H}{2}\right] \cup \left[\tfrac{W}{2},W\right]\times\left[\tfrac{H}{2},H\right].
+\end{aligned}
+\end{equation}
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}[scale=2.0]
+      \draw[fill=white] (0,0) rectangle (1,1);
+      \draw[fill=white] (1,1) rectangle (2,2);
+      \draw[fill=gray!50] (0,1) rectangle (1,2);
+      \draw[fill=gray!50] (1,0) rectangle (2,1);
+      
+      % Draw the boundary of the square
+      \draw[thick] (0,0) rectangle (2,2);
   
+      % Draw axes
+      \draw[->] (-0.5,2) -- (2.5,2) node[anchor=north west] {$x$};  % x-axis
+      \draw[<-] (0,-0.5) node[anchor=south east] {$y$} -- (0,2.5);  % y-axis
+  
+      % Mark the origin
+      \node[anchor=south east] at (0,2) {$(0, 0)$};
+      
+      % Mark the side length L
+      \draw[-] (2,0) -- (2,2) node[midway, right] {$H$};
+      \draw[-] (0,0) -- (2,0) node[midway, below] {$W$};
+      \draw (0.5, 1.5) node[anchor=center] {$c_1$};
+      \draw (1.5, 0.5) node[anchor=center] {$c_1$};
+      \draw (1.5, 1.5) node[anchor=center] {$c_2$};
+      \draw (0.5, 0.5) node[anchor=center] {$c_2$};
+  \end{tikzpicture}
+  \caption{Sistemos pradinės sąlygos}
+\end{figure}
+
 kraštinės sąlygos \eqref{general-boundary-cond} dviejose dimensijose virsta:
 
 \begin{equation} \label{boundary-cond}
@@ -149,40 +177,10 @@ kraštinės sąlygos \eqref{general-boundary-cond} dviejose dimensijose virsta:
 
 kur $L$ - bedimensis kubo kraštinės ilgis, $T$ - bedimensė proceso trukmė.
 
-\begin{figure}[h!]
-    \centering
-    \begin{tikzpicture}[scale=2.0]
-        \draw[fill=white] (0,0) rectangle (1,1);
-        \draw[fill=white] (1,1) rectangle (2,2);
-        \draw[fill=gray!50] (0,1) rectangle (1,2);
-        \draw[fill=gray!50] (1,0) rectangle (2,1);
-        
-        % Draw the boundary of the square
-        \draw[thick] (0,0) rectangle (2,2);
-    
-        % Draw axes
-        \draw[->] (-0.5,2) -- (2.5,2) node[anchor=north west] {$x$};  % x-axis
-        \draw[<-] (0,-0.5) node[anchor=south east] {$y$} -- (0,2.5);  % y-axis
-    
-        % Mark the origin
-        \node[anchor=south east] at (0,2) {$(0, 0)$};
-        
-        % Mark the side length L
-        \draw[-] (2,0) -- (2,2) node[midway, right] {$L$};
-        \draw[-] (0,0) -- (2,0) node[midway, below] {$L$};
-        \draw (0.5, 1.5) node[anchor=center] {$c_1$};
-        \draw (1.5, 0.5) node[anchor=center] {$c_1$};
-        \draw (1.5, 1.5) node[anchor=center] {$c_2$};
-        \draw (0.5, 0.5) node[anchor=center] {$c_2$};
-    \end{tikzpicture}
-    \caption{Dvimačio modelio pradinės sąlygos laiku $t=0$. Pilka spalva žymi plotą priklausantį aibei $A$. }
-\end{figure}
-
 \section{Skaitinis modelis}
 
 \include{diskretizavimas}
 
-\newpage
 \subsection{Dviejų dimensijų skaitinis modelis Dekarto koordinačių sistemoje}
 
 Remiantis išreikštiniu baigtinių skirtumų metodu iš dvimačio modelio galima gauti skaitinį modelį.
