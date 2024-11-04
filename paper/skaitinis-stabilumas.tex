@@ -87,37 +87,16 @@ Tai reiškia, kad maksimalios pirmos ir antros medžiagų reikšmės bus laiko m
   \Delta t \leqslant \left(\max(3c^{0}_{2,i,j}, 5c^{0}_{1,i,j})+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
 \end{align}
 
-Laiko žingsnis čia vis dar priklauso nuo diskretizuotos erdvės koordinatės $(i, j)$, o ją panaikinti galima būtų tokiu pat principu kaip 
-
-\newpage
-Galima panaikinti laiko žingsnio $\Delta t$ priklausomybę nuo einamojo diskrečios erdvės taško padarius pastebėjimą,
-kad laiko žingsnis su didžiausiomis medžiagų kiekių $c^n_{1,i,j}$ bei $c^n_{2,i,j}$ reikšmėmis užtikrintų stabilumą visiem
-likusiems diskrečios erdvės taškams, taigi:
+Laiko žingsnis čia vis dar priklauso nuo diskretizuotos erdvės koordinatės $(i, j)$, tačiau tai nesunku pastebėti, kad užtenka parinkti didžiausią reikšmę iš kiekvienos pradinės sąlygos -- tokiu būdu laiko žingsnis gausis mažiausias. Iš pradinės sąlygos \eqref{intial-cond} turime:
 
 \begin{align*}
-    \Delta t\leq\min\left(
-    \frac{1}{3\max\limits_{(i,j,n)\in[0,N)\times[0,M)\times[0,T)}c^{n}_{2,i,j}
-    +2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)},\right.\\
-    \left. \frac{1}{5\max\limits_{(i,j,n)\in[0,N)\times[0,M)\times[0,T)}c^{n}_{1,i,j}
-    +2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
-    \right)
+\max c^0_{1,i,j}=3c_0,\quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1\\
+\max c^0_{2,i,j}=5c_0,\quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1
 \end{align*}
 
-Taip pat galime atsikratyti laiko žingsnio $\Delta t$ priklausomybės nuo einamojo laiko momento, nes
-pagal duotas kraštines sąlygas į sistemą laikui einant nepatenka joks naujas medžiagų $c_1$ ir $c_2$ kiekis.
-Taip pat vykstant medžiagų $c_1$ ir $c_2$ reakcijai, bendri šių medžiagų kiekiai uždaroje sistemoje mažės, todėl:
+Taigi, kad simuliacija išliktų skaitiškai stabili, reikia, kad laiko žingsnis $\Delta t$ tenkintų šią neligybę.
 
 \begin{align*}
-    \Delta t\leq\min\left(
-        \frac{1}{3\max\limits_{(i,j)\in[0,N)\times[0,M)}c^{0}_{2,i,j}
-        +2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)},\right. \\
-        \left. \frac{1}{5\max\limits_{(i,j)\in[0,N)\times[0,M)}c^{0}_{1,i,j}
-        +2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
-    \right)
+  \Delta t \leqslant \left(15c_0+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
 \end{align*}
 
-Šiuo atveju, iš pradinių sąlygų $\max\limits_{(i,j)\in[0,N)\times[0,M)}c^{0}_{2,i,j}=\max\limits_{(i,j)\in[0,N)\times[0,M)}c^{0}_{1,i,j}=1$, taigi
-
-\begin{align*}
-    \Delta t\leq\frac{1}{5+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)}
-\end{align*}
