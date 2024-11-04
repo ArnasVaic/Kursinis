@@ -65,13 +65,11 @@ chemical reactions}
 
 \subsection{\acs{yag} sintezė}
 
-% gal blogai nes realiai visas paragrafas yra tiesiog pacituotas......... AAAAAAAAAAAAAAAA
-
 \acs{yag} milteliai gali būti sintezuojami keleta skirtingų būdų: Zolis-Gelis procesu, nusodinimu, solvoterminiu procesu, terminio purškimo procesu bei kietafaze reakcija, kuri lieka viena dažniausiai taikomų dėl savo paprastumo bei galimybės pritaikyti masinei gamybai \cite{zhangNovelSynthesisYAG2005}.
 
 \subsection{Kietafazė reakcija}
 
-Šiame darbe yra modeliuojama paskutinė kietafazės reakcija, kurios metu reaguodami itrio ir aliuminio oksidai sudaro itrio aliuminio granato kristalus arba tiesiog \acs{yag}:
+Šiame darbe yra modeliuojama paskutinė kietafazės reakcijos stadija, kurios metu reaguodami itrio ir aliuminio oksidai sudaro itrio aliuminio granato kristalus arba tiesiog \acs{yag}:
 \begin{align*}
   \ce{3Y_2O_3 + 5Al_2O_3 -> 2Y_3Al_5O_12}
 \end{align*}
@@ -87,7 +85,7 @@ Prieš pradedant reakciją metalų oksidai yra sutrinami iki smulkiagrūdžių m
 
 Modeliavimo 
 
-Tokioje temperatūroje metalų oksidai lydosi ir vyksta difūzija, dėl šios priežasties cheminei reakcija yra modeliuojama su difūzijos-reakcijos sistema.
+Tokioje temperatūroje metalų oksidai lydosi ir vyksta difuzija, dėl šios priežasties cheminei reakcija yra modeliuojama su difuzijos-reakcijos sistema.
 
 \section{Matematinis modelis}
 
@@ -137,6 +135,8 @@ Interpretavus bedimensį modelį \eqref{nodim} dviejose dimensijose gauname lygt
 \end{aligned}
 \end{equation}
 
+Čia $c_0$ yra kažkoks teigiamas dydis, kuris nusako pradinę kiekvienos medžiagos koncentraciją sistemoje.
+
 \begin{figure}[h!]
   \centering
   \begin{tikzpicture}[scale=2.0]
@@ -170,8 +170,8 @@ kraštinės sąlygos \eqref{general-boundary-cond} dviejose dimensijose virsta:
 
 \begin{equation} \label{boundary-cond}
 \begin{split}
-\frac{\partial c_1}{\partial x}\Big|_{x=0}&=\frac{\partial c_1}{\partial x}\Big|_{x=L}=\frac{\partial c_2}{\partial x}\Big|_{x=0}=\frac{\partial c_2}{\partial x}\Big|_{x=L}=0, &y&\in[0,L], t\in[0,T]\\
-\frac{\partial c_1}{\partial y}\Big|_{y=0}&=\frac{\partial c_1}{\partial y}\Big|_{y=L}=\frac{\partial c_2}{\partial y}\Big|_{y=0}=\frac{\partial c_2}{\partial y}\Big|_{y=L}=0, &x&\in[0,L], t\in[0,T]
+\frac{\partial c_1}{\partial x}\Big|_{x=0}&=\frac{\partial c_1}{\partial x}\Big|_{x=L}=\frac{\partial c_2}{\partial x}\Big|_{x=0}=\frac{\partial c_2}{\partial x}\Big|_{x=L}=0, \quad y\in[0,H], \quad t\in[0,T]\\
+\frac{\partial c_1}{\partial y}\Big|_{y=0}&=\frac{\partial c_1}{\partial y}\Big|_{y=L}=\frac{\partial c_2}{\partial y}\Big|_{y=0}=\frac{\partial c_2}{\partial y}\Big|_{y=L}=0, \quad x\in[0,W],\quad t\in[0,T]
 \end{split}
 \end{equation}
 

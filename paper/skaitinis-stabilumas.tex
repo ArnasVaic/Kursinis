@@ -6,7 +6,7 @@ Norint užtikrinti skaitinį programos stabilumą, reikia užtikrinti, kad visai
 \mu_y = \frac{D\Delta t}{(\Delta y)^2}
 \end{align*}
 
-Tada pertvarkome dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} taip, kad kairėsė lygčių pusėse liktų medžiagų koncentracija laiko momentu $n+1$, o dešinėse lygčių pusėse sugrupuojame narius pagal medžiagų koncentracija skirtinguose diskretizuotos erdvės taškuose:
+Tada pertvarkome dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} taip, kad kairėse lygčių pusėse liktų medžiagų koncentracija laiko momentu $n+1$, o dešinėse lygčių pusėse sugrupuojame narius pagal medžiagų koncentracija skirtinguose diskretizuotos erdvės taškuose:
 
 \begin{subequations} \label{eqs:r-coefs}
     \begin{align}
@@ -28,7 +28,7 @@ Akivaizdu, kad lygtyje \eqref{r-coefs3}, medžiagos koncentracija $c^{n+1}_{3,i,
     \mu_xc^n_{1,i-1,j}+\mu_xc^n_{1,i+1,j}+\mu_yc^n_{1,i,j-1}+\mu_yc^n_{1,i,j+1}\geqslant 0
 \end{align*}
 
-Taigi $c^{n+1}_{1,i,j}$ ženklą lemia tik koeficientas $R_1$, todėl įvedame ribojimą, kad $R_1\geqslant 0$. Analogiškai, iš antros medžiagos lygties \eqref{r-coefs2} gauname, kad $R_2\geqslant 0$ ir turime neligybių sistemą:
+Taigi $c^{n+1}_{1,i,j}$ ženklą lemia tik koeficientas $R_1$, todėl įvedame ribojimą, kad $R_1\geqslant 0$. Analogiškai, iš antros medžiagos lygties \eqref{r-coefs2} gauname, kad $R_2\geqslant 0$ ir turime nelygybių sistemą:
 
 \begin{align} \label{impl-ineqs}
   \begin{cases}
@@ -37,7 +37,7 @@ Taigi $c^{n+1}_{1,i,j}$ ženklą lemia tik koeficientas $R_1$, todėl įvedame r
   \end{cases}, \quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1
 \end{align}
 
-Išreiške neligybes \eqref{impl-ineqs} per laiko žingsnį $\Delta t$ gauname:
+Išreiškę nelygybes \eqref{impl-ineqs} per laiko žingsnį $\Delta t$ gauname:
 
 \begin{align} \label{dt-ineq}
   \begin{cases}
@@ -46,7 +46,7 @@ Išreiške neligybes \eqref{impl-ineqs} per laiko žingsnį $\Delta t$ gauname:
   \end{cases}
 \end{align}
 
-Gautas neligybes galima apjungti dėl jų panašios struktūros. Norint, kad apjungta neligybė tenkintų sistemą \eqref{dt-ineq}, reikia išrinkti mažiausią įmanomą laiko žingsnį $\Delta t$, o taip bus tada, kai trupmenos vardiklis bus kuo įmanoma didesnis. Dėl to gauta neligybę įgaus formą:
+Gautas nelygybes galima apjungti dėl jų panašios struktūros. Norint, kad apjungta nelygybė tenkintų sistemą \eqref{dt-ineq}, reikia išrinkti mažiausią įmanomą laiko žingsnį $\Delta t$, o taip bus tada, kai trupmenos vardiklis bus kuo įmanoma didesnis. Dėl to gauta nelygybė įgaus formą:
 
 \begin{align}
   \Delta t \leqslant \left(\max(3c^{n}_{2,i,j}, 5c^{n}_{1,i,j})+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
@@ -54,7 +54,7 @@ Gautas neligybes galima apjungti dėl jų panašios struktūros. Norint, kad apj
 
 Taigi parodėme, kad išvengti neigiamų sprendinio reikšmių, užtenka pasirinkti pakankamai mažą laiko žingsnį $\Delta t$. Tačiau čia sustoti būtų nenaudinga, nes turime rekursyvią priklausomybę -- norint pasirinkti $\Delta t$, reikia žinoti maksimalią medžiagų reikšmę simuliacijoje, o jai sužinoti reikia atlikti simuliaciją su pasirinktu laiko žingsniu $\Delta t$.
 
-Parodysime, kad galima panakinti laiko žingsio priklausomybę nuo laiko momento $n$ ir kad $\Delta t$ priklauso tik nuo pradinių sąlygų $c^0_{1,i,j}$ ir $c^0_{2,i,j}$. Medžiagos kiekio pokytis per laiką sistemoje gali būti apskaičiuoti taip:
+Parodysime, kad galima panaikinti laiko žingsnio priklausomybę nuo laiko momento $n$ ir kad $\Delta t$ priklauso tik nuo pradinių sąlygų $c^0_{1,i,j}$ ir $c^0_{2,i,j}$. Medžiagos kiekio pokytis per laiką sistemoje gali būti apskaičiuoti taip:
 
 \begin{align}
   \frac{\partial q_k}{\partial t} = \int_\Omega \frac{\partial c_k}{\partial t} dA
@@ -81,7 +81,7 @@ Todėl pirmos ir antros medžiagų kiekio pokytis per laiką bus ne teigiamas:
   \frac{\partial q_2}{\partial t}=-5\int_\Omega c_1c_2\,dA\leqslant 0
 \end{align}
 
-Tai reiškia, kad maksimalios pirmos ir antros medžiagų reikšmės bus laiko momente $n=0$, tad neligybę galime supaprastinti iki šios formos:
+Tai reiškia, kad maksimalios pirmos ir antros medžiagų reikšmės bus laiko momente $n=0$, tad nelygybę galime suprastinti iki šios formos:
 
 \begin{align}
   \Delta t \leqslant \left(\max(3c^{0}_{2,i,j}, 5c^{0}_{1,i,j})+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
@@ -94,7 +94,7 @@ Laiko žingsnis čia vis dar priklauso nuo diskretizuotos erdvės koordinatės $
 \max c^0_{2,i,j}=5c_0,\quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1
 \end{align*}
 
-Taigi, kad simuliacija išliktų skaitiškai stabili, reikia, kad laiko žingsnis $\Delta t$ tenkintų šią neligybę.
+Taigi, kad simuliacija išliktų skaitiškai stabili, reikia, kad laiko žingsnis $\Delta t$ tenkintų šią nelygybę.
 
 \begin{align*}
   \Delta t \leqslant \left(15c_0+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
