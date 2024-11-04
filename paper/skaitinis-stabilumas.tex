@@ -1,12 +1,12 @@
 \subsection{Modelio skaitinis stabilumas}
 
-Norint užtikrinti skaitinį programos stabilumą, reikia užtikrinti, kad visais laiko momentais, visuose diskretizuotos erdvės taškuose, visų medžiagų koncentracijos išliktų ne neigiamos. Parodysime, kad tai užtikrinti, užtenka pasirinkti pakankamai mažą laiko žingsnį $\Delta t$. Pirmiausia įvedame porą konstantų:
+Norint užtikrinti skaitinį programos stabilumą, reikia užtikrinti, kad visais laiko momentais, visuose diskretizuotos erdvės taškuose, visų medžiagų koncentracijos išliktų ne neigiamos. Šiai sąlygai išpildyti, užtenka pasirinkti pakankamai mažą laiko žingsnį $\Delta t$. Pirmiausia įvedame porą konstantų:
 \begin{align*}
 \mu_x = \frac{D\Delta t}{(\Delta x)^2}, \quad
 \mu_y = \frac{D\Delta t}{(\Delta y)^2}
 \end{align*}
 
-Tada pertvarkome dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} taip, kad kairėse lygčių pusėse liktų medžiagų koncentracija laiko momentu $n+1$, o dešinėse lygčių pusėse sugrupuojame narius pagal medžiagų koncentracija skirtinguose diskretizuotos erdvės taškuose:
+Tada pertvarkome dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} taip, kad kairėse lygčių pusėse liktų medžiagų koncentracija laiko momentu $n+1$, o dešinėse lygčių pusėse sugrupuojame narius pagal medžiagų koncentraciją skirtinguose diskretizuotos erdvės taškuose:
 
 \begin{subequations} \label{eqs:r-coefs}
     \begin{align}
@@ -19,16 +19,22 @@ Tada pertvarkome dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} taip
 Baziniu atveju, kai $n=0$, medžiagų koncentracija visuose taškuose yra ne neigiama, kaip numatyta pradinėje sąlygoje \eqref{intial-cond}. Darome indukcijos hipotezės prielaidą, kad medžiagų koncentracija visuose diskretizuotos erdvės taškuose, laiko momentu $n$ bus ne neigiama:
 
 \begin{align} \label{induction-assumption}
-    c^n_{k,i,j} \geqslant 0, \quad k=1,2,3,\quad i=0,1,\dots,N-1,\quad j=0,1,\dots,M-1
+  c^n_{k,i,j} \geqslant 0, \quad k=1,2,3,\quad i=0,1,\dots,N-1,\quad j=0,1,\dots,M-1
 \end{align}
 
-Akivaizdu, kad lygtyje \eqref{r-coefs3}, medžiagos koncentracija $c^{n+1}_{3,i,j}$ negali tapti neigiama dėl prielaidos \eqref{induction-assumption} ir fakto, kad $\Delta t>0$. Pirmos medžiagos lygtyje \eqref{r-coefs1}, galima pastebėti, kad dėmenys su medžiagų koncentracijomis iš aplinkinių diskretizuotos erdvės taškų visada bus ne neigiami dėl prielaidos \eqref{induction-assumption} ir fakto, kad $\mu_x>0$ ir $\mu_y>0$:
+Akivaizdu, kad lygtyje \eqref{r-coefs3}, medžiagos koncentracija $c^{n+1}_{3,i,j}$ bus ne neigiama:
+
+\begin{align*}
+  \Delta t > 0 \land c^n_{k,i,j}\geqslant 0 \implies c^{n+1}_{3,i,j}=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j}\geqslant 0 
+\end{align*}
+
+Pirmos medžiagos lygtyje \eqref{r-coefs1}, galima pastebėti, kad dėmenys su medžiagų koncentracijomis iš aplinkinių diskretizuotos erdvės taškų visada bus ne neigiami dėl prielaidos \eqref{induction-assumption} ir fakto, kad $\mu_x>0$ ir $\mu_y>0$:
 
 \begin{align*}
     \mu_xc^n_{1,i-1,j}+\mu_xc^n_{1,i+1,j}+\mu_yc^n_{1,i,j-1}+\mu_yc^n_{1,i,j+1}\geqslant 0
 \end{align*}
 
-Taigi $c^{n+1}_{1,i,j}$ ženklą lemia tik koeficientas $R_1$, todėl įvedame ribojimą, kad $R_1\geqslant 0$. Analogiškai, iš antros medžiagos lygties \eqref{r-coefs2} gauname, kad $R_2\geqslant 0$ ir turime nelygybių sistemą:
+Taigi, $c^{n+1}_{1,i,j}$ ženklą lemia tik koeficientas $R_1$, todėl įvedame ribojimą, kad $R_1\geqslant 0$. Analogiškai, iš antros medžiagos lygties \eqref{r-coefs2} gauname, kad $R_2\geqslant 0$ ir turime nelygybių sistemą:
 
 \begin{align} \label{impl-ineqs}
   \begin{cases}
@@ -52,7 +58,7 @@ Gautas nelygybes galima apjungti dėl jų panašios struktūros. Norint, kad apj
   \Delta t \leqslant \left(\max(3c^{n}_{2,i,j}, 5c^{n}_{1,i,j})+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
 \end{align}
 
-Taigi parodėme, kad išvengti neigiamų sprendinio reikšmių, užtenka pasirinkti pakankamai mažą laiko žingsnį $\Delta t$. Tačiau čia sustoti būtų nenaudinga, nes turime rekursyvią priklausomybę -- norint pasirinkti $\Delta t$, reikia žinoti maksimalią medžiagų reikšmę simuliacijoje, o jai sužinoti reikia atlikti simuliaciją su pasirinktu laiko žingsniu $\Delta t$.
+Taigi, parodėme, kad su pakankamai mažu laiko žingsniu $\Delta t$ išvengiame neigiamų sprendinio reikšmių. Tačiau čia sustoti būtų nenaudinga, nes turime rekursyvią priklausomybę -- norint pasirinkti $\Delta t$, reikia žinoti maksimalią medžiagų reikšmę simuliacijoje, o jai sužinoti reikia atlikti simuliaciją su pasirinktu laiko žingsniu $\Delta t$.
 
 Parodysime, kad galima panaikinti laiko žingsnio priklausomybę nuo laiko momento $n$ ir kad $\Delta t$ priklauso tik nuo pradinių sąlygų $c^0_{1,i,j}$ ir $c^0_{2,i,j}$. Medžiagos kiekio pokytis per laiką sistemoje gali būti apskaičiuoti taip:
 
@@ -60,7 +66,7 @@ Parodysime, kad galima panaikinti laiko žingsnio priklausomybę nuo laiko momen
   \frac{\partial q_k}{\partial t} = \int_\Omega \frac{\partial c_k}{\partial t} dA
 \end{align}
 
-Įstatom bedimensio modelio lygtis \eqref{nodim1}, \eqref{nodim2}:
+Įstatome bedimensio modelio lygtis \eqref{nodim1}, \eqref{nodim2}:
 
 \begin{align}
   \frac{\partial q_1}{\partial t}=-3\int_\Omega c_1c_2\,dA + \int_\Omega \Delta c_1\,dA=-3\int_\Omega c_1c_2\,dA + \int_\Omega \nabla \cdot (\nabla c_1)\,dA\\
