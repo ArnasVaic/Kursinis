@@ -7,7 +7,6 @@
 \usepackage{bm}
 \usepackage{color}
 \usepackage{graphicx}
-% \usepackage{hyperref}  % Nuorodų aktyvavimas
 \usepackage{url}
 
 \usepackage{gensymb}
@@ -22,21 +21,19 @@
 % Titulinio aprašas
 \university{Vilniaus universitetas}
 \faculty{Matematikos ir informatikos fakultetas}
-\institute{Informatikos institutas}  % Užkomentavus šią eilutę - institutas neįtraukiamas į titulinį
+\institute{Informatikos institutas}
 \department{Programų sistemų katedra}
 \papertype{Kursinis darbas}
-\title{Medžiagų maišymo modeliavimas cheminėse
-reakcijose}
-\titleineng{Modelling the mixing of reagents in
-chemical reactions}
+\title{Medžiagų maišymo modeliavimas cheminėse reakcijose}
+\titleineng{Modelling the mixing of reagents in chemical reactions}
 \status{4 kurso 3 grupės studentas}
 \author{Arnas Vaicekauskas}
-% \secondauthor{Vardonis Pavardonis}   % Pridėti antrą autorių
 \supervisor{Asist. Dr. Rokas Astrauskas}
 \date{Vilnius \\ \the\year}
 
 % Nustatymai
-% \setmainfont{Palemonas}   % Pakeisti teksto šriftą į Palemonas (turi būti įdiegtas sistemoje)
+% \setmainfont{Palemonas}   
+% Pakeisti teksto šriftą į Palemonas (turi būti įdiegtas sistemoje)
 \bibliography{bibliografija} 
 
 \DeclareAcronym{yag}{
@@ -45,217 +42,17 @@ chemical reactions}
 }
 
 \begin{document}
+
 \maketitle
-
 \tableofcontents
-
-% \sectionnonum{Sąvokų apibrėžimai}
-
-% \begin{itemize}
-% \item Stoichiometrinis mišinys - tai toks mišinys, kuriame medžiagų proporcijos yra tokios, kokių reikia, kad jos reakcijos metu visiškai sureaguotų
-% \end{itemize}
-
-% Sutartinių ženklų, simbolių, vienetų ir terminų sutrumpinimų sąrašas (jeigu
-% ženklų, simbolių, vienetų ir terminų bendras skaičius didesnis nei 10 ir
-% kiekvienas iš jų tekste kartojasi daugiau nei 3 kartus).
-
 \include{ivadas}
-
-\section{\acs{yag} reakcijos matematinis modeliavimas}
-
-\subsection{\acs{yag} sintezė}
-
-\acs{yag} milteliai gali būti sintezuojami keleta skirtingų būdų: Zolis-Gelis procesu, nusodinimu, solvoterminiu procesu, terminio purškimo procesu bei kietafaze reakcija, kuri lieka viena dažniausiai taikomų dėl savo paprastumo bei galimybės pritaikyti masinei gamybai \cite{zhangNovelSynthesisYAG2005}.
-
-\subsection{Kietafazė reakcija}
-
-Šiame darbe yra modeliuojama paskutinė kietafazės reakcijos stadija, kurios metu reaguodami itrio ir aliuminio oksidai sudaro itrio aliuminio granato kristalus arba tiesiog \acs{yag}:
-\begin{align*}
-  \ce{3Y_2O_3 + 5Al_2O_3 -> 2Y_3Al_5O_12}
-\end{align*}
-
-Prieš pradedant reakciją metalų oksidai yra sutrinami iki smulkiagrūdžių miltelių. Metalų oksidų mišinys yra nuolat kaitinamas 1600\degree C laipsnių temperatūroje ir periodiškai maišomas. Eksperimentiniu būdu išmatuota,kad individualių dalelių turiai prie 1600\degree C temperatūros siekia apie $\sqrt{10}\mu\text{m}^3$ \cite{ivanauskasComputationalModellingYAG2009}.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.25\linewidth]{assets/metal_oxides_mixture.png}
-  \label{fig:metal-oxides-mixuter}
-  \caption{Priartinto metalų oksidų mišinio iliustracija \cite{}}
-\end{figure}
-
-Modeliavimo 
-
-Tokioje temperatūroje metalų oksidai lydosi ir vyksta difuzija, dėl šios priežasties cheminei reakcija yra modeliuojama su difuzijos-reakcijos sistema.
-
-\section{Matematinis modelis}
-
-\subsection{Bedimensis modelis}
-
-\begin{subequations} \label{nodim}
-    \begin{align}
-    \frac{\partial c_1}{\partial t}&=-3c_1c_2+D\Delta c_1 \label{nodim1}\\
-    \frac{\partial c_2}{\partial t}&=-5c_1c_2+D\Delta c_2 \label{nodim2}\\
-    \frac{\partial c_3}{\partial t}&=2c_1c_2
-    \end{align}
-\end{subequations}
-
-kur $c_1,c_2,c_3$ yra bedimensė medžiagų koncentracija, 
-$\Delta$ - Laplaso operatorius, $t$ - laikas, 
-$D$ - bedimensis medžiagų $c_1$ ir $c_2$ difuzijos koeficientas. Modeliui yra taikoma kraštinė sąlygą:
-
-\begin{equation} \label{general-boundary-cond}
-  \nabla c_k(\textbf{x}, t)\cdot\vec{n}=0, \textbf{x}\in\partial\Omega
-\end{equation}
-
-Čia $\nabla c_k$ yra medžiagos $c_k$ gradientas, $\textbf{x}$ - erdvės koordinatė, $\partial\Omega$ - simuliuojamos erdvės srities paviršius, o $\vec{n}$ - simuliuojamos erdvės paviršiaus normalė.
-
-\subsection{Elementų maišymasis dviejose dimensijose}
-
-Interpretavus bedimensį modelį \eqref{nodim} dviejose dimensijose gauname lygtis
-
-\begin{subequations} \label{rect}
-    \begin{align}
-    \frac{\partial c_1}{\partial t}&=-3c_1c_2+D\left(\frac{\partial^2c_1}{\partial x^2}+\frac{\partial^2c_1}{\partial y^2}\right)\\
-    \frac{\partial c_2}{\partial t}&=-5c_1c_2+D\left(\frac{\partial^2c_2}{\partial x^2}+\frac{\partial^2c_2}{\partial y^2}\right)\\
-    \frac{\partial c_3}{\partial t}&=2c_1c_2
-    \end{align}
-\end{subequations}
-
-\newpage
-Šiam modeliui yra taikomos stoichiometrinės pradinės sąlygos:
-
-% pradinės sąlygos medžiagų koncentracijai turėtų aprašyti stoichiometrinį mišinį
-
-\begin{equation} \label{intial-cond}
-  \begin{aligned}
-  c_1(x, y, 0) &= \begin{cases} 3c_0, & \text{jei } x \in A \\ 0, & \text{kitaip} \end{cases}\\
-  c_2(x, y, 0) &= \begin{cases} 5c_0, & \text{jei } x \notin A \\ 0, & \text{kitaip} \end{cases}\\
-  c_3(x, y, 0) &= 0,\\ 
-  (x, y) &\in \Omega, \quad\Omega=[0,W]\times[0,H],\quad A=\left[0,\tfrac{W}{2}\right]\times\left[0,\tfrac{H}{2}\right] \cup \left[\tfrac{W}{2},W\right]\times\left[\tfrac{H}{2},H\right].
-\end{aligned}
-\end{equation}
-
-Čia $c_0$ yra kažkoks teigiamas dydis, kuris nusako pradinę kiekvienos medžiagos koncentraciją sistemoje.
-
-\begin{figure}[h!]
-  \centering
-  \begin{tikzpicture}[scale=2.0]
-      \draw[fill=white] (0,0) rectangle (1,1);
-      \draw[fill=white] (1,1) rectangle (2,2);
-      \draw[fill=gray!50] (0,1) rectangle (1,2);
-      \draw[fill=gray!50] (1,0) rectangle (2,1);
-      
-      % Draw the boundary of the square
-      \draw[thick] (0,0) rectangle (2,2);
-  
-      % Draw axes
-      \draw[->] (-0.5,2) -- (2.5,2) node[anchor=north west] {$x$};  % x-axis
-      \draw[<-] (0,-0.5) node[anchor=south east] {$y$} -- (0,2.5);  % y-axis
-  
-      % Mark the origin
-      \node[anchor=south east] at (0,2) {$(0, 0)$};
-      
-      % Mark the side length L
-      \draw[-] (2,0) -- (2,2) node[midway, right] {$H$};
-      \draw[-] (0,0) -- (2,0) node[midway, below] {$W$};
-      \draw (0.5, 1.5) node[anchor=center] {$c_1$};
-      \draw (1.5, 0.5) node[anchor=center] {$c_1$};
-      \draw (1.5, 1.5) node[anchor=center] {$c_2$};
-      \draw (0.5, 0.5) node[anchor=center] {$c_2$};
-  \end{tikzpicture}
-  \caption{Sistemos pradinės sąlygos}
-\end{figure}
-
-kraštinės sąlygos \eqref{general-boundary-cond} dviejose dimensijose virsta:
-
-\begin{equation} \label{boundary-cond}
-\begin{split}
-\frac{\partial c_1}{\partial x}\Big|_{x=0}&=\frac{\partial c_1}{\partial x}\Big|_{x=L}=\frac{\partial c_2}{\partial x}\Big|_{x=0}=\frac{\partial c_2}{\partial x}\Big|_{x=L}=0, \quad y\in[0,H], \quad t\in[0,T]\\
-\frac{\partial c_1}{\partial y}\Big|_{y=0}&=\frac{\partial c_1}{\partial y}\Big|_{y=L}=\frac{\partial c_2}{\partial y}\Big|_{y=0}=\frac{\partial c_2}{\partial y}\Big|_{y=L}=0, \quad x\in[0,W],\quad t\in[0,T]
-\end{split}
-\end{equation}
-
-kur $L$ - bedimensis kubo kraštinės ilgis, $T$ - bedimensė proceso trukmė.
-
-\section{Skaitinis modelis}
-
-\include{diskretizavimas}
-
-\subsection{Dviejų dimensijų skaitinis modelis Dekarto koordinačių sistemoje}
-
-Remiantis išreikštiniu baigtinių skirtumų metodu iš dvimačio modelio galima gauti skaitinį modelį.
-\begin{subequations} \label{numerical-eqs}
-\begin{align}
-\frac{c^{n+1}_{1,i,j}-c^n_{1,i,j}}{\Delta t}&=
--3c^{n}_{1,i,j}c^{n}_{2,i,j}\notag\\
-&+D\left(\frac{c^n_{1,i-1,j}-2c^n_{1,i,j}+c^n_{1,i+1,j}}{(\Delta x)^2}+\frac{c^n_{1,i,j-1}-2c^n_{1,i,j}+c^n_{1,i,j+1}}{(\Delta y)^2}\right)\\
-\frac{c^{n+1}_{2,i,j}-c^n_{2,i,j}}{\Delta t}&=
--5c^{n}_{1,i,j}c^{n}_{2,i,j}\notag\\
-&+D\left(\frac{c^n_{2,i-1,j}-2c^n_{2,i,j}+c^n_{2,i+1,j}}{(\Delta x)^2}+\frac{c^n_{2,i,j-1}-2c^n_{2,i,j}+c^n_{2,i,j+1}}{(\Delta y)^2}\right)\\
-\frac{c^{n+1}_{3,i,j}-c^n_{3,i,j}}{\Delta t}&=2c^{n}_{1,i,j}c^{n}_{2,i,j},
-\end{align}
-\end{subequations}
-
-kur $n\in[0, T)$ - laiko momentas, 
-$i\in[0,N)$ - diskrečios erdvės taško koordinatė $x$ ašyje,
-$j\in[0,M)$ - diskrečios erdvės taško koordinatė $y$ ašyje,
-$c^n_{1,i,j}$ - pirmos medžiagos kiekis diskrečios erdvės taške $i$, $j$ laiko momentu $n$,
-$c^n_{2,i,j}$ - antros medžiagos kiekis diskrečios erdvės taške $i$, $j$ laiko momentu $n$,
-$c^n_{3,i,j}$ - trečios medžiagos kiekis diskrečios erdvės taške $i$, $j$ laiko momentu $n$,
-$\Delta t$ - laiko žingsnis,
-$\Delta x$ - diskrečios erdvės žingsnis $x$ ašimi,
-$\Delta y$ - diskrečios erdvės žingsnis $y$ ašimi.
-
+\include{chemija}
+\include{modelis}
 \include{skaitinis-stabilumas}
 \include{palyginimas}
 \include{maisymas}
-
-% \subsubsection{Skirsnis}
-% \subsubsubsection{Straipsnis}
-% \subsubsection{Skirsnis}
-% \section{Skyrius}
-% \subsection{Poskyris}
-% \subsection{Poskyris}
-
-\sectionnonum{Rezultatai ir išvados}
-% Išvadose ir pasiūlymuose, nekartojant atskirų dalių apibendrinimų,
-% suformuluojamos svarbiausios darbo išvados, rekomendacijos bei pasiūlymai.
-
-\printbibliography[heading=bibintoc] % Literatūros šaltiniai aprašomi
-% bibliografija.bib faile. Šaltinių sąraše nurodoma panaudota literatūra,
-% kitokie šaltiniai. Abėcėlės tvarka išdėstoma tik darbe panaudotų (cituotų,
-% perfrazuotų ar bent paminėtų) mokslo leidinių, kitokių publikacijų
-% bibliografiniai aprašai (šiuo punktu pasirūpina LaTeX). Aprašai pateikiami
-% netransliteruoti.
-
-\appendix  % Priedai
-% Prieduose gali būti pateikiama pagalbinė, ypač darbo autoriaus savarankiškai
-% parengta, medžiaga. Savarankiški priedai gali būti pateikiami kompiuterio
-% diskelyje ar kompaktiniame diske. Priedai taip pat vadinami ir numeruojami.
-% Tekstas su priedais siejamas nuorodomis (pvz.: \ref{img:mlp}).
-
-% \section{Neuroninio tinklo struktūra}
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[scale=0.5]{img/MLP}
-%     \caption{Paveikslėlio pavyzdys}   % Antraštė įterpiama po paveikslėlio
-%     \label{img:mlp}
-% \end{figure}
-
-
-% \section{Eksperimentinio palyginimo rezultatai}
-% % tablesgenerator.com - converts calculators (e.g. excel) tables to LaTeX
-% \begin{table}[H]\footnotesize
-%   \centering
-%   \caption{Lentelės pavyzdys}    % Antraštė įterpiama prieš lentelę
-%   {\begin{tabular}{|l|c|c|} \hline
-%     Algoritmas & $\bar{x}$ & $\sigma^{2}$ \\
-%     \hline
-%     Algoritmas A  & 1.6335    & 0.5584       \\
-%     Algoritmas B  & 1.7395    & 0.5647       \\
-%     \hline
-%   \end{tabular}}
-%   \label{tab:table example}
-% \end{table}
+\include{rezultatai}
+\printbibliography[heading=bibintoc]
+\appendix
 
 \end{document}
