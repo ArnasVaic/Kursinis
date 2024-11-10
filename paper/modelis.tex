@@ -2,7 +2,7 @@
 
 \section{Matematinis modelis}
 
-Šiame darbe yra naudojamas \acs{yag} reakcijos modelis, kurį pasiūlė Ivanauskas et al \cite{ivanauskasModellingSolidState2005}. Šis matematinis modelis yra reakcijos-difuzijos sistema, kuriai spręsti naudojamas išreikštinių baigtinių skirtumų metodas \cite{pressNumericalRecipes3rd2007}. Procesas yra modeliuojamas dviejose dimensijose - stačiakampio srityje.
+Šiame darbe yra naudojamas \acs{yag} reakcijos modelis, kurį pasiūlė Ivanauskas et al \cite{ivanauskasModellingSolidState2005}. Yra žinoma, kad reakcijos produktas yra kristalas ir nedifunduoja, todėl difuzijos dėmens trečioje lygtyje nėra \textbf{reikia citatos!}. Šis matematinis modelis yra reakcijos-difuzijos sistema, kuriai spręsti naudojamas išreikštinių baigtinių skirtumų metodas \cite{pressNumericalRecipes3rd2007}. Procesas yra modeliuojamas dviejose dimensijose - stačiakampio srityje.
 
 \begin{subequations} \label{rect}
 	\begin{align}
@@ -76,7 +76,14 @@ Ruošiant medžiagas reakcijai yra sudaromas stoichiometrinis medžiagų mišiny
 
 \subsection{Erdvės diskretizavimas}
 
-Sudarydami tinklelį skaitiniam modeliui, padaliname stačiakampę erdvę $\Omega$ į $N\times M$ taškų, kurie yra nutolę vienas nuo kito fiksuotais atstumais $\Delta x$ ir $\Delta y$ atitinkamomis ašimis. Laiko erdvę $[0, T]$ padalinsime į
+Sudarydami tinklelį skaitiniam modeliui, padaliname stačiakampę erdvę $\Omega$ į $N\times M$ taškų, kurie yra nutolę vienas nuo kito fiksuotais atstumais $\Delta x$ ir $\Delta y$ atitinkamomis ašimis. Analogiškai, laiko erdvę $[0, T]$ padalinsime į $\tau + 1$ taškų, kurie vienas nuo kito yra nutolę tolygiais $\Delta t$ atstumais. Apibūdinta diskretų tinklelį galima užrašyti taip:
+
+\begin{align}
+    \omega_W&=\{ x_i : x_i = i\Delta x, \quad i=0, 1, \dots, N - 1 \} & (N-1)\Delta x&=W\\
+    \omega_H&=\{ y_j : y_j = j\Delta y, \quad j=0, 1, \dots, M - 1 \} & (M-1)\Delta y&=H\\
+    \omega_\tau&=\{ t_n : t_n = n\Delta t,\quad n=0, 1, \dots, \tau\} & \tau\Delta t&=T\\
+	\omega&=\omega_W\times\omega_H\times\omega_\tau
+\end{align}
 
 \begin{figure}[!h]
 \centering
@@ -116,7 +123,7 @@ Sudarydami tinklelį skaitiniam modeliui, padaliname stačiakampę erdvę $\Omeg
 \draw[shift={(0,1)}] (-0.1,0) -- (0.1,0);
 \node[left] at (0, 1) {$\Delta y$};
         
-\draw[shift={(0,2)}] (-0.1,0) -q- (0.1,0);
+\draw[shift={(0,2)}] (-0.1,0) -- (0.1,0);
 \node[left] at (0, 2) {$\vdots$};
 
 \draw[shift={(0,3)}] (-0.1,0) -- (0.1,0);
@@ -126,17 +133,12 @@ Sudarydami tinklelį skaitiniam modeliui, padaliname stačiakampę erdvę $\Omeg
 \caption{ Diskretizuota erdvė }
 \end{figure}
 
-Tinklelio taškų koordinates tada galima užrašyti:
 
-\begin{align}
-    \omega_W&=\{ x_i : x_i = i\Delta x, \quad i=0, 1, \dots, N - 1 \} & (N-1)\Delta x&=W\\
-    \omega_H&=\{ y_j : y_j = j\Delta y, \quad j=0, 1, \dots, M - 1 \} & (M-1)\Delta y&=H\\
-    \omega_\tau&=\{ t_n : t_n = n\Delta t,\quad n=0, 1, \dots, \tau\} & \tau\Delta t&=T
-\end{align}
 
+\newpage
 \subsection{Dviejų dimensijų skaitinis modelis Dekarto koordinačių sistemoje}
 
-Remiantis išreikštiniu baigtinių skirtumų metodu iš dvimačio modelio galima gauti skaitinį modelį.
+Remiantis išreikštiniu baigtinių skirtumų metodu iš dvimačio modelio gaunamas skaitinis modelis:
 \begin{subequations} \label{numerical-eqs}
 	\begin{align}
 		\frac{c^{n+1}_{1,i,j}-c^n_{1,i,j}}{\Delta t} & =
@@ -149,12 +151,8 @@ Remiantis išreikštiniu baigtinių skirtumų metodu iš dvimačio modelio galim
 	\end{align}
 \end{subequations}
 
-kur $n\in[0, T)$ - laiko momentas,
-$i\in[0,N)$ - diskrečios erdvės taško koordinatė $x$ ašyje,
-$j\in[0,M)$ - diskrečios erdvės taško koordinatė $y$ ašyje,
-$c^n_{1,i,j}$ - pirmos medžiagos kiekis diskrečios erdvės taške su indeksais $i$, $j$ laiko momentu $n$,
-$c^n_{2,i,j}$ - antros medžiagos kiekis diskrečios erdvės taške su indeksais $i$, $j$ laiko momentu $n$,
-$c^n_{3,i,j}$ - trečios medžiagos kiekis diskrečios erdvės taške su indeksais $i$, $j$ laiko momentu $n$,
+Čia
 $\Delta t$ - laiko žingsnis,
 $\Delta x$ - diskrečios erdvės žingsnis $x$ ašimi,
 $\Delta y$ - diskrečios erdvės žingsnis $y$ ašimi.
+$c^n_{1,i,j}$, $c^n_{2,i,j}$, $c^n_{3,i,j}$ - atitinkamai pirmos, antros ir trečios medžiagos koncentracijos diskretizuotos erdvės tinklelio taške $(x_i, y_i, t_n)\in\omega$.
