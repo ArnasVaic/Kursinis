@@ -19,14 +19,14 @@ $D$ - bedimensė medžiagų $c_1$ ir $c_2$ difuzijos konstanta, $k$ - bedimensė
 \end{align*}
 Šios sistemos modelis yra uždaras - medžiagos neprateka pro stačiakampio srities kraštinę $\partial\Omega$, t.~y. taikoma Neumano kraštinė sąlygą:
 \begin{align} \label{general-boundary-cond}
-	\nabla c_k(x, y, t)\cdot\vec{n}&=0, & (x, y)&\in\partial\Omega & t&\in[0, T] & k&=1, 2, 3
+	\nabla c_m(x, y, t)\cdot\vec{n}&=0, & (x, y)&\in\partial\Omega & t&\in[0, T] & m&=1, 2, 3
 \end{align}
-Čia $\nabla c_k$ yra medžiagos $c_k$ gradientas, o $\vec{n}$ - paviršiaus $\partial\Omega$ normalė. Išskleidus kraštinės sąlygas \eqref{general-boundary-cond} dviejose dimensijose gauname:
+Čia $\nabla c_m$ yra medžiagos $c_m$ gradientas, o $\vec{n}$ - paviršiaus $\partial\Omega$ normalė. Išskleidus kraštinės sąlygas \eqref{general-boundary-cond} dviejose dimensijose gauname:
 \begin{equation} \label{boundary-cond}
 \begin{aligned}
 \begin{split}
-    \frac{\partial c_k}{\partial x}\Big|_{x=0}=\frac{\partial c_k}{\partial x}\Big|_{x=W}&=0 & y&\in[0,H] & t&\in[0, T] & k&=1, 2, 3\\
-    \frac{\partial c_k}{\partial y}\Big|_{y=0}=\frac{\partial c_k}{\partial y}\Big|_{y=H}&=0 & x&\in[0,W] & t&\in[0, T] & k&=1, 2, 3
+    \frac{\partial c_m}{\partial x}\Big|_{x=0}=\frac{\partial c_m}{\partial x}\Big|_{x=W}&=0 & y&\in[0,H] & t&\in[0, T] & m&=1, 2, 3\\
+    \frac{\partial c_m}{\partial y}\Big|_{y=0}=\frac{\partial c_m}{\partial y}\Big|_{y=H}&=0 & x&\in[0,W] & t&\in[0, T] & m&=1, 2, 3
 \end{split}
 \end{aligned}
 \end{equation}
@@ -142,12 +142,12 @@ Remiantis išreikštiniu baigtinių skirtumų metodu iš dvimačio modelio gauna
 \begin{subequations} \label{numerical-eqs}
 	\begin{align}
 		\frac{c^{n+1}_{1,i,j}-c^n_{1,i,j}}{\Delta t} & =
-		-3c^{n}_{1,i,j}c^{n}_{2,i,j}\notag\\
+		-3kc^{n}_{1,i,j}c^{n}_{2,i,j}\notag\\
         & +D\left(\frac{c^n_{1,i-1,j}-2c^n_{1,i,j}+c^n_{1,i+1,j}}{(\Delta x)^2}+\frac{c^n_{1,i,j-1}-2c^n_{1,i,j}+c^n_{1,i,j+1}}{(\Delta y)^2}\right) \\
 		\frac{c^{n+1}_{2,i,j}-c^n_{2,i,j}}{\Delta t} & =
-		-5c^{n}_{1,i,j}c^{n}_{2,i,j}\notag\\
+		-5kc^{n}_{1,i,j}c^{n}_{2,i,j}\notag\\
         &+D\left(\frac{c^n_{2,i-1,j}-2c^n_{2,i,j}+c^n_{2,i+1,j}}{(\Delta x)^2}+\frac{c^n_{2,i,j-1}-2c^n_{2,i,j}+c^n_{2,i,j+1}}{(\Delta y)^2}\right) \\
-		\frac{c^{n+1}_{3,i,j}-c^n_{3,i,j}}{\Delta t} & =2c^{n}_{1,i,j}c^{n}_{2,i,j},
+		\frac{c^{n+1}_{3,i,j}-c^n_{3,i,j}}{\Delta t} & =2kc^{n}_{1,i,j}c^{n}_{2,i,j},
 	\end{align}
 \end{subequations}
 
@@ -155,4 +155,4 @@ Remiantis išreikštiniu baigtinių skirtumų metodu iš dvimačio modelio gauna
 $\Delta t$ - laiko žingsnis,
 $\Delta x$ - diskrečios erdvės žingsnis $x$ ašimi,
 $\Delta y$ - diskrečios erdvės žingsnis $y$ ašimi.
-$c^n_{1,i,j}$, $c^n_{2,i,j}$, $c^n_{3,i,j}$ - atitinkamai pirmos, antros ir trečios medžiagos koncentracijos diskretizuotos erdvės tinklelio taške $(x_i, y_i, t_n)\in\omega$.
+$c^n_{1,i,j}$, $c^n_{2,i,j}$, $c^n_{3,i,j}$ - atitinkamai pirmos, antros ir trečios medžiagų koncentracijos diskretizuotos erdvės tinklelio taške $(x_i, y_i, t_n)\in\omega$.
