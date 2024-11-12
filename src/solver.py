@@ -1,27 +1,33 @@
+import sys
 import numpy as np
 from scipy.signal import convolve2d
 from mixer import mix
-import sys
 
-def get_upper_dt_bound(dx, dy, D, c1_initial, c2_initial):
-  
-  c1_initial_max = c1_initial.max()
-  c2_initial_max = c2_initial.max() 
+def get_upper_dt_bound(dx: float, dy: float, D: float, c0: float, k: float):
+  """Get upper bound for the time step
 
-  return 1 / np.max([
-    2 * D * (dx**-2 + dy**-2) + 3 * c2_initial_max,
-    2 * D * (dx**-2 + dy**-2) + 5 * c1_initial_max
-  ])
+  Args:
+      dx (float): step size in x
+      dy (float): step size in y
+      D (float): diffusion coefficient
+      c0 (float): initial concentration
+      k (float): reactivity coefficient
 
-def validate_dt(dt, dx, dy, D, c1_initial, c2_initial):
-  dt_upper_bound = get_upper_dt_bound(dx, dy, D, c1_initial, c2_initial)
+  Returns:
+      float: upper bound for time step
+  """
+  return  2 * D * (dx**-2 + dy**-2) + 15 * k * c0
+
+def validate_dt(dt, dx, dy, D, c0, k):
+  dt_upper_bound = get_upper_dt_bound(dx, dy, D, c0, k)
 
   if dt_upper_bound < dt:
-    print(f'error: given dt={dt:.04f} may produce unstable results! Use dt <= {dt_upper_bound:04f}.')
+    msg = f'error: given dt={dt:.04f} may produce unstable results! Use dt <= {dt_upper_bound:04f}.'
+    print(msg)
   assert dt_upper_bound >= dt
 
 def validate_solution(c):
- 
+
   c1, c2, c3 = c
 
   # if c1.min() < 0:
@@ -46,33 +52,33 @@ def validate_solution(c):
   q2dt = np.diff(q2, 1, axis=0)
   q3dt = np.diff(q3, 1, axis=0)
 
-  # if np.any(q1dt >= sys.float_info.epsilon):
-  #   id = np.unravel_index(q1dt.argmax(), q1dt.shape)
-  #   print(f'q1dt[{id[0]}]={q1dt[id]}')
+  if np.any(q1dt >= sys.float_info.epsilon):
+    id = np.unravel_index(q1dt.argmax(), q1dt.shape)
+    print(f'q1dt[{id[0]}]={q1dt[id]}')
 
-  # if np.any(q2dt >= sys.float_info.epsilon):
-  #   id = np.unravel_index(q2dt.argmax(), q2dt.shape)
-  #   print(f'q2dt[{id[0]}]={q2dt[id]}')
+  if np.any(q2dt >= sys.float_info.epsilon):
+    id = np.unravel_index(q2dt.argmax(), q2dt.shape)
+    print(f'q2dt[{id[0]}]={q2dt[id]}')
 
-  # if np.any(q3dt < sys.float_info.epsilon):
-  #   id = np.unravel_index(q3dt.argmin(), q3dt.shape)
-  #   print(f'q3dt[{id[0]}]={q3dt[id]}')
+  if np.any(q3dt < sys.float_info.epsilon):
+    id = np.unravel_index(q3dt.argmin(), q3dt.shape)
+    print(f'q3dt[{id[0]}]={q3dt[id]}')
 
   # assert 1st & 2nd materials quantities are always non-negative and non-increasing
   assert np.all(c1 >= 0)
-  assert np.all(q1dt <= 0)
+  assert np.all(q1dt <= sys.float_info.epsilon)
 
   assert np.all(c2 >= 0)
-  assert np.all(q2dt <= 0)
+  assert np.all(q2dt <= sys.float_info.epsilon)
 
   # assert 3rd material quantity is non-negative and non-decreasing
   assert np.all(c3 >= 0)
-  assert np.all(q3dt >= 0)
+  assert np.all(q3dt >= -sys.float_info.epsilon)
 
-def stop(t, T, c1, c2, threshold):
-  relative_quantity = (c1[t] + c2[t]).sum() / (c1[0] + c2[0]).sum()
+def stop(t, T, c1_init, c2_init, c1_last, c2_last, threshold):
+  relative_quantity = (c1_last + c2_last).sum() / (c1_init + c2_init).sum()
   return (T is None and relative_quantity <= threshold)  \
-      or (T is not None and t == T)
+    or (T is not None and t == T)
 
 def build_laplacian_filter(dx, dy):
   return np.array([
@@ -86,14 +92,14 @@ def laplacian(c, filter):
   return convolve2d(padded, filter, mode='valid')
 
 def validate_inputs(
-  W, 
-  H, 
-  N, 
+  W,
+  H,
+  N,
   M,
-  D, 
-  c1_init, 
-  c2_init, 
-  threshold, 
+  D,
+  c1_init,
+  c2_init,
+  threshold,
   t_mix,
   T,
   dt):
@@ -101,10 +107,10 @@ def validate_inputs(
   assert H > 0
 
   assert N > 0
-  assert type(N) is int
-  
+  assert isinstance(N, int)
+
   assert M > 0
-  assert type(M) is int
+  assert isinstance(M, int)
 
   assert D >= 0
 
@@ -115,10 +121,9 @@ def validate_inputs(
 
   assert t_mix is None or t_mix >= 0
 
-  assert type(T) is int
-  assert T is None or T > 0
+  assert T is None or (isinstance(T, int) and T > 0)
 
-  assert (threshold and t_mix) or T
+  assert threshold or T
 
   dx = W / (N - 1)
   dy = H / (M - 1)
@@ -140,22 +145,22 @@ def print_initial_debug_info(T, dt, dt_upper_bound, t_mix, threshold):
   if t_mix is not None:
     print(f"approximate frame of mixing: {int(t_mix / dt)}")
 
-def print_sim_debug_info(t, dt, c1, c2):
-  q1 = c1[t].sum() / c1[0].sum()
-  q2 = c2[t].sum() / c2[0].sum()
-  q = (c1[t] + c2[t]).sum() / (c1[0] + c2[0]).sum()
-  print(f'[t={t * dt:.02f},step={t}] [q1 q2 q]=[{q1:.02f} {q2:.02f} {q:.02f}]')
+def print_sim_debug_info(t, dt, c1_init, c2_init, c1_last, c2_last):
+  q = (c1_last + c2_last).sum() / (c1_init + c2_init).sum()
+  print(f'[t={t * dt:.02f},step={t}] q={q:.02f}')
 
 def solve(
-  W, 
-  H, 
-  N, 
+  W,
+  H,
+  N,
   M,
-  D, 
-  c1_init, 
-  c2_init, 
-  threshold=None, 
-  t_mix=None, 
+  D,
+  c0,
+  k,
+  c1_init,
+  c2_init,
+  threshold=None,
+  t_mix=None,
   B=2,
   debug=False,
   T=None,
@@ -165,40 +170,45 @@ def solve(
 
   dx = W / (N - 1)
   dy = H / (M - 1)
-  dt_upper_bound = get_upper_dt_bound(dx, dy, D, c1_init.max(), c2_init.max())
+  dt_upper_bound = get_upper_dt_bound(dx, dy, D, c0, k)
 
   if debug:
     print_initial_debug_info(T, dt, dt_upper_bound, t_mix, threshold)
-  
+
   filter = build_laplacian_filter(dx, dy)
   dt = dt or dt_upper_bound
   c1, c2, c3 = [ c1_init ], [ c2_init ], [ np.zeros((N, M)) ]
   t = 0
   mixing_done = False
 
+  c1_last, c2_last, c3_last = c1[0], c2[0], c3[0]
+
   while True:
 
     if debug and t % 2000 == 0:
-      print_sim_debug_info(t, dt, c1, c2)
+      print_sim_debug_info(t, dt, c1_init, c2_init, c1_last, c2_last)
 
     if t_mix is not None and abs(t * dt - t_mix) <= dt / 2 and not mixing_done:
       if debug:
         print(f'[t={t * dt:.02f},step={t}] mixing')
-      c1[t], c2[t], c3[t] = mix([c1[t], c2[t], c3[t]], B=B, debug=False)
+      c1_last, c2_last, c3_last = mix([c1_last, c2_last, c3_last], B=B, debug=False)
 
-    c1_next = c1[t] + dt * (-3 * c1[t] * c2[t] + D * laplacian(c1[t], filter))
-    c2_next = c2[t] + dt * (-5 * c1[t] * c2[t] + D * laplacian(c2[t], filter))
-    c3_next = c3[t] + dt *   2 * c1[t] * c2[t]
+    c1_next = c1_last + dt * (-3 * k * c1_last * c2_last + D * laplacian(c1_last, filter))
+    c2_next = c2_last + dt * (-5 * k * c1_last * c2_last + D * laplacian(c2_last, filter))
+    c3_next = c3_last + dt *   2 * k * c1_last * c2_last
 
-    _ = c1.append(c1_next), c2.append(c2_next), c3.append(c3_next)
+    if t % 100 == 0:
+      _ = c1.append(c1_next), c2.append(c2_next), c3.append(c3_next)
 
-    # if T is not set, stop reaction when ratio of elements c1, c2 
-    # to the initial amount reaches threshold 
-    if stop(t, T, c1, c2, threshold):
+    # if T is not set, stop reaction when ratio of elements c1, c2
+    # to the initial amount reaches threshold
+    if stop(t, T, c1_init, c2_init, c1_last, c2_last, threshold):
       break
 
     # update time step
     t = t + 1
+    # update last values
+    c1_last, c2_last, c3_last = c1_next, c2_next, c3_next
 
   # convert python lists to numpy lists
   c1 = np.stack(c1, axis=0)
@@ -208,5 +218,5 @@ def solve(
   # shape [ 3, t, width, height ]
   c = np.stack((c1, c2, c3), axis=0)
   validate_solution(c)
-  
-  return c 
+ 
+  return c
