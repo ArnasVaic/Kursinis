@@ -3,13 +3,14 @@ solver_config = {
   'H': 1.0,
   'N': 100,
   'M': 100,
-  'D': 1e-4,
+  'D': 5e-2,
   'k': 1,
   'c0': 1,
   't_mix': None,
   'B': 2,
-  'T': None,
-  'dt': None
+  'T': 5000,
+  'dt': None,
+  'frame_stride': 50
 }
 
 def solver_config_id():

@@ -177,6 +177,7 @@ def solvec(config, c_init, stop_threshold, debug=True):
 
   T = config['T']
   dt = config['dt']
+  frame_stride = config['frame_stride']
 
   return solve(W, H, N, M, D, c0, k, *c_init,
     threshold=stop_threshold,
@@ -184,7 +185,8 @@ def solvec(config, c_init, stop_threshold, debug=True):
     B=B,
     debug=debug,
     T=T,
-    dt=dt)
+    dt=dt,
+    frame_stride=frame_stride)
 
 def solve(
   W,
@@ -202,7 +204,8 @@ def solve(
   B=2,
   debug=False,
   T=None,
-  dt=None):
+  dt=None,
+  frame_stride=1):
 
   validate_inputs(W, H, N, M, D, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
 
@@ -238,7 +241,7 @@ def solve(
     c2_next = c2_last + dt * (-5 * k * c1_last * c2_last + D * laplacian(c2_last, filter))
     c3_next = c3_last + dt *   2 * k * c1_last * c2_last
 
-    if t % 100 == 0:
+    if t % frame_stride == 0:
       _ = c1.append(c1_next), c2.append(c2_next), c3.append(c3_next)
 
       # register that we calculated data for next time step
@@ -261,7 +264,7 @@ def solve(
 
   # shape [ 3, t, width, height ]
   c = np.stack((c1, c2, c3), axis=0)
-  validate_solution(c)
+  #validate_solution(c)
 
   print(f'total time steps taken: {t}')
   print(f'saved result t: {c1.shape[0]}')

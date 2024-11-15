@@ -16,45 +16,46 @@ c0 = solver_config['c0']
 
 dt = get_upper_dt_bound_from_config(solver_config)
 
-# chose material index for visualization
-c_id = 0
-
 vmax = [ 3 * c0, 5 * c0, c[2, -1].max() ]
 
-print(f'T = {T}')
+# chose material index for visualization
+for c_id in [0, 1, 2]:
 
-plt.figure(dpi=1200)
-fig_h = 6
-figs = 5
-fig, ax = plt.subplots(1, figs, figsize=(figs * fig_h, fig_h))
+  print(f'T = {T}')
 
-cmap = plt.get_cmap('inferno')
+  plt.figure(dpi=1200)
+  fig_h = 6
+  figs = 5
+  fig, ax = plt.subplots(1, figs, figsize=(figs * fig_h, fig_h))
 
-ns = [0, 2, 6, 15, 31]
+  cmap = plt.get_cmap('inferno')
 
-assert len(ns) == figs
+  ns = [0, 3, 25, 50, 100]
 
-for i, n in enumerate(ns):
+  assert len(ns) == figs
 
-  ax[i].set_xlabel(f'$x$')
+  for i, n in enumerate(ns):
 
-  ax[i].set_ylabel(f'$y$')
+    ax[i].set_xlabel(f'$x$')
 
-  ax[i].title.set_text(f'Medžiagos $c_{c_id+1}$ koncentracija\n laiko momentu $n={n * dt:04f}$')
+    ax[i].set_ylabel(f'$y$')
 
-  cc = ax[i].imshow(
-    np.flip(c[c_id, n].T, axis=1),
-    cmap=cmap,
-    extent = [0, 1, 1, 0],
-    origin='upper',
-    vmin=0, 
-    vmax=vmax[c_id])
+    ax[i].title.set_text(f'Medžiagos $c_{c_id+1}$ koncentracija\n laiko momentu $t={n * dt:04f}$')
 
-normalizer = Normalize(0, vmax[c_id])
-im = cm.ScalarMappable(norm=normalizer)
-fig.colorbar(cc, ax=ax.ravel().tolist())
+    cc = ax[i].imshow(
+      np.flip(c[c_id, n].T, axis=1),
+      cmap=cmap,
+      extent = [0, 1, 1, 0],
+      origin='upper',
+      vmin=0,
+      vmax=vmax[c_id])
 
-#fig.tight_layout()
-plt.show()
+  normalizer = Normalize(0, vmax[c_id])
+  im = cm.ScalarMappable(norm=normalizer)
+  fig.colorbar(cc, ax=ax.ravel().tolist())
+
+  #fig.tight_layout()
+  plt.show()
+  fig.savefig(f'../assets/examples-c{c_id + 1}.png')
 
 # %%
