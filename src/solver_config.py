@@ -1,19 +1,20 @@
 solver_config = {
   'W': 1.0,
   'H': 1.0,
-  'dx': 1/49,
-  'dy': 1/49,
-  'D': 28e-6,
-  'k': 192,
-  'c0': 1e-6,
+  'N': 100,
+  'M': 100,
+  'D': 1e-4,
+  'k': 1,
+  'c0': 1,
   't_mix': None,
-  'B': 4,
-  'out_stride': 1
+  'B': 2,
+  'T': None,
+  'dt': None
 }
 
 def solver_config_id():
-  W, H = solver_config['W'], solver_config['H']
-  dx, dy = solver_config['dx'], solver_config['dy']
+  N, M = solver_config['N'], solver_config['M']
   D = solver_config['D']
-  N, M = int(W / dx) + 1, int(H / dy) + 1
-  return f'[N,M,D]=[{N},{M},{D}]'
+  k = solver_config['k']
+  c0 = solver_config['c0']
+  return f'[N,M,D,k,c0]=[{N},{M},{D},{k},{c0}]'

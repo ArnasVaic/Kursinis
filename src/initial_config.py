@@ -1,6 +1,6 @@
 import numpy as np
 
-def setup_initial_c1c2(N, M, c0):
+def get_c_init(N, M, c0):
 
   assert N % 2 == 0
   assert M % 2 == 0
@@ -13,4 +13,4 @@ def setup_initial_c1c2(N, M, c0):
   c2_init = np.zeros((N, M))
   c2_init[hw:, :hh] = c2_init[:hw, hh:] = 5 * c0
 
-  return c1_init, c2_init
+  return c1_init, c2_init, np.zeros((N, M))

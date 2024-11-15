@@ -3,6 +3,18 @@ import numpy as np
 from scipy.signal import convolve2d
 from mixer import mix
 
+def get_upper_dt_bound_from_config(config):
+  W = config['W']
+  H = config['H']
+  N = config['N']
+  M = config['M']
+  D  = config['D']
+  c0 = config['c0']
+  k = config['k']
+  dx = W / (N - 1)
+  dy = H / (M - 1)
+  return get_upper_dt_bound(dx, dy, D, c0, k)
+
 def get_upper_dt_bound(dx: float, dy: float, D: float, c0: float, k: float):
   """Get upper bound for the time step
 
@@ -16,9 +28,10 @@ def get_upper_dt_bound(dx: float, dy: float, D: float, c0: float, k: float):
   Returns:
       float: upper bound for time step
   """
-  return  2 * D * (dx**-2 + dy**-2) + 15 * k * c0
+  return 1.0 / (2 * D * (dx**-2 + dy**-2) + 15 * k * c0)
 
 def validate_dt(dt, dx, dy, D, c0, k):
+  print(f'dx={dx},dy={dy},D={D},c0={c0},k={k}')
   dt_upper_bound = get_upper_dt_bound(dx, dy, D, c0, k)
 
   if dt_upper_bound < dt:
@@ -30,17 +43,17 @@ def validate_solution(c):
 
   c1, c2, c3 = c
 
-  # if c1.min() < 0:
-  #   id = np.unravel_index(c1.argmin(), c1.shape)
-  #   print(f'c1 min: {c1.min()} at {id}')
+  if c1.min() < 0:
+    id = np.unravel_index(c1.argmin(), c1.shape)
+    print(f'c1 min: {c1.min()} at {id}')
 
-  # if c2.min() < 0:
-  #   id = np.unravel_index(c2.argmin(), c2.shape)
-  #   print(f'c2 min: {c2.min()} at {id}')
+  if c2.min() < 0:
+    id = np.unravel_index(c2.argmin(), c2.shape)
+    print(f'c2 min: {c2.min()} at {id}')
 
-  # if c3.min() < 0:
-  #   id = np.unravel_index(c3.argmin(), c3.shape)
-  #   print(f'c3 min: {c3.min()} at {id}')
+  if c3.min() < 0:
+    id = np.unravel_index(c3.argmin(), c3.shape)
+    print(f'c3 min: {c3.min()} at {id}')
 
   # material quantities over time
   q1 = np.sum(c1, axis=(1, 2))
@@ -99,6 +112,7 @@ def validate_inputs(
   D,
   c1_init,
   c2_init,
+  c3_init,
   threshold,
   t_mix,
   T,
@@ -116,6 +130,7 @@ def validate_inputs(
 
   assert np.all(c1_init >= 0)
   assert np.all(c2_init >= 0)
+  assert np.all(c3_init >= 0)
 
   assert threshold is None or 0 <= threshold <= 1
 
@@ -149,6 +164,28 @@ def print_sim_debug_info(t, dt, c1_init, c2_init, c1_last, c2_last):
   q = (c1_last + c2_last).sum() / (c1_init + c2_init).sum()
   print(f'[t={t * dt:.02f},step={t}] q={q:.02f}')
 
+def solvec(config, c_init, stop_threshold, debug=True):
+  W = config['W']
+  H = config['H']
+  N = config['N']
+  M = config['M']
+  D  = config['D']
+  c0 = config['c0']
+  k = config['k']
+  t_mix = config['t_mix']
+  B = config['B']
+
+  T = config['T']
+  dt = config['dt']
+
+  return solve(W, H, N, M, D, c0, k, *c_init,
+    threshold=stop_threshold,
+    t_mix=t_mix,
+    B=B,
+    debug=debug,
+    T=T,
+    dt=dt)
+
 def solve(
   W,
   H,
@@ -159,6 +196,7 @@ def solve(
   k,
   c1_init,
   c2_init,
+  c3_init,
   threshold=None,
   t_mix=None,
   B=2,
@@ -166,7 +204,7 @@ def solve(
   T=None,
   dt=None):
 
-  validate_inputs(W, H, N, M, D, c1_init, c2_init, threshold, t_mix, T, dt)
+  validate_inputs(W, H, N, M, D, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
 
   dx = W / (N - 1)
   dy = H / (M - 1)
@@ -177,8 +215,11 @@ def solve(
 
   filter = build_laplacian_filter(dx, dy)
   dt = dt or dt_upper_bound
-  c1, c2, c3 = [ c1_init ], [ c2_init ], [ np.zeros((N, M)) ]
+  c1, c2, c3 = [ c1_init ], [ c2_init ], [ c3_init ]
   t = 0
+
+  ts = [0]
+
   mixing_done = False
 
   c1_last, c2_last, c3_last = c1[0], c2[0], c3[0]
@@ -200,6 +241,9 @@ def solve(
     if t % 100 == 0:
       _ = c1.append(c1_next), c2.append(c2_next), c3.append(c3_next)
 
+      # register that we calculated data for next time step
+      ts.append(t + 1)
+
     # if T is not set, stop reaction when ratio of elements c1, c2
     # to the initial amount reaches threshold
     if stop(t, T, c1_init, c2_init, c1_last, c2_last, threshold):
@@ -218,5 +262,8 @@ def solve(
   # shape [ 3, t, width, height ]
   c = np.stack((c1, c2, c3), axis=0)
   validate_solution(c)
- 
-  return c
+
+  print(f'total time steps taken: {t}')
+  print(f'saved result t: {c1.shape[0]}')
+
+  return np.array(ts), c
