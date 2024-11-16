@@ -4,14 +4,25 @@ Pagal dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} sudarytas užda
 
 Modelio rezultatai yra saugomi kaip atskiri \textit{.npy} formato failai, kurie yra skirti saugoti \mbox{\textit{NumPy}} masyvus. Dėl praktinių rezultatų panaudojimo ir tyrimo nebūtina saugoti informacijos apie visus laiko žingsnius, todėl išsaugotuose rezultatų failuose, simuliacijos kadrai laiko kryptimi gali būti praretinti iki tūkstančio kartų, priklausomai nuo pasirinktų parametrų. Pagalbiniai duomenų vaizdavimo skriptai šiuos duomenis agreguoja į grafikus, kurie išsaugomi \textit{.png} formatu.
 
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{../assets/examples-c1.png} \\
 \includegraphics[width=\textwidth]{../assets/examples-c2.png} \\
 \includegraphics[width=\textwidth]{../assets/examples-c3.png}
-\caption{Kompiuterinio modelio rezultato pavyzdys. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{99}$, $\Delta y = \frac{1}{99}$, $k = 1$, $c_0 = 1$.}
+\caption{Kompiuterinio modelio rezultato pavyzdys. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{99}$, $\Delta y = \frac{1}{99}$, $k = 1$, $c_0 = 1$, $\Delta t$ - pasirinktas pagal \eqref{numerical-stability-condition} }
 %     \label{result-example}
 \end{figure}
 
 \subsection{Rezultatų korektiškumo tikrinimas}
+
+% Čia galima tikrint kad individualiu ląstelių
+% - keičiant dx/dy kiekio per laiką sprendinys vizualiai konverguoja
+% - kiekio grafikai per laika medžiagom c1 ir c2 mažėja, o c3 - didėja.
+% - jei nustatom reakcijos koeficienta k = 0, kiekis bus pastovus
+Tikrinti rezultatų korektiškumui yra naudojami tie patys duomenys kaip ir rezultatų vaizdavimui. Pirmiausia galime patikrinti kaip šio modelio sprendinys keičiasi didinant erdvinius žingsnius $\Delta x$ ir $\Delta y$.
+
+
+
+
 \subsection{Palyginimas su eksperimentiniais duomenimis}

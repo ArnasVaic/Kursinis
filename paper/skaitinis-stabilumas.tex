@@ -82,7 +82,7 @@ Laiko žingsnis čia vis dar priklauso nuo diskretizuotos erdvės koordinatės $
 \max c^0_{2,i,j}=5c_0,\quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1
 \end{align*}
 Taigi, kad simuliacija išliktų skaitiškai stabili, reikia, kad laiko žingsnis $\Delta t$ tenkintų šią nelygybę.
-\begin{align*}
-  \Delta t \leqslant \left(15kc_0+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
-\end{align*}
+\begin{align}
+  \Delta t \leqslant \left(15kc_0+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}\label{numerical-stability-condition}
+\end{align}
 

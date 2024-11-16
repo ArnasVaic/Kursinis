@@ -1,13 +1,22 @@
-\documentclass{VUMIFInfKursinis}
+\documentclass[
+    % english, % Klasei padavus parametrą 'english', darbas bus anglų kalba.
+    % signatureplaces % prideda parašų vietas tituliniame puslapyje
+]{VUMIFPSkursinis}
+\usepackage{float}
+\usepackage{wrapfig2}
+\usepackage{hyperref}
 \usepackage{algorithmicx}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{bm}
+\usepackage{caption}
 \usepackage{color}
 \usepackage{graphicx}
-\usepackage{url}
+\usepackage{listings}
+\usepackage{subcaption}
+\usepackage{biblatex}
 
 \usepackage{gensymb}
 \usepackage{acro}
@@ -19,17 +28,20 @@
 \setlength{\jot}{8px} 
 
 % Titulinio aprašas
+% Titulinio aprašas
 \university{Vilniaus universitetas}
 \faculty{Matematikos ir informatikos fakultetas}
-\institute{Informatikos institutas}
-\department{Programų sistemų katedra}
+\department{Programų sistemų studijų programa}
 \papertype{Kursinis darbas}
 \title{Medžiagų maišymo modeliavimas cheminėse reakcijose}
 \titleineng{Modelling the mixing of reagents in chemical reactions}
-\status{4 kurso 3 grupės studentas}
 \author{Arnas Vaicekauskas}
+\status{4 kurso 3 grupės studentas}
 \supervisor{Asist. Dr. Rokas Astrauskas}
-\date{Vilnius \\ \the\year}
+\reviewer{doc. dr. Vardauskas Pavardauskas}
+\date{Vilnius – \the\year}
+
+\bibliography{bibliografija}
 
 % Nustatymai
 % \setmainfont{Palemonas}   
@@ -53,6 +65,6 @@
 \include{maisymas}
 \include{rezultatai}
 \printbibliography[heading=bibintoc]
-\appendix
+%\appendix
 
 \end{document}
