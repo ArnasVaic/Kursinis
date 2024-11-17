@@ -79,10 +79,10 @@ Ruošiant medžiagas reakcijai yra sudaromas stoichiometrinis medžiagų mišiny
 Sudarydami tinklelį skaitiniam modeliui, padaliname stačiakampę erdvę $\Omega$ į $N\times M$ taškų, kurie yra nutolę vienas nuo kito fiksuotais atstumais $\Delta x$ ir $\Delta y$ atitinkamomis ašimis. Analogiškai, laiko erdvę $[0, T]$ padalinsime į $\tau + 1$ taškų, kurie vienas nuo kito yra nutolę tolygiais $\Delta t$ atstumais. Apibūdinta diskretų tinklelį galima užrašyti taip:
 
 \begin{align}
-    \omega_W&=\{ x_i : x_i = i\Delta x, \quad i=0, 1, \dots, N - 1 \} & (N-1)\Delta x&=W\\
-    \omega_H&=\{ y_j : y_j = j\Delta y, \quad j=0, 1, \dots, M - 1 \} & (M-1)\Delta y&=H\\
-    \omega_\tau&=\{ t_n : t_n = n\Delta t,\quad n=0, 1, \dots, \tau\} & \tau\Delta t&=T\\
-	\omega&=\omega_W\times\omega_H\times\omega_\tau
+    \omega_W&=\{ x_i : x_i = i\Delta x, \quad i=0, 1, \dots, N - 1 \} & (N-1)\Delta x&=W \label{meshx}\\
+    \omega_H&=\{ y_j : y_j = j\Delta y, \quad j=0, 1, \dots, M - 1 \} & (M-1)\Delta y&=H \label{meshy}\\
+    \omega_\tau&=\{ t_n : t_n = n\Delta t,\quad n=0, 1, \dots, \tau\} & \tau\Delta t&=T \label{mesht}\\
+	\omega&=\omega_W\times\omega_H\times\omega_\tau \label{mesh}
 \end{align}
 
 \begin{figure}[!h]

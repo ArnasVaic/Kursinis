@@ -110,6 +110,8 @@ def validate_inputs(
   N,
   M,
   D,
+  c0,
+  k,
   c1_init,
   c2_init,
   c3_init,
@@ -143,7 +145,8 @@ def validate_inputs(
   dx = W / (N - 1)
   dy = H / (M - 1)
 
-  dt_upper_bound = get_upper_dt_bound(dx, dy, D, c1_init, c2_init)
+  dt_upper_bound = get_upper_dt_bound(dx, dy, D, c0, k)
+  print(dt_upper_bound)
   if dt is not None and dt_upper_bound < dt:
     print(f'warning: it must hold that dt <= {dt_upper_bound}')
   assert dt is None or dt_upper_bound >= dt
@@ -164,7 +167,11 @@ def print_sim_debug_info(t, dt, c1_init, c2_init, c1_last, c2_last):
   q = (c1_last + c2_last).sum() / (c1_init + c2_init).sum()
   print(f'[t={t * dt:.02f},step={t}] q={q:.02f}')
 
-def solvec(config, c_init, stop_threshold, debug=True):
+def solvec(
+    config,
+    c_init,
+    stop_threshold=None,
+    debug=True):
   W = config['W']
   H = config['H']
   N = config['N']
@@ -207,7 +214,7 @@ def solve(
   dt=None,
   frame_stride=1):
 
-  validate_inputs(W, H, N, M, D, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
+  validate_inputs(W, H, N, M, D, c0, k, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
 
   dx = W / (N - 1)
   dy = H / (M - 1)

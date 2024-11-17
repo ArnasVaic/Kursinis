@@ -8,9 +8,9 @@ solver_config = {
   'c0': 1,
   't_mix': None,
   'B': 2,
-  'T': 5000,
-  'dt': None,
-  'frame_stride': 50
+  'T': 360000,
+  'dt': 0.00001,
+  'frame_stride': 1200
 }
 
 def solver_config_id():
