@@ -23,21 +23,14 @@ Modelio rezultatai yra saugomi kaip atskiri \textit{.npy} formato failai, kurie 
 % Tikrinti rezultatų korektiškumui yra naudojami tie patys duomenys kaip ir rezultatų vaizdavimui. 
 
 Nagrinėjant programos korektiškumą naudosime modelio rezultatų duomenis. Dėl didelės rezultatų dimensijos būtų sunku interpretuoti grafiškai pavaizduotus sprendinio duomenis, kaip \ref{result-example}-ame pavyzdyje, todėl vietoj viso sprendinio tyrinėsime medžiagų kiekius sistemoje. Galime išskleisti formulę medžiagos kiekiui bendru atveju \eqref{quantity-general} ir gausime formulę diskrečiam atvejui:
-
 \begin{align}
     q(t) = \int_\Omega c\,dV = \int_0^W \int_0^H c(x, y, t)\,dy\,dx
 \end{align}
-
 Pakeičiam dvigubą integralą su Rymano suma ir gaunam, kad medžiagos $c_m$ kiekis diskrečiu laiko momentu $n$ yra:
-
 \begin{align}
     q_{m, n}= \sum_{i=0}^{N-1}\sum_{j=0}^{M-1} c_{m, i,j}^n \frac{1}{N\cdot M} \quad m=1, 2, 3
 \end{align}
-
-% Jei programa veikia korektiškai, galima tikėtis, kad mažinant erdvės žingsnius $\Delta x$ ir $\Delta y$, skaitinio sprendinys artės prie tikrojo sprendinio:
-
 Norint nustatyti ar programa veikia korektiškai galima tikrinti ar mažinant žingsnių dydį, skaitinis sprendinys artėja prie tikrojo sprendinio. Šiuo atveju mažinsime erdvės žingsnius $\Delta x$ ir $\Delta y$. Tai lemia diskretaus tinklelio taškų kiekio padidėjimą, nes egzistuoja atvirkštinė priklausomybė tarp erdvinių žingsnių dydžio ir diskrečių taškų kiekio atitinkamomis ašimis (\ref{meshx}, \ref{meshy}).
-
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{../assets/space-error-v2.png} \\
@@ -45,10 +38,11 @@ Norint nustatyti ar programa veikia korektiškai galima tikrinti ar mažinant ž
     %\label{result-example}
 \end{figure}
 
-Iš grafiko galima matyti, kad eksponentiškai didinant diskrečių taškų skaičių sprendinių grafikai duoda vis tikslesnius rezultatus. Taip pat galima pastebėti, kad kažkuriuo momentu diskrečios erdvės taškų didinimas nebeduoda ypatingai didelių rezultato pagerėjimų, taip yra todėl, išreikštinių skirtumų metodo paklaida, kuria gauname iš erdvinių išvestinių skaičiavimo yra antros eilės.
+Iš grafiko galima matyti, kad eksponentiškai didinant diskrečių taškų skaičių sprendinių grafikai duoda vis tikslesnius rezultatus. Taip pat galima pastebėti, kad kažkuriuo momentu diskrečios erdvės taškų didinimas nebeduoda ypatingai didelių rezultato pagerėjimų, taip yra todėl, išreikštinių skirtumų metodo paklaida yra antros eilės pagal erdvinius žingsnius $\Delta x$ ir $\Delta y$
 
 \begin{align}
-    \frac{d^2f}{dx^2}=\frac{f(x - \Delta x) - 2f(x) + f(x + \Delta x)}{\Delta x^2} + O(\Delta x^2)
+    \frac{\partial^2c}{\partial x^2}\Big|_{x=x_i, y=y_j, t=t_n}=\frac{c^n_{i-1,j} - 2c^n_{i,j} + c^n_{i+1,j}}{\Delta x^2} + \mathcal{O}(\Delta x^2)\\
+    \frac{\partial^2c}{\partial y^2}\Big|_{x=x_i, y=y_j, t=t_n}=\frac{c^n_{i,j-1} - 2c^n_{i,j} + c^n_{i,j+1}}{\Delta y^2} + \mathcal{O}(\Delta y^2)
 \end{align}
 
 \subsection{Palyginimas su eksperimentiniais duomenimis}
