@@ -1,16 +1,16 @@
 solver_config = {
   'W': 1.0,
   'H': 1.0,
-  'N': 100,
-  'M': 100,
+  'N': 80,
+  'M': 80,
   'D': 5e-2,
-  'k': 1,
+  'k': 0,
   'c0': 1,
   't_mix': None,
   'B': 2,
   'T': 360000,
   'dt': 0.00001,
-  'frame_stride': 1200
+  'frame_stride': 1800
 }
 
 def solver_config_id():

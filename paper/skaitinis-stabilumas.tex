@@ -64,14 +64,16 @@ Iš čia galime išvesti išraišką medžiagos kiekio pokyčiui per laiką:
   \frac{\partial q_2}{\partial t}=-5k\int_\Omega c_1c_2\,dV + D\int_\Omega \Delta c_2\,dV=-5k\int_\Omega c_1c_2\,dV + D\int_\Omega \nabla \cdot (\nabla c_2)\,dV
 \end{align}
 Pagal Gauso-Ostrogradskio divergencijos teoremą ir kraštinę sąlygą \eqref{general-boundary-cond} gauname, kad:
-\begin{align}
+\begin{align}\label{no-q-change}
 \int_\Omega \nabla \cdot (\nabla c_m) dV = \int_{\partial\Omega} \nabla c_k \cdot \vec{n}\, dS = 0,\quad m=1,2
 \end{align}
 Todėl pirmos ir antros medžiagų kiekio pokytis per laiką bus ne teigiamas:
+\begin{subequations} \label{negative-quantity}
 \begin{align}
   \frac{\partial q_1}{\partial t}=-3k\int_\Omega c_1c_2\,dV \leqslant 0\\
   \frac{\partial q_2}{\partial t}=-5k\int_\Omega c_1c_2\,dV\leqslant 0
 \end{align}
+\end{subequations}
 Tai reiškia, kad maksimalios pirmos ir antros medžiagų reikšmės bus laiko momente $n=0$, tad nelygybę galime suprastinti iki šios formos:
 \begin{align}
   \Delta t \leqslant \left(\max(3kc^{0}_{2,i,j}, 5kc^{0}_{1,i,j})+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}

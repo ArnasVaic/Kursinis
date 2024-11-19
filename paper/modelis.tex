@@ -138,15 +138,18 @@ Sudarydami tinklelį skaitiniam modeliui, padaliname stačiakampę erdvę $\Omeg
 \newpage
 \subsection{Dviejų dimensijų skaitinis modelis Dekarto koordinačių sistemoje}
 
-Remiantis išreikštiniu baigtinių skirtumų metodu pakeisime sistemos \eqref{rect} lygtis su išvestinių aproksimacijomis:
+Remiantis išreikštiniu baigtinių skirtumų metodu pakeisime sistemos \eqref{rect} lygtis su išvestinių aproksimacijomis gautomis skleidžiant išvestines pagal Teiloro eilutę.
 
+\begin{subequations} \label{finite-diffs}
 \begin{align}
-	\frac{\partial c}{\partial t}\Big|_{x=x_i, y=y_j, t=t_n}=\frac{}{}
-    \frac{\partial^2c}{\partial x^2}\Big|_{x=x_i, y=y_j, t=t_n}=\frac{c^n_{i-1,j} - 2c^n_{i,j} + c^n_{i+1,j}}{\Delta x^2} + \mathcal{O}(\Delta x^2)\\
-    \frac{\partial^2c}{\partial y^2}\Big|_{x=x_i, y=y_j, t=t_n}=\frac{c^n_{i,j-1} - 2c^n_{i,j} + c^n_{i,j+1}}{\Delta y^2} + \mathcal{O}(\Delta y^2)
+	\frac{\partial c}{\partial t}\Big|_{x=x_i, y=y_j, t=t_n}&=\frac{c^{n+1}_{i,j}-c^n_{i,j}}{\Delta t} + \mathcal{O}(\Delta t)\\
+    \frac{\partial^2c}{\partial x^2}\Big|_{x=x_i, y=y_j, t=t_n}&=\frac{c^n_{i-1,j} - 2c^n_{i,j} + c^n_{i+1,j}}{(\Delta x)^2} + \mathcal{O}((\Delta x)^2)\\
+    \frac{\partial^2c}{\partial y^2}\Big|_{x=x_i, y=y_j, t=t_n}&=\frac{c^n_{i,j-1} - 2c^n_{i,j} + c^n_{i,j+1}}{(\Delta y)^2} + \mathcal{O}((\Delta y)^2)
 \end{align}
+\end{subequations}
 
-iš dvimačio modelio gaunamas skaitinis modelis:
+Įstate aproksimacijų išraiškas gauname dvimatį skaitini modelį:
+
 \begin{subequations} \label{numerical-eqs}
 	\begin{align}
 		\frac{c^{n+1}_{1,i,j}-c^n_{1,i,j}}{\Delta t} & =

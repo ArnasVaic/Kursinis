@@ -34,15 +34,19 @@ Norint nustatyti ar programa veikia korektiškai galima tikrinti ar mažinant ž
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{../assets/space-error-v2.png} \\
-    \caption{Medžiagų priklausomybė nuo laiko. Čia $\tau=3.6\times 10^5$, $D=0.05$, $W = 1$, $H=1$, $k = 1$, $c_0 = 1$, $\Delta t = 1\times 10^{-5}$, $\Delta x$, $\Delta y$ - kintami ir priklauso nuo $N$ bei $M$ }
+    \caption{Kompiuterinio modelio rezultatai - medžiagų kiekių priklausomybė nuo laiko. Čia $\tau=3.6\times 10^5$, $D=0.05$, $W = 1$, $H=1$, $k = 1$, $c_0 = 1$, $\Delta t = 1\times 10^{-5}$, $\Delta x$, $\Delta y$ - kintami ir priklauso nuo $N$ bei $M$ }
     %\label{result-example}
 \end{figure}
 
-Iš grafiko galima matyti, kad eksponentiškai didinant diskrečių taškų skaičių sprendinių grafikai duoda vis tikslesnius rezultatus. Taip pat galima pastebėti, kad kažkuriuo momentu diskrečios erdvės taškų didinimas nebeduoda ypatingai didelių rezultato pagerėjimų, taip yra todėl, išreikštinių skirtumų metodo paklaida yra antros eilės pagal erdvinius žingsnius $\Delta x$ ir $\Delta y$
+Iš grafiko galima matyti, kad eksponentiškai didinant diskrečių taškų skaičių sprendinių grafikai duoda vis tikslesnius rezultatus. Deja, kažkuriuo momentu diskrečios erdvės taškų didinimas nebeduoda ypatingai didelių rezultato pagerėjimų, taip yra todėl, išreikštinių skirtumų metodo paklaida yra antros eilės pagal erdvinius žingsnius $\Delta x$ ir $\Delta y$ \eqref{finite-diffs}. Grafikuose taip galima įžvelgti, kad pirmų dviejų medžiagų kiekiai per laiką griežtai ne mažėja - tai mes teoriškai parodėme \eqref{negative-quantity}, taip, žinoma, yra dėl medžiagų reakcijos. Jei reakcijos koeficientas būtų lygus nuliui, vienintelis sistemoje vykstantis procesas būtų pirmų dviejų medžiagų difuzija, jei skaitinis modelis veikia korektiškai, kompiuterinio modelio rezultatuose turėtų būti galima matyti, kad difuzijos metu medžiagos kiekis sistemoje nekinta, tai parodėme \eqref{no-q-change}.
 
-\begin{align}
-    \frac{\partial^2c}{\partial x^2}\Big|_{x=x_i, y=y_j, t=t_n}=\frac{c^n_{i-1,j} - 2c^n_{i,j} + c^n_{i+1,j}}{\Delta x^2} + \mathcal{O}(\Delta x^2)\\
-    \frac{\partial^2c}{\partial y^2}\Big|_{x=x_i, y=y_j, t=t_n}=\frac{c^n_{i,j-1} - 2c^n_{i,j} + c^n_{i,j+1}}{\Delta y^2} + \mathcal{O}(\Delta y^2)
-\end{align}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../assets/no-reaction.png}
+    \caption{Kompiuterinio modelio rezultatai - medžiagų kiekių priklausomybė nuo laiko, kai reakcija nevyksta. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{79}$, $\Delta y = \frac{1}{79}$, $k = 0$, $c_0 = 1$, $\Delta t = 1\times 10^{-5}$ }
+    \label{no-reaction}
+\end{figure}
+
+Šis grafikas nėra ypatingai turiningas, tačiau svarbu įžvelgti esminius faktus - visų trijų medžiagų kiekiai sistemoje bėgant laikui nesikeičia, o trečios medžiagos kiekis visos simuliacijos metu yra lygus nuliui. Šie rezultatai intuityvus, tačiau šiuo atveju beveik nematome difuzijos poveikio sistemai.
 
 \subsection{Palyginimas su eksperimentiniais duomenimis}
