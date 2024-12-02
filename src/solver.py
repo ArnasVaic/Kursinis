@@ -28,6 +28,7 @@ def get_upper_dt_bound(dx: float, dy: float, D: float, c0: float, k: float):
   Returns:
       float: upper bound for time step
   """
+  print(dx, dy)
   return 1.0 / (2 * D * (dx**-2 + dy**-2) + 15 * k * c0)
 
 def validate_dt(dt, dx, dy, D, c0, k):
