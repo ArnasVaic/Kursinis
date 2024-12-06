@@ -42,9 +42,21 @@ Norint nustatyti, ar programa veikia korektiškai galima tikrinti, ar mažinant 
 
 \ref{results-space-error}-ame pav. matome, kad eksponentiškai didinant diskrečių taškų skaičių, sprendinių grafikai tolygiai artėja prie sprendinio su didžiausiu tikslumu, darome prielaidą, kad didinant diskrečių taškų skaičių, skaitinis sprendinys konverguoją į tikrąjį sprendinį. Kažkuriuo momentu diskrečios erdvės taškų kiekio didinimas nebeduoda ypatingai didelių rezultato pagerėjimų. Sprendinių grafikuose taip pat galima įžvelgti, kad pirmų dviejų medžiagų kiekiai per laiką griežtai ne mažėja - tai mes teoriškai parodėme \eqref{negative-quantity}, taip, žinoma, yra dėl  medžiagų reakcijos. 
 
+Analogiškai galima būtų fiksuoti erdvinius žingsnius $\Delta x, \Delta y$ ir stebėti kaip keičiasi skaitinis sprendinys mažinant laiko žingsnį $\Delta t$. Dėl priežasčių, kurios vėliau bus akivaizdžios vaizduosime du sprendinius - vienas iš jų gautas pasirinkus $\Delta t$ pagal \eqref{dt-ineq}, o kitam paimta konkreti reikšmė $\Delta t = 10^{-4}$.
+
+\begin{figure}[h!]
+
+\centering
+
+\caption{Kompiuterinio modelio rezultatai - medžiagų kiekių priklausomybė nuo laiko. Čia $\tau=3.6\times 10^5$, $D=0.05$, $W = 1$, $H=1$, $k = 1$, $c_0 = 1$, $\Delta x = \Delta y = 79^{-1}$}
+
+\includegraphics[width\textwidth]{../assets/time-error-2.png}
+
+\label{time-error}
+
+\end{figure}
+
 \newpage
-
-
 
 \subsubsection*{Korektiškumo tikrinimas kai vyksta tik difuzija}
 
@@ -64,13 +76,9 @@ Jei reakcijos koeficientas būtų lygus nuliui, vienintelis sistemoje vykstantis
 \includegraphics[width=\textwidth]{../assets/only-diffusion-c1.png} \\
 \includegraphics[width=\textwidth]{../assets/only-diffusion-c2.png}
 \caption{Kompiuterinio modelio rezultato pavyzdys, kai vyksta tik difuzija. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{79}$, $\Delta y = \frac{1}{79}$, $k = 0$, $c_0 = 1$, $\Delta t = 1\times 10^{-5}$ }
-\label{result-example}
+\label{only-diffusion}
 \end{figure}
 
 Čia akivaizdžiai galime matyti, kad medžiagų difuzija vyksta ir einant laikui medžiagos tolygiai pasiskirsto po erdvę.
 
-\newpage
-\subsection{Palyginimas su eksperimentiniais duomenimis}
-
-%% ka cia rasyti? duoti straipsniai geriausiu atveju pateikia D-k priklausomybes grafikus arba Energijos grafikus?
 
