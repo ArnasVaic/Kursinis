@@ -6,10 +6,10 @@ Modelio rezultatai yra saugomi kaip atskiri \textit{.npy} formato failai, kurie 
 
 \begin{figure}[h!]
 \centering
+\caption{Kompiuterinio modelio rezultato pavyzdys. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{99}$, $\Delta y = \frac{1}{99}$, $k = 1$, $c_0 = 1$, $\Delta t$ - pasirinktas pagal \eqref{numerical-stability-condition} }
 \includegraphics[width=\textwidth]{../assets/examples-c1.png} \\
 \includegraphics[width=\textwidth]{../assets/examples-c2.png} \\
 \includegraphics[width=\textwidth]{../assets/examples-c3.png}
-\caption{Kompiuterinio modelio rezultato pavyzdys. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{99}$, $\Delta y = \frac{1}{99}$, $k = 1$, $c_0 = 1$, $\Delta t$ - pasirinktas pagal \eqref{numerical-stability-condition} }
 \label{result-example}
 \end{figure}
 
@@ -35,8 +35,8 @@ Pakeičiam dvigubą integralą su dviguba Rymano suma ir gaunam, kad medžiagos 
 Norint nustatyti, ar programa veikia korektiškai galima tikrinti, ar mažinant žingsnių dydį, skaitinis sprendinys artėja prie tikrojo sprendinio. Šiuo atveju mažinsime erdvės žingsnius $\Delta x$ ir $\Delta y$. Tai lemia diskretaus tinklelio taškų kiekio padidėjimą, nes egzistuoja atvirkštinė priklausomybė tarp erdvinių žingsnių dydžio ir diskrečių taškų kiekio atitinkamomis ašimis (\ref{meshx}, \ref{meshy}).
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{../assets/space-error-v2.png} \\
     \caption{Kompiuterinio modelio rezultatai - medžiagų kiekių priklausomybė nuo laiko. Čia $\tau=3.6\times 10^5$, $D=0.05$, $W = 1$, $H=1$, $k = 1$, $c_0 = 1$, $\Delta t = 1\times 10^{-5}$, $\Delta x$, $\Delta y$ - kintami ir priklauso nuo $N$ bei $M$ }
+    \includegraphics[width=\textwidth]{../assets/space-error-v2.png} \\
     \label{results-space-error}
 \end{figure}
 
@@ -66,8 +66,8 @@ Jei reakcijos koeficientas būtų lygus nuliui, vienintelis sistemoje vykstantis
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{../assets/no-reaction.png}
     \caption{Kompiuterinio modelio rezultatai - medžiagų kiekių priklausomybė nuo laiko, kai reakcija nevyksta. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{79}$, $\Delta y = \frac{1}{79}$, $k = 0$, $c_0 = 1$, $\Delta t = 1\times 10^{-5}$ }
+    \includegraphics[width=0.5\textwidth]{../assets/no-reaction.png}
     \label{no-reaction}
 \end{figure}
 
@@ -75,9 +75,9 @@ Jei reakcijos koeficientas būtų lygus nuliui, vienintelis sistemoje vykstantis
 
 \begin{figure}[h!]
 \centering
+\caption{Kompiuterinio modelio rezultato pavyzdys, kai vyksta tik difuzija. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{79}$, $\Delta y = \frac{1}{79}$, $k = 0$, $c_0 = 1$, $\Delta t = 1\times 10^{-5}$ }
 \includegraphics[width=\textwidth]{../assets/only-diffusion-c1.png} \\
 \includegraphics[width=\textwidth]{../assets/only-diffusion-c2.png}
-\caption{Kompiuterinio modelio rezultato pavyzdys, kai vyksta tik difuzija. $D = 0.05$, $W = 1$, $H = 1$, $\Delta x = \frac{1}{79}$, $\Delta y = \frac{1}{79}$, $k = 0$, $c_0 = 1$, $\Delta t = 1\times 10^{-5}$ }
 \label{only-diffusion}
 \end{figure}
 
