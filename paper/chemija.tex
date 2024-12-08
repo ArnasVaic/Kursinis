@@ -2,18 +2,22 @@
 
 \section{YAG reakcijos matematinis modeliavimas}
 
-\subsection{YAG sintezė}
+% pradedam nuo cheminės reakcijos aprašymo
+% - sumaišyti milteliai
+% 
 
-\acs{yag} milteliai gali būti sintezuojami keleta skirtingų būdų: Zolis-Gelis procesu, nusodinimu, solvoterminiu procesu, terminio purškimo procesu bei kietafaze reakcija, kuri lieka viena dažniausiai taikomų dėl savo paprastumo bei galimybės pritaikyti masinei gamybai \cite{zhangNovelSynthesisYAG2005}.
+% \subsection{YAG sintezė}
+
+% \acs{yag} milteliai gali būti sintezuojami keleta skirtingų būdų: Zolis-Gelis procesu, nusodinimu, solvoterminiu procesu, terminio purškimo procesu bei kietafaze reakcija, kuri lieka viena dažniausiai taikomų dėl savo paprastumo bei galimybės pritaikyti masinei gamybai.
 
 \subsection{Kietafazė reakcija}
 
-Šiame darbe yra modeliuojama paskutinė kietafazės reakcijos stadija, kurios metu reaguodami itrio ir aliuminio oksidai sudaro itrio aliuminio granato kristalus arba tiesiog \acs{yag}:
+Šiame darbe yra modeliuojama kietafazė reakcija, kurios metu reaguodami itrio ir aliuminio oksidai sudaro itrio aliuminio granato kristalus arba tiesiog \acs{yag}:
 \begin{align*}
   \ce{3Y_2O_3 + 5Al_2O_3 -> 2Y_3Al_5O_12}
 \end{align*}
 
-Prieš pradedant reakciją metalų oksidai yra sutrinami iki smulkiagrūdžių miltelių. Metalų oksidų mišinys yra nuolat kaitinamas 1600\degree C laipsnių temperatūroje ir periodiškai maišomas. Eksperimentiniu būdu išmatuota,kad individualių dalelių turiai prie 1600\degree C temperatūros siekia apie $\sqrt{10}\mu\text{m}^3$ \cite{ivanauskasComputationalModellingYAG2009}.
+Prieš pradedant reakciją metalų oksidai yra sutrinami iki smulkiagrūdžių miltelių ir maišomi kol susidaro homogeniškas mišinys. Metalų oksidų mišinys yra nuolat kaitinamas 1600\degree C laipsnių temperatūroje ir periodiškai maišomas. Eksperimentiniu būdu išmatuota, kad individualių mikrodalelių turiai prie 1600\degree C temperatūros siekia apie $10\mu\text{m}^3$ \cite{ivanauskasComputationalModellingYAG2009}. Tokioje temperatūroje metalų oksidai lydosi ir vyksta medžiagų difuzija, todėl reakcijos produktas formuojasi ties mikrodalelių sienelėmis.
 
 \begin{figure}[h]
   \centering
@@ -22,4 +26,12 @@ Prieš pradedant reakciją metalų oksidai yra sutrinami iki smulkiagrūdžių m
   \label{fig:metal-oxides-mixuter}
 \end{figure}
 
-Tokioje temperatūroje metalų oksidai lydosi ir vyksta difuzija, dėl šios priežasties cheminei reakcija yra modeliuojama su difuzijos-reakcijos sistema.
+Verta paminėti, kad \ref{fig:metal-oxides-mixuter}-ame pavyzdyje matoma iliustracija nėra iki galo tiksli, yra žinoma, kad mikrodalelės yra išsidėsčiusios glaudžiai.
+\cite{ivanauskasModellingSolidState2005} Ivanauskas et al pasiūlė modelį, kuriame mikrodalelės yra laikomos kubo arba kvadrato formos priklausomai nuo dimensijos, kurioje modeliuojama reakciją. Laikoma, kad dalelės erdvėje yra periodiškai pasikartojančios, todėl užtenka modeliuoti mažą sritį, kurioje susiduria skirtingų medžiagų dalelės. 
+
+\begin{figure}[h]
+  \centering
+  \caption{Periodiškas reakcijos erdvės modelis, čia dalelės tūris $V=a^3=10\mu m$}
+  \includegraphics[width=0.75\linewidth]{assets/periodic-space.png}
+  \label{fig:periodic-space}
+\end{figure}
