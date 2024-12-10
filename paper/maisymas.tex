@@ -2,7 +2,20 @@
 \section{Maišymo modeliavimas}
 \subsection{Maišymo proceso modelis}
 
-Kaip jau buvo minėta anksčiau, ši reakcija gali užtrukti kelias valandas, todėl chemikai bando paspartinti šį procesą išmaišydami reagentus proceso metu. Išmaišymas gali vykti kelis kartus. Išmaišymas vyksta ištraukus reagentus iš krosnies ir todėl aplinkos temperatūra maišymo metu yra daug kartų žemesnė negu reakcijos vykdymo temperatūra.
+Ši reakcija gali užtrukti kelias valandas, todėl chemikai bando paspartinti šį procesą išmaišydami reagentus proceso metu. Per visą reakcijos procesą, išmaišymas gali būti vykdomas kelis kartus. Išmaišymas vyksta ištraukus reagentus iš krosnies ir todėl aplinkos temperatūra maišymo metu yra daug kartų žemesnė negu reakcijos vykdymo temperatūra. Išmaišymo procesui modeliuoti nėra apsvarstoma temperatūros kaita - daroma prielaida, kad pradėjus mažinti krosnies temperatūrą, medžiagos nustoja reaguoti. Tada išmaišymą galima modeliuoti kaip momentinį procesą, kuris įvyksta tarp kompiuterinio modelio žingsnių. 
+
+Yra žinoma, kad fizinio maišymo metu, dalelės neskyla ir netampa smulkesnės, todėl maišymą modeliuosime kaip reaguojančių dalelių atsitiktinis sukeitimas vietomis joms priskiriant atsitiktinius pasisukimo kampus. Pradinių sąlygų \eqref{intial-cond} atveju, modeliuojame keturių mikrodalelių reakcija, todėl
+
+Fizinis maišymo procesas procesas nėra determinis
+
+
+
+Taigi išmaišymą galima apibrėžti kaip funkciją:
+
+\begin{align}
+    \mathcal{M}(c_m) = c_m^*
+\end{align}
+
 
 % aprasyti kaip tas maisymas atrodo is tikro ir kaip skiriasi nuo modelio
 
