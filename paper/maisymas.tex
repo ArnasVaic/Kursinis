@@ -2,19 +2,88 @@
 \section{Maišymo modeliavimas}
 \subsection{Maišymo proceso modelis}
 
-Ši reakcija gali užtrukti kelias valandas, todėl chemikai bando paspartinti šį procesą išmaišydami reagentus proceso metu. Per visą reakcijos procesą, išmaišymas gali būti vykdomas kelis kartus. Išmaišymas vyksta ištraukus reagentus iš krosnies ir todėl aplinkos temperatūra maišymo metu yra daug kartų žemesnė negu reakcijos vykdymo temperatūra. Išmaišymo procesui modeliuoti nėra apsvarstoma temperatūros kaita - daroma prielaida, kad pradėjus mažinti krosnies temperatūrą, medžiagos nustoja reaguoti. Tada išmaišymą galima modeliuoti kaip momentinį procesą, kuris įvyksta tarp kompiuterinio modelio žingsnių. 
+Vykstant reakcijai, chemikai periodiškai ištraukia reagentus iš krosnies, kurioje vyksta reakcija, todėl maišymas vyksta prie daug žemesnės temperatūros. Milteliai yra išmaišomi nepažeidžiant mikrodalelių struktūros - t. y. maišoma taip, kad mikrodalelės neskiltų. Konstruojant kompiuterinį modelį šiam procesui atkreipsime dėmesį į kelias svarbias detales:
 
-Yra žinoma, kad fizinio maišymo metu, dalelės neskyla ir netampa smulkesnės, todėl maišymą modeliuosime kaip reaguojančių dalelių atsitiktinis sukeitimas vietomis joms priskiriant atsitiktinius pasisukimo kampus. Pradinių sąlygų \eqref{intial-cond} atveju, modeliuojame keturių mikrodalelių reakcija, todėl
+\begin{itemize}
+    \item Išmaišymas vyksta prie daug žemesnės temperatūros negu reakcija
+    \item Išmaišymas gali vykti kelis kartus
+    \item Išmaišymo metu mikrodalelės neskyla
+    \item Išmaišymo procesas nėra deterministinis
+\end{itemize}
 
-Fizinis maišymo procesas procesas nėra determinis
+\paragraph{Maišymas prie žemesnės temperatūros}
 
+Kadangi maišymas vyksta prie daug žemesnės temperatūros negu pati reakcija, darysime prielaidą, kad ištraukus reagentus iš krosnies cheminė reakcija ir difuzija nevyksta, todėl medžiagų maišymą modeliuosime kaip momentinį procesą, kuris įvyksta tarp diskrečių laiko žingsnių.
 
+\paragraph{Maišymas kelis kartus}
 
-Taigi išmaišymą galima apibrėžti kaip funkciją:
+Praktikoje vykdant šią reakcija chemikai savo nuožiūra pasirenka laiką, kuriuo vykdys išmaišymą, todėl ir kompiuterinis modelis turėtų suteikti vartotojui pasirinkimą nurodyti konkrečius laiko momentus, kada vyks medžiagų išmaišymas. Šiuos laikus žymėsime taip:
 
 \begin{align}
-    \mathcal{M}(c_m) = c_m^*
+    t^1_\text{mix}, t^2_\text{mix}, \dots, t^{T^*}_\text{mix} \quad T^*\in \mathbb{N}
 \end{align}
+
+Čia $T^*$ -- bendras išmaišymų skaičius, o $t^i_\text{mix}$ -- $i$-tojo išmaišymo laikas. Kadangi kompiuterinis modelis laiko informaciją apie diskrečius laiko taškus $t_n$, mes negalime tiesiogiai apibrėžti sąlygos, kad išmaišymas vyks konkrečiu laiko momentu $t^i_\text{mix}$, todėl medžiagas išmaišysime einamajame laiko žingsnyje $t_n$, kuris yra artimiausias išmaišymo laikui $t^i_\text{mix}$:
+
+\begin{figure}[!h]
+\centering
+\caption{Šiuo atveju, išmaišymas įvyks laiko žingsniu $t_n$, o ne $t_{n+1}$, nes $t^i_\text{mix}$ yra arčiau laiko momento $t_n$}
+\label{mix-inequality-graphic}
+\begin{tikzpicture}[thick]
+
+% Main timeline
+\draw[->] (-0.5,0) -- (6.5,0) node[right] {$t$}; % Timeline with axis label
+
+% Time points
+\foreach \x/\label in {0/{$t_n$}, 2/{$t^i_\text{mix}$}, 6/{$t_{n+1}$}} {
+    \draw (\x,0.1) -- (\x,-0.1) node[below] {\label};
+}
+
+% Braces for interval
+\draw[decorate,decoration={brace,amplitude=10pt,mirror}] (0,-1) -- (6,-1) node[midway,below=10pt] {$\Delta t$};
+
+
+\end{tikzpicture}
+\end{figure}
+
+arba kitaip sakant išmaišymas įvyks laiko žingsniu $t_n$, jei:
+
+\begin{align}
+    \vert t_n - t^i_\text{mix} \vert < \frac{1}{2}\Delta t \label{mix-inequality}
+\end{align}
+
+\paragraph{Nedeterministinis maišymas}
+
+Maišymas praktikoje yra chaotiškas procesas, todėl sudarydami kompiuterinį modelį turime į tai atsižvelgti. Maišymą modeliuosime kaip reakcijos erdvės sričių atsitiktinį išdėstymą. Pradinė erdvę $\Omega$ padalinsime į mažesnes, nepersidengiančias, vienodas kvadratines sritis $\Omega_i$:
+
+\begin{figure}[!h]
+\centering
+\caption{Padalinta reakcijos erdvė $\Omega$}
+\label{mix-inequality-graphic}
+\begin{tikzpicture}
+    % Draw the outer solid border
+    \draw[thick] (0, 0) rectangle (2, 2);
+    
+    % Draw the grid lines
+    \draw (1, 0) -- (1, 2);
+    \draw (0, 1) -- (2, 1);
+    
+    % Add indexed \Omega to the center of each cell
+    \foreach \x in {0, 1} {
+        \foreach \y in {0, 1} {
+            \node at (\x + 0.5, \y + 0.5) {$\Omega_{\the\numexpr \x * 2 + \y + 1 \relax}$};
+        }
+    }
+\end{tikzpicture}
+\end{figure}
+
+Tada sugeneruosime atsitiktinę 4-permutaciją $\sigma$ ir 4 atsitiktinius kampus $\theta_i \in \{0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}\}$
+
+
+\paragraph{Neskylančios mikrodalelės}
+
+Maišymą modeliuosime 
+Norint atkartoti praktikoje pastebimą faktą, kad išmaišymo metu reagentų mikrodalelės nėra smulkinamos, modeliuodami medžiagų maišymą apsiribojime, kad 
 
 
 % aprasyti kaip tas maisymas atrodo is tikro ir kaip skiriasi nuo modelio
