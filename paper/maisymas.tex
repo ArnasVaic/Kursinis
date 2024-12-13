@@ -71,18 +71,17 @@ Maišymas praktikoje yra chaotiškas procesas, todėl sudarydami kompiuterinį m
     % Add indexed \Omega to the center of each cell
     \foreach \x in {0, 1} {
         \foreach \y in {0, 1} {
-            \node at (\x + 0.5, \y + 0.5) {$\Omega_{\the\numexpr \x * 2 + \y + 1 \relax}$};
+            \node at (\x + 0.5, \y + 0.5) {\Omega_{\the\numexpr \x * 2 + \y + 1 \relax}};
         }
     }
 \end{tikzpicture}
 \end{figure}
 
-Tada sugeneruosime atsitiktinę 4-permutaciją $\sigma$ ir 4 atsitiktinius kampus $\theta_i \in \{0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}\}$
+Tada sugeneruosime atsitiktinę 4-permutaciją $\sigma$ ir 4 atsitiktinius kampus $\theta_i \in \{0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}\}$ Kiekviena iš sričių $\Omega_i$ keliauja į poziciją, kurioje yra sritis $\Omega_{\sigma(i)}$, tačiau pasukta kampu $\theta_i$. Čia galime bandyti nuspėti tokios transformacijos rezultatus - po sričių išmaišymo, kai kurios medžiagų dalelių sienos, kurios prieš tai buvo nukreiptos į kvadrato išorę, susilies ir dėl to 
 
 
 \paragraph{Neskylančios mikrodalelės}
 
-Maišymą modeliuosime 
 Norint atkartoti praktikoje pastebimą faktą, kad išmaišymo metu reagentų mikrodalelės nėra smulkinamos, modeliuodami medžiagų maišymą apsiribojime, kad 
 
 
