@@ -60,25 +60,40 @@ Maišymas praktikoje yra chaotiškas procesas, todėl sudarydami kompiuterinį m
 \centering
 \caption{Padalinta reakcijos erdvė $\Omega$}
 \label{mix-inequality-graphic}
+
 \begin{tikzpicture}
-    % Draw the outer solid border
-    \draw[thick] (0, 0) rectangle (2, 2);
-    
-    % Draw the grid lines
-    \draw (1, 0) -- (1, 2);
-    \draw (0, 1) -- (2, 1);
-    
-    % Add indexed \Omega to the center of each cell
-    \foreach \x in {0, 1} {
-        \foreach \y in {0, 1} {
-            \node at (\x + 0.5, \y + 0.5) {\Omega_{\the\numexpr \x * 2 + \y + 1 \relax}};
-        }
-    }
+% Draw grid
+\draw[thick] (0,0) grid (4,4);
+
+% Row 1
+\node at (0.5, 3.5) {$\Omega_1$};
+\node at (1.5, 3.5) {$\Omega_2$};
+\node at (2.5, 3.5) {$\cdots$};
+\node at (3.5, 3.5) {$\Omega_B$};
+
+% Row 2
+\node at (0.5, 2.5) {$\Omega_{B + 1}$};
+\node at (1.5, 2.5) {$\Omega_{B + 2}$};
+\node at (2.5, 2.5) {$\cdots$};
+\node at (3.5, 2.5) {$\Omega_{2B}$};
+
+% Row 3
+\node at (0.5, 1.5) {$\vdots$};
+\node at (1.5, 1.5) {$\vdots$};
+\node at (2.5, 1.5) {$\ddots$};
+\node at (3.5, 1.5) {$\vdots$};
+
+% Row 4
+\node at (0.5, 0.5) {$\cdots$};
+\node at (1.5, 0.5) {$\cdots$};
+\node at (2.5, 0.5) {$\cdots$};
+\node at (3.5, 0.5) {$\Omega_{B^2}$};
 \end{tikzpicture}
 \end{figure}
 
-Tada sugeneruosime atsitiktinę 4-permutaciją $\sigma$ ir 4 atsitiktinius kampus $\theta_i \in \{0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}\}$ Kiekviena iš sričių $\Omega_i$ keliauja į poziciją, kurioje yra sritis $\Omega_{\sigma(i)}$, tačiau pasukta kampu $\theta_i$. Čia galime bandyti nuspėti tokios transformacijos rezultatus - po sričių išmaišymo, kai kurios medžiagų dalelių sienos, kurios prieš tai buvo nukreiptos į kvadrato išorę, susilies ir dėl to 
+Tada sugeneruosime atsitiktinę $B^2$-permutaciją $\sigma: \{ 1, 2, \dots, B^2 \} \to \{ 1, 2, \dots, B^2 \} $ ir $B^2$ atsitiktinių kampų $\theta_i \in \{0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}\}$. Kiekviena iš sričių $\Omega_i$ keliauja į poziciją, kurioje yra sritis $\Omega_{\sigma(i)}$, tačiau pasukta kampu $\theta_i$. Čia, kaip kompiuterinio modelio vartotojai, mes galime pasirinkti sričių kiekio parametrą $B\in\mathbb{N}$, tačiau reikia užtikrinti, kad diskrečių erdvės taškų kiekiai $N, M$ atitinkamomis ašimis būtų dalomi iš $B$. 
 
+Atlikus tokį erdvės sudalinimą, gali atsitikti taip, kad kai kurių sričių $\Omega_i$ kaimynės bus tos pačios medžiagos arba atsisukusios į srities $\Omega$ išorę ir dėl to ties jų sandūra reakcija nevyks. Po išmaišymo tai gali pasikeisti ir galime daryti spėjimą, kad turėtume matyti staigų reakcijos greičio padidėjimą. 
 
 \paragraph{Neskylančios mikrodalelės}
 
