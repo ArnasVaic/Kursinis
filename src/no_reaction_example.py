@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import solver
 from solver_config import *
+plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'STIXGeneral'
 
 t, c = solver.solvec(solver_config, debug=True)
 
