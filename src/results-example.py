@@ -22,12 +22,14 @@ vmax = [ 3 * c0, 5 * c0, c[2].max() ]
 
 
 # %%
+plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'STIXGeneral'
 
 def index_of_nearest(array, value):
   array = np.asarray(array)
   return (np.abs(array - value)).argmin()
 
-FIG_HEIGHT, FIG_CNT = 5, 5
+FIG_HEIGHT, FIG_CNT = 3, 5
 FIG_SIZE = (FIG_CNT * FIG_HEIGHT, FIG_HEIGHT)
 
 # timestamps to visualize (hours)
@@ -81,7 +83,6 @@ for element_id in range(3):
   normalizer = Normalize(0, vmax[element_id])
   im = cm.ScalarMappable(norm=normalizer)
   fig.colorbar(cc, ax=ax.ravel().tolist())
-  plt.savefig(f'example-{element_id}.png', format='png')
-  plt.show()
+  plt.savefig(f'all-only-diff-{element_id}.pdf')
 
 # %%

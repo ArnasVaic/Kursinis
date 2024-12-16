@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 from scipy.signal import convolve2d
+from initial_config import get_c_init
 from mixer import mix
 
 def get_upper_dt_bound_from_config(config):
@@ -28,7 +29,6 @@ def get_upper_dt_bound(dx: float, dy: float, D: float, c0: float, k: float):
   Returns:
       float: upper bound for time step
   """
-  print(dx, dy)
   return 1.0 / (2 * D * (dx**-2 + dy**-2) + 15 * k * c0)
 
 def validate_dt(dt, dx, dy, D, c0, k):
@@ -147,7 +147,6 @@ def validate_inputs(
   dy = H / (M - 1)
 
   dt_upper_bound = get_upper_dt_bound(dx, dy, D, c0, k)
-  print(dt_upper_bound)
   if dt is not None and dt_upper_bound < dt:
     print(f'warning: it must hold that dt <= {dt_upper_bound}')
   assert dt is None or dt_upper_bound >= dt
@@ -168,11 +167,7 @@ def print_sim_debug_info(t, dt, c1_init, c2_init, c1_last, c2_last):
   q = (c1_last + c2_last).sum() / (c1_init + c2_init).sum()
   print(f'[t={t * dt:.02f},step={t}] q={q:.02f}')
 
-def solvec(
-    config,
-    c_init,
-    stop_threshold=None,
-    debug=True):
+def solvec(config, debug=False):
   W = config['W']
   H = config['H']
   N = config['N']
@@ -181,14 +176,16 @@ def solvec(
   c0 = config['c0']
   k = config['k']
   t_mix = config['t_mix']
+  threshold = config['threshold']
   B = config['B']
-
   T = config['T']
   dt = config['dt']
   frame_stride = config['frame_stride']
 
+  c_init = get_c_init(N, M, c0)
+
   return solve(W, H, N, M, D, c0, k, *c_init,
-    threshold=stop_threshold,
+    threshold=threshold,
     t_mix=t_mix,
     B=B,
     debug=debug,
@@ -216,6 +213,8 @@ def solve(
   frame_stride=1):
 
   validate_inputs(W, H, N, M, D, c0, k, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
+
+  #print(W, H, N, M, D, c0, k, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
 
   dx = W / (N - 1)
   dy = H / (M - 1)

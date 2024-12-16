@@ -1,4 +1,12 @@
 solver_config = {
+
+  # frame stride
+  'frame_stride': 50,
+
+  # time step
+  'dt': None,
+
+  # reaction parameters
   'W': 2.154434690031884,
   'H': 2.154434690031884,
   'N': 80,
@@ -6,11 +14,14 @@ solver_config = {
   'D': 28e-6,
   'k': 192,
   'c0': 1e-6,
-  't_mix': None,
-  'B': 2,
+  
+  # stop condition
+  'threshold': None,
   'T': 10000,
-  'dt': None,
-  'frame_stride': 50
+  
+  # mixing parameters
+  'B': 2,
+  't_mix': None,
 }
 
 def solver_config_id():
