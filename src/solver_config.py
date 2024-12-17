@@ -1,7 +1,7 @@
 solver_config = {
 
   # frame stride
-  'frame_stride': 50,
+  'frame_stride': 10,
 
   # time step
   'dt': None,
@@ -16,12 +16,12 @@ solver_config = {
   'c0': 1e-6,
   
   # stop condition
-  'threshold': None,
-  'T': 10000,
+  'threshold': 0.03,
+  'T': None,
   
   # mixing parameters
   'B': 2,
-  't_mix': None,
+  't_mix': [ 0.99 * 3600 ],
 }
 
 def solver_config_id():

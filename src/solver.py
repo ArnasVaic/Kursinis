@@ -137,7 +137,7 @@ def validate_inputs(
 
   assert threshold is None or 0 <= threshold <= 1
 
-  assert t_mix is None or t_mix >= 0
+  #assert t_mix is None or np.all(t_mix >= 0)
 
   assert T is None or (isinstance(T, int) and T > 0)
 
@@ -161,7 +161,7 @@ def print_initial_debug_info(T, dt, dt_upper_bound, t_mix, threshold):
   print(f'Upper dt bound: {dt_upper_bound}, given dt={dt}')
 
   if t_mix is not None:
-    print(f"approximate frame of mixing: {int(t_mix / dt)}")
+    print(f"Mixing times: {t_mix}")
 
 def print_sim_debug_info(t, dt, c1_init, c2_init, c1_last, c2_last):
   q = (c1_last + c2_last).sum() / (c1_init + c2_init).sum()
@@ -212,6 +212,7 @@ def solve(
   dt=None,
   frame_stride=1):
 
+  t_mix = None if t_mix is None else np.array(t_mix)
   validate_inputs(W, H, N, M, D, c0, k, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
 
   #print(W, H, N, M, D, c0, k, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
@@ -239,7 +240,7 @@ def solve(
     if debug and t % 2000 == 0:
       print_sim_debug_info(t, dt, c1_init, c2_init, c1_last, c2_last)
 
-    if t_mix is not None and abs(t * dt - t_mix) <= dt / 2 and not mixing_done:
+    if t_mix is not None and np.any(abs(t * dt - t_mix) <= dt / 2): # and not mixing_done:
       if debug:
         print(f'[t={t * dt:.02f},step={t}] mixing')
       c1_last, c2_last, c3_last = mix([c1_last, c2_last, c3_last], B=B, debug=False)

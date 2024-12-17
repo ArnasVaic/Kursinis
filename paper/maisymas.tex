@@ -7,7 +7,6 @@ Vykstant reakcijai, chemikai periodiškai ištraukia reagentus iš krosnies, kur
 \begin{itemize}
     \item Išmaišymas vyksta prie daug žemesnės temperatūros negu reakcija
     \item Išmaišymas gali vykti kelis kartus
-    % \item Išmaišymo metu mikrodalelės neskyla
     \item Išmaišymo procesas nėra deterministinis
 \end{itemize}
 
@@ -105,5 +104,37 @@ Atlikus tokį erdvės sudalinimą, gali atsitikti taip, kad kai kurių sričių 
 % matematinis modelis maisymui
 % stop salyga
 
+\subsection{Reakcijos stabdymo sąlyga}
+
+Pristatyti kompiuterinio modelio rezultatai rodo, kad vykstant reakcijai, reagentų kiekis erdvėje artėja prie 0, tačiau niekad jo nepasiekia. Tai būdinga ir realybėje vykstančioms reakcijoms, dėl šios priežasties kompiuterinio modelio darbą stabdysime, kai sureaguos $\eta_\text{stop}\%$ pradinių medžiagų kiekio. Matematiškai reakcijos stabdymo laiką $t_\text{stop}$ galime apibrėžti taip:
+
+\begin{align}
+    q(t_\text{stop})=\left(1-\frac{\eta_\text{stop}}{100}\right)q(0),\quad \eta_\text{stop}\in[0, 100)
+\end{align}
+
+\newpage
 \subsection{Maišymo procesu papildytos programos rezultatų analizė}
+
+\begin{figure}[h!]
+\centering
+\caption{Kompiuterinio modelio, papildyto išmaišymo procesu, rezultato pavyzdys. Čia $\eta_\text{stop} = 97$, $t^1_\text{mix} = 1h$, $B = 2$, $D = 28\times 10^{-6} \frac{\mu m^2}{s}$, $W = \sqrt[3]{10}\mu m$, $H = \sqrt[3]{10}\mu m$, $k = 0$, $c_0 = 10^{-6} \frac{g}{\mu m^3}$, $\Delta x = \Delta y = \frac{\sqrt[3]{10}}{79} \mu m$ }
+\includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c0-1.png} \\
+\includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c1-1.png} \\
+\includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c2-1.png}
+\label{mix-example}
+\end{figure}
+
+\ref{mix-example}-ame pavyzdyje matome kaip atrodo reakcijos eiga, kada vyksta išmaišymas. Šiuo atveju išmaišymas vyko laiku $t=1h$. Trečias stulpelis vaizduoja reakcijos erdvę ką tik po išmaišymo proceso, kada visos keturios sritys $\Omega_i$ yra atsitiktinai pasukamos ir sumaišomos. Kadangi nuo išmaišymo praejo labai mažai laiko, medžiagos nespėjo sureaguoti ir dėl to matome didelio kontrasto artefaktus ties kai kuriomis išmaišytų sričių kraštinėmis. Čia galime pastebėti tam tikrą problemą su atsitiktiniu išmaišymu - šiuo atveju, po išmaišymo, nesusidūrė prieš tai dar nesureagavusios dalelių kraštinės, todėl reakcijos greičiui šis procesas neturėjo beveik jokios įtakos. Tai gana akivaizdžiai matosi jei pažiūrėtume į medžiagos kiekio grafiką.
+
+\newpage
+
+\begin{figure}[h!]
+    \centering
+    \caption{Kompiuterinio modelio rezultatų palyginimas su ir be maišymo proceso. Čia $\eta_\text{stop} = 97$, $B = 2$, $D = 28\times 10^{-6} \frac{\mu m^2}{s}$, $W = \sqrt[3]{10}\mu m$, $H = \sqrt[3]{10}\mu m$, $k = 0$, $c_0 = 10^{-6} \frac{g}{\mu m^3}$, $\Delta x = \Delta y = \frac{\sqrt[3]{10}}{79} \mu m$ }
+    \includegraphics[width=0.5\textwidth]{../paper/assets/bad-mix-qnt-compare.png}
+    \label{bad-mix-qnt-example}
+\end{figure}
+
+\ref{bad-mix-qnt-example}-ame pavyzdyje puikiai matosi, kad išmaišymas nepagreitino reakcijos, o ją sulėtino. Praktiniuose eksperimentuose taip niekad nenutinka todėl, kad mikrodalelių skaičius yra pakankamai didelis ir toks atvejis tampa beveik neįmanomas. Šiuo atveju galėtume pakeisti 
+
 

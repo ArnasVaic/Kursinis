@@ -2,26 +2,42 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from solver_config import *
-from solver import get_upper_dt_bound
+import solver
+
+plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'STIXGeneral'
 
 id = solver_config_id()
-c1, c2, c3 = np.load(f'../assets/saves/{id}.npy')
-dx, dy = solver_config['dx'], solver_config['dy']
-c0, k = solver_config['c0'], solver_config['k']
-stride = solver_config['out_stride']
-D = solver_config['D']
+c_mix = np.load(f'../assets/saves/{id}-mix.npy')
+ts_mix = np.load(f'../assets/saves/T-{id}-mix.npy')
 
-dt = get_upper_dt_bound(dx, dy, D, c0, k)
+c = np.load(f'../assets/saves/{id}.npy')
+ts = np.load(f'../assets/saves/T-{id}.npy')
 
-T, N, M = c3.shape
+dt = solver.get_upper_dt_bound_from_config(solver_config)
 
-q = np.sum(c3, axis=(1, 2)) / (N * M)
+W, H = solver_config['W'], solver_config['H'] 
+T, N, M = c[2].shape
+t_mix = solver_config['t_mix']
 
-ts = np.linspace(0, stride * T * dt, T)
-plt.title(f'Medžiagos $c_3$ kiekio $q_3(t)$ priklausomybė nuo laiko.')
-plt.xlabel('$t$')
-plt.ylabel('$q_3$')
-plt.plot(ts, q, label=f'$q_3(t)=\\frac{{1}}{{NM}}\\sum_{{i=0}}^{{N-1}}\\sum_{{j=0}}^{{M-1}}c_3(i, j, t)$')
+q = np.sum(c[2], axis=(1, 2)) * W * H / (N * M)
+q_mix = np.sum(c_mix[2], axis=(1, 2)) * W * H / (N * M)
+
+plt.title('$q_{3, n}$')
+plt.xlabel('$t\quad[h]$')
+plt.ylabel('$q\quad[g]$')
+
+# how to get from t_mix to n?
+# t_mix \in [0, ]
+
+plt.plot(ts_mix * dt / 3600, q_mix, label=f'$q(t)$ with mixing')
+plt.plot(ts * dt / 3600, q, label=f'$q(t)$ without mixing')
+
+plt.scatter(
+    np.array(t_mix) / 3600, 
+    [ q[ int( T * tm / (ts[-1] * dt) ) ] for tm in t_mix ], 
+    label='$t^1_{mix}=1h$')
+
 plt.legend()
 plt.show()
  # %%

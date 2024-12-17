@@ -29,11 +29,11 @@ def index_of_nearest(array, value):
   array = np.asarray(array)
   return (np.abs(array - value)).argmin()
 
-FIG_HEIGHT, FIG_CNT = 3, 5
+FIG_HEIGHT, FIG_CNT = 3, 4
 FIG_SIZE = (FIG_CNT * FIG_HEIGHT, FIG_HEIGHT)
 
 # timestamps to visualize (hours)
-timestamps = np.array([ 0.0, 1.0, 3.0, 6.0, 18.0 ])
+timestamps = np.array([ 0.0, 0.9, 1.01, 1.5 ])
 
 assert len(timestamps) == FIG_CNT
 
@@ -60,7 +60,10 @@ for element_id in range(3):
       axis.set_ylabel(f'$c_{element_id+1}$', fontsize=16)
 
     # convert title to hours
-    title = f'$t={round(step * dt/3600)}h$'
+    total_minutes = int(step * dt / 60)
+    hrs = total_minutes // 60
+    min = total_minutes % 60
+    title = f'$t=${hrs}h {min}min'
     axis.set_title(title, fontsize=16)
 
     ticks = ticker.MaxNLocator(2)
@@ -83,6 +86,6 @@ for element_id in range(3):
   normalizer = Normalize(0, vmax[element_id])
   im = cm.ScalarMappable(norm=normalizer)
   fig.colorbar(cc, ax=ax.ravel().tolist())
-  plt.savefig(f'all-only-diff-{element_id}.pdf')
+  plt.savefig(f'random-mix-example-c{element_id}.pdf')
 
 # %%
