@@ -7,3 +7,4 @@
 **.gz
 __pycache__/
 /paper/out
+/.git-old
