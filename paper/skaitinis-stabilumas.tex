@@ -21,11 +21,11 @@ Akivaizdu, kad lygtyje \eqref{r-coefs3}, medžiagos koncentracija $c^{n+1}_{3,i,
 \begin{align*}
   \Delta t > 0 \land c^n_{m,i,j}\geqslant 0 \implies c^{n+1}_{3,i,j}=c^n_{3,i,j}+2\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j}\geqslant 0 
 \end{align*}
-\newpage
 Pirmos medžiagos lygtyje \eqref{r-coefs1}, galima pastebėti, kad dėmenys su medžiagų koncentracijomis iš aplinkinių diskretizuotos erdvės taškų visada bus ne neigiami dėl prielaidos \eqref{induction-assumption} ir fakto, kad $\mu_x>0$ ir $\mu_y>0$:
 \begin{align*}
   \mu_xc^n_{1,i-1,j}+\mu_xc^n_{1,i+1,j}+\mu_yc^n_{1,i,j-1}+\mu_yc^n_{1,i,j+1}\geqslant 0
 \end{align*}
+\newpage
 Taigi, $c^{n+1}_{1,i,j}$ ženklą lemia tik koeficientas $R_1$, todėl įvedame ribojimą, kad $R_1\geqslant 0$. Analogiškai, iš antros medžiagos lygties \eqref{r-coefs2} gauname, kad $R_2\geqslant 0$ ir turime nelygybių sistemą:
 \begin{align} \label{impl-ineqs}
   \begin{cases}
@@ -57,12 +57,13 @@ Iš čia galime išvesti išraišką medžiagos kiekio pokyčiui per laiką:
 \begin{align}
   \frac{\partial q}{\partial t}=\frac{\partial}{\partial t}\int_\Omega c dV=\int_\Omega\frac{\partial c}{\partial t}dV,
 \end{align}
-\newpage
+
 Įstatome pirmų dviejų medžiagų lygtis iš matematinio modelio \eqref{rect} ir gauname lygtis pirmos $q_1$ ir antros $q_2$ medžiagos kiekio pokyčiams per laiką:
 \begin{align}
   \frac{\partial q_1}{\partial t}=-3k\int_\Omega c_1c_2\,dV + D\int_\Omega \Delta c_1\,dV=-3k\int_\Omega c_1c_2\,dV + D\int_\Omega \nabla \cdot (\nabla c_1)\,dV\\
   \frac{\partial q_2}{\partial t}=-5k\int_\Omega c_1c_2\,dV + D\int_\Omega \Delta c_2\,dV=-5k\int_\Omega c_1c_2\,dV + D\int_\Omega \nabla \cdot (\nabla c_2)\,dV
 \end{align}
+\newpage
 Pagal Gauso-Ostrogradskio divergencijos teoremą ir kraštinę sąlygą \eqref{general-boundary-cond} gauname, kad:
 \begin{align}\label{no-q-change}
 \int_\Omega \nabla \cdot (\nabla c_m) dV = \int_{\partial\Omega} \nabla c_k \cdot \vec{n}\, dS = 0,\quad m=1,2

@@ -52,7 +52,8 @@ def mix(
   grids, 
   rotate=True, 
   shuffle=True, 
-  B=2, 
+  B=2,
+  optimal_mix=False,
   debug=False):
 
   assert B > 1
@@ -68,9 +69,9 @@ def mix(
   block_order = np.random.permutation(blocks) if shuffle else np.arange(0, blocks)
 
   # best theoretical mix for 2x2
-  # if 2 == B:
-  #   rotations = np.array([0, 0, 0, 0])
-  #   block_order = np.array([3, 2, 1, 0])
+  if optimal_mix and 2 == B:
+    rotations = np.array([0, 0, 0, 0])
+    block_order = np.array([3, 2, 1, 0])
 
   # mix each block
   return [ mix_single(g, rotations, block_order, B, debug) for g in grids ]

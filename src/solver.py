@@ -181,6 +181,7 @@ def solvec(config, debug=False):
   T = config['T']
   dt = config['dt']
   frame_stride = config['frame_stride']
+  optimal_mix = config['optimal_mix']
 
   c_init = get_c_init(N, M, c0)
 
@@ -191,7 +192,8 @@ def solvec(config, debug=False):
     debug=debug,
     T=T,
     dt=dt,
-    frame_stride=frame_stride)
+    frame_stride=frame_stride,
+    optimal_mix=optimal_mix)
 
 def solve(
   W,
@@ -210,7 +212,8 @@ def solve(
   debug=False,
   T=None,
   dt=None,
-  frame_stride=1):
+  frame_stride=1,
+  optimal_mix=False):
 
   t_mix = None if t_mix is None else np.array(t_mix)
   validate_inputs(W, H, N, M, D, c0, k, c1_init, c2_init, c3_init, threshold, t_mix, T, dt)
@@ -230,9 +233,6 @@ def solve(
   t = 0
 
   ts = [0]
-
-  mixing_done = False
-
   c1_last, c2_last, c3_last = c1[0], c2[0], c3[0]
 
   while True:
@@ -243,7 +243,11 @@ def solve(
     if t_mix is not None and np.any(abs(t * dt - t_mix) <= dt / 2): # and not mixing_done:
       if debug:
         print(f'[t={t * dt:.02f},step={t}] mixing')
-      c1_last, c2_last, c3_last = mix([c1_last, c2_last, c3_last], B=B, debug=False)
+      c1_last, c2_last, c3_last = mix(
+        [c1_last, c2_last, c3_last], 
+        B=B, 
+        optimal_mix=optimal_mix, 
+        debug=False)
 
     c1_next = c1_last + dt * (-3 * k * c1_last * c2_last + D * laplacian(c1_last, filter))
     c2_next = c2_last + dt * (-5 * k * c1_last * c2_last + D * laplacian(c2_last, filter))
@@ -274,7 +278,8 @@ def solve(
   c = np.stack((c1, c2, c3), axis=0)
   #validate_solution(c)
 
-  print(f'total time steps taken: {t}')
-  print(f'saved result t: {c1.shape[0]}')
+  if debug:
+    print(f'total time steps taken: {t}')
+    print(f'saved result t: {c1.shape[0]}')
 
   return np.array(ts), c

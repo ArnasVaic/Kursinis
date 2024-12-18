@@ -1,13 +1,12 @@
 
 \section{Maišymo modeliavimas}
-\subsection{Maišymo proceso modelis}
-
-Vykstant reakcijai, chemikai periodiškai ištraukia reagentus iš krosnies, kurioje vyksta reakcija, todėl maišymas vyksta prie daug žemesnės temperatūros. Milteliai yra išmaišomi nepažeidžiant mikrodalelių struktūros - t. y. maišoma taip, kad mikrodalelės neskiltų. Konstruojant kompiuterinį modelį šiam procesui atkreipsime dėmesį į kelias svarbias detales:
+ 
+Konstruojant kompiuterinį modelį šiam procesui atkreipsime dėmesį į kelias svarbias detales:
 
 \begin{itemize}
-    \item Išmaišymas vyksta prie daug žemesnės temperatūros negu reakcija
-    \item Išmaišymas gali vykti kelis kartus
-    \item Išmaišymo procesas nėra deterministinis
+  \item Išmaišymas vyksta prie daug žemesnės temperatūros negu reakcija
+  \item Išmaišymas gali vykti kelis kartus
+  \item Išmaišymo procesas nėra deterministinis
 \end{itemize}
 
 \paragraph{Maišymas prie žemesnės temperatūros}
@@ -51,48 +50,44 @@ arba kitaip sakant išmaišymas įvyks laiko žingsniu $t_n$, jei:
     \vert t_n - t^i_\text{mix} \vert < \frac{1}{2}\Delta t \label{mix-inequality}
 \end{align}
 
+\newpage
 \paragraph{Nedeterministinis maišymas}
 
-Maišymas praktikoje yra chaotiškas procesas, todėl sudarydami kompiuterinį modelį turime į tai atsižvelgti. Maišymą modeliuosime kaip reakcijos erdvės sričių atsitiktinį išdėstymą. Pradinė erdvę $\Omega$ padalinsime į mažesnes, nepersidengiančias, vienodas kvadratines sritis $\Omega_i$:
+Maišymas praktikoje yra chaotiškas procesas, todėl sudarydami kompiuterinį modelį turime į tai atsižvelgti. Maišymą modeliuosime kaip reakcijos erdvės sričių atsitiktinį išdėstymą. Pradinė erdvę $\Omega$ padalinsime į mažesnes, nepersidengiančias, vienodas kvadratines sritis $\Omega_i$, tada sugeneruosime atsitiktinę $4$-permutaciją $\sigma$ ir $4$ atsitiktinius kampus $\theta_i \in \{0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}\}$. Kiekviena iš sričių $\Omega_i$ keliauja į poziciją, kurioje yra sritis $\Omega_{\sigma(i)}$, tačiau pasukta kampu $\theta_i$. 
 
 \begin{figure}[!h]
 \centering
-\caption{Padalinta reakcijos erdvė $\Omega$}
+\caption{Maišymo transformacijos pavyzdys}
 \label{split-reaction-space}
 
 \begin{tikzpicture}
-% Draw grid
-\draw[thick] (0,0) grid (4,4);
+    % Original Grid
+    \draw[thick] (0,0) rectangle (2,2);
+    \draw[thick] (1,0) -- (1,2);
+    \draw[thick] (0,1) -- (2,1);
 
-% Row 1
-\node at (0.5, 3.5) {$\Omega_1$};
-\node at (1.5, 3.5) {$\Omega_2$};
-\node at (2.5, 3.5) {$\cdots$};
-\node at (3.5, 3.5) {$\Omega_B$};
+    \node at (0.5,1.5) {$\Omega_1$};
+    \node at (1.5,1.5) {$\Omega_2$};
+    \node at (0.5,0.5) {$\Omega_3$};
+    \node at (1.5,0.5) {$\Omega_4$};
 
-% Row 2
-\node at (0.5, 2.5) {$\Omega_{B + 1}$};
-\node at (1.5, 2.5) {$\Omega_{B + 2}$};
-\node at (2.5, 2.5) {$\cdots$};
-\node at (3.5, 2.5) {$\Omega_{2B}$};
+    % Arrow
+    \draw[->, thick] (2.5,1) -- (3.5,1);
 
-% Row 3
-\node at (0.5, 1.5) {$\vdots$};
-\node at (1.5, 1.5) {$\vdots$};
-\node at (2.5, 1.5) {$\ddots$};
-\node at (3.5, 1.5) {$\vdots$};
+    % Transformed Grid
+    \begin{scope}[shift={(4,0)}]
+        \draw[thick] (0,0) rectangle (2,2);
+        \draw[thick] (1,0) -- (1,2);
+        \draw[thick] (0,1) -- (2,1);
 
-% Row 4
-\node at (0.5, 0.5) {$\cdots$};
-\node at (1.5, 0.5) {$\cdots$};
-\node at (2.5, 0.5) {$\cdots$};
-\node at (3.5, 0.5) {$\Omega_{B^2}$};
+        \node at (0.5,1.5) {\rotatebox{270}{$\Omega_3$}}; % Rotated 180° horizontally
+        \node at (1.5,1.5) {$\Omega_1$};             % No change
+        \node at (0.5,0.5) {\rotatebox{180}{$\Omega_4$}}; % Upside down
+        \node at (1.5,0.5) {\rotatebox{90}{$\Omega_2$}};  % 90° rotation
+    \end{scope}
 \end{tikzpicture}
 \end{figure}
 
-Tada sugeneruosime atsitiktinę $B^2$-permutaciją $\sigma: \{ 1, 2, \dots, B^2 \} \to \{ 1, 2, \dots, B^2 \} $ ir $B^2$ atsitiktinių kampų $\theta_i \in \{0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}\}$. Kiekviena iš sričių $\Omega_i$ keliauja į poziciją, kurioje yra sritis $\Omega_{\sigma(i)}$, tačiau pasukta kampu $\theta_i$. Čia, kaip kompiuterinio modelio vartotojai, mes galime pasirinkti sričių kiekio parametrą $B\in\mathbb{N}$, tačiau reikia užtikrinti, kad diskrečių erdvės taškų kiekiai $N, M$ atitinkamomis ašimis būtų dalomi iš $B$. 
-
-Atlikus tokį erdvės sudalinimą, gali atsitikti taip, kad kai kurių sričių $\Omega_i$ kaimynės bus tos pačios medžiagos arba atsisukusios į srities $\Omega$ išorę ir dėl to ties jų sandūra reakcija nevyks. Po išmaišymo tai gali pasikeisti ir galime daryti spėjimą, kad turėtume matyti staigų reakcijos greičio padidėjimą. 
 
 % \paragraph{Neskylančios mikrodalelės}
 
@@ -119,24 +114,61 @@ Tolimesniems pavyzdžiams ir analizei naudosime konkrečią reikšmę $\eta_\tex
 
 \begin{figure}[h!]
 \centering
-\caption{Kompiuterinio modelio, papildyto išmaišymo procesu, rezultato pavyzdys. Čia $\eta_\text{stop} = 97$, $t^1_\text{mix} = 1h$, $B = 2$, $D = 28\times 10^{-6} \frac{\mu m^2}{s}$, $W = \sqrt[3]{10}\mu m$, $H = \sqrt[3]{10}\mu m$, $k = 0$, $c_0 = 10^{-6} \frac{g}{\mu m^3}$, $\Delta x = \Delta y = \frac{\sqrt[3]{10}}{79} \mu m$ }
+\caption{Kompiuterinio modelio rezultatai - medžiagų koncentracijos per laiką, kai vyksta išmaišymas. Išmaišymo laikas $t^1_\text{mix} = 1h$ }
 \includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c0-1.png} \\
 \includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c1-1.png} \\
 \includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c2-1.png}
 \label{mix-example}
 \end{figure}
 
-\ref{mix-example}-ame pavyzdyje matome kaip atrodo reakcijos eiga, kada vyksta išmaišymas. Šiuo atveju išmaišymas vyko laiku $t=1h$. Trečias stulpelis vaizduoja reakcijos erdvę ką tik po išmaišymo proceso, kada visos keturios sritys $\Omega_i$ yra atsitiktinai pasukamos ir sumaišomos. Kadangi nuo išmaišymo praejo labai mažai laiko, medžiagos nespėjo sureaguoti ir dėl to matome didelio kontrasto artefaktus ties kai kuriomis išmaišytų sričių kraštinėmis. Čia galime pastebėti tam tikrą problemą su atsitiktiniu išmaišymu - šiuo atveju, po išmaišymo, nesusidūrė prieš tai dar nesureagavusios dalelių kraštinės, todėl reakcijos greičiui šis procesas neturėjo beveik jokios įtakos. Tai gana akivaizdžiai matosi jei pažiūrėtume į medžiagos kiekio grafiką.
+\ref{mix-example}-ame pavyzdyje matome kaip atrodo reakcijos eiga, kada vyksta išmaišymas. Trečiame stulpelyje ir ypatingai trečios medžiagos koncentracijoje matome ryškių artefaktų. Taip yra todėl, kad nuo išmaišymo praejo labai mažai laiko ir medžiagos nespėjo sureaguoti. Čia galime pastebėti tam tikrą problemą su atsitiktiniu išmaišymu - šiuo atveju, po išmaišymo, nesusidūrė prieš tai dar nesureagavusios dalelių kraštinės, todėl reakcijos greičiui šis procesas neturėjo beveik jokios įtakos. Tai gana akivaizdžiai matosi jei pažiūrėtume į medžiagos kiekio grafiką.
 
 \newpage
-
 \begin{figure}[h!]
     \centering
-    \caption{Kompiuterinio modelio rezultatų palyginimas su ir be maišymo proceso. Čia $\eta_\text{stop} = 97$, $B = 2$, $D = 28\times 10^{-6} \frac{\mu m^2}{s}$, $W = \sqrt[3]{10}\mu m$, $H = \sqrt[3]{10}\mu m$, $k = 0$, $c_0 = 10^{-6} \frac{g}{\mu m^3}$, $\Delta x = \Delta y = \frac{\sqrt[3]{10}}{79} \mu m$ }
+    \caption{Kompiuterinio modelio rezultatų palyginimas, kai išmaišymas vyksta ir nevyksta.  }
     \includegraphics[width=0.5\textwidth]{../paper/assets/bad-mix-qnt-compare.png}
     \label{bad-mix-qnt-example}
 \end{figure}
+\ref{bad-mix-qnt-example}-ame pavyzdyje puikiai matosi, kad išmaišymas nepagreitino reakcijos, o ją sulėtino - reakcijos laikas su išmaišymu yra apytiksliai $5$-iom valandom ilgesnis. Ši problema atsiranda todėl, kad mes modeliuojame ypač mažą reakcijos erdvės sritį, kurioje susiduria tik 4 mikrodalelės, dėl to nėra daug skirtingų išdėstymų, kada viena sienele galėtų dalintis skirtingų medžiagų dalelės, prie to žinoma prisideda ir faktas, kad šis modelis yra dviejų dimensijų. Eksperimentas parodė, kad nesuveiktų ir statistinis bandymas - vidutinis atsitiktinis išmaišymas taip pat neduoda geresnių rezultatų negu reakcijos modelis be išmaišymų. Kad išspręstume šia problemą, modeliuosime tobulą teorinį išmaišymą duotoms pradinėms sąlygoms \eqref{intial-cond}.
+\begin{figure}[!h]
+\centering
+\caption{Tobulos maišymo transformacijos pavyzdys pradinėms sąlygmos \eqref{intial-cond}}
+\label{perfect-2x2-mix}
+\begin{tikzpicture}
+    % Original Grid
+    \draw[thick] (0,0) rectangle (2,2);
+    \draw[dashed] (1,0) -- (1,2);
+    \draw[dashed] (0,1) -- (2,1);
 
-\ref{bad-mix-qnt-example}-ame pavyzdyje puikiai matosi, kad išmaišymas nepagreitino reakcijos, o ją sulėtino. Praktiniuose eksperimentuose taip niekad nenutinka todėl, kad mikrodalelių skaičius yra pakankamai didelis ir toks atvejis tampa beveik neįmanomas. Šiuo atveju galėtume pakeisti 
+    \node at (0.5,1.5) {$\Omega_1$};
+    \node at (1.5,1.5) {$\Omega_2$};
+    \node at (0.5,0.5) {$\Omega_3$};
+    \node at (1.5,0.5) {$\Omega_4$};
 
-% Prie bendro atvejo apie stabdymo salyga parasyti konkretu, kuri po to naudosiu visiem pavyzdziam
+    % Arrow
+    \draw[->, thick] (2.5,1) -- (3.5,1);
+
+    % Transformed Grid
+    \begin{scope}[shift={(4,0)}]
+        \draw[dashed] (0,0) rectangle (2,2);
+        \draw[thick] (1,0) -- (1,2);
+        \draw[thick] (0,1) -- (2,1);
+
+        \node at (0.5,1.5) {$\Omega_4$};
+        \node at (1.5,1.5) {$\Omega_3$};
+        \node at (0.5,0.5) {$\Omega_2$};
+        \node at (1.5,0.5) {$\Omega_1$};
+    \end{scope}
+\end{tikzpicture}
+\end{figure}
+\ref{perfect-2x2-mix}-ame pavyzdyje matoma prieš tai apibūdintą transformacija. Punktyrinės linijos kairėje pusėje žymi sieneles ties kuriomis vyksta reakcija. Šiuo atveju po išmaišymo nėra sričių, kurios turėtų bendrą punktyrinę sienelę, todėl šio išmaišymo dar labiau pagerinti neįmanoma. Čia geriausia išmaišymą laikome tokiu, kuris turėtų didžiausią poveiki reakcijos greičiui.
+\newpage
+\begin{figure}[h!]
+    \centering
+    \caption{Kompiuterinio modelio rezultatų palyginimas tarp įprastos reakcijos ir reakcijos su tobulu išmaišymu.  }
+    \includegraphics[width=0.5\textwidth]{../paper/assets/optimal-mix-qnt-1.png}
+    \label{optimal-mix-qnt}
+\end{figure}
+
+Šiuo atveju, \ref{optimal-mix-qnt}-ame pavyzdyje matome reakcijos greičio šuolį, kuris lemia greitesnę reakcijos pabaigą. 

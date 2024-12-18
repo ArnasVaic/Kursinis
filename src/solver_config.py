@@ -21,7 +21,8 @@ solver_config = {
   
   # mixing parameters
   'B': 2,
-  't_mix': [ 0.99 * 3600 ],
+  't_mix': [ 1.99 * 3600 ],
+  'optimal_mix': True,
 }
 
 def solver_config_id():
