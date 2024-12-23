@@ -247,112 +247,114 @@ Modeliuoti mažą visos reakcijos erdvės sritį užtenka norint gauti tikslias 
 Kadangi prieš tai apibrėžtas maišymo modelis yra tinkamas tik įprastoms pradinėms \hbox{sąlygoms \eqref{intial-cond}}, praplėstoms pradinėms sąlygoms reikės atskirai apibrėžti išmaišymą. Eksperimentas parodė, kad net su praplėstomis pradinėmis sąlygomis, atsitiktinio maišymo problema nedingsta - išmaišymas dažniausiai pailgina reakcijos pabaigos laiką. Dėl šios priežasties praplėsime \enquote{tobulo} išmaišymo modelį analogiškai atkartodami jį veidrodžio principu kaip ir pradines sąlygas. 
 
 \begin{figure}[!h]
-    \centering
-    \begin{tikzpicture}
-        % Original Grid
+\centering
+\begin{tikzpicture}
+    % Original Grid
 
+    \fill[gray!30] (1, 0) rectangle (3, 1);
+    \fill[gray!30] (1, 3) rectangle (3, 4);
+
+    \fill[gray!30] (0, 1) rectangle (1, 3);
+    \fill[gray!30] (3, 1) rectangle (4, 3);
+
+    \draw[thick] (0,0) rectangle (2,2);
+    \draw[thick] (0,2) rectangle (2,4);
+    \draw[thick] (2,0) rectangle (4,2);
+    \draw[thick] (2,2) rectangle (4,4);
+    \draw[dashed] (1,0) -- (1,4);
+    \draw[dashed] (0,1) -- (4,1);
+    \draw[dashed] (3,0) -- (3,4);
+    \draw[dashed] (0,3) -- (4,3);
+
+    \draw[<->] (0.75,0.75) -- (1.25,1.25);
+    \draw[<->] (1.25,0.75) -- (0.75,1.25);
+
+    \draw[<->] (2.75,0.75) -- (3.25,1.25);
+    \draw[<->] (3.25,0.75) -- (2.75,1.25);
+
+    \draw[<->] (0.75,2.75) -- (1.25,3.25);
+    \draw[<->] (1.25,2.75) -- (0.75,3.25);
+
+    \draw[<->] (2.75,2.75) -- (3.25,3.25);
+    \draw[<->] (3.25,2.75) -- (2.75,3.25);
+
+    \node at (0.5,3.5) {$\Omega_1$};
+    \node at (1.5,3.5) {$\Omega_2$};
+    \node at (0.5,2.5) {$\Omega_5$};
+    \node at (1.5,2.5) {$\Omega_6$};
+
+    \node at (2.5,3.5) {$\Omega_3$};
+    \node at (3.5,3.5) {$\Omega_4$};
+    \node at (2.5,2.5) {$\Omega_7$};
+    \node at (3.5,2.5) {$\Omega_8$};
+
+    \node at (0.5,1.5) {$\Omega_9$};
+    \node at (1.5,1.5) {$\Omega_{10}$};
+    \node at (0.5,0.5) {$\Omega_{13}$};
+    \node at (1.5,0.5) {$\Omega_{14}$};
+
+    \node at (2.5,1.5) {$\Omega_{11}$};
+    \node at (3.5,1.5) {$\Omega_{12}$};
+    \node at (2.5,0.5) {$\Omega_{15}$};
+    \node at (3.5,0.5) {$\Omega_{16}$};
+
+    % Arrow
+    \draw[->, thick] (4.5,2) -- (5.5,2);
+
+    % Transformed Grid
+    \begin{scope}[shift={(6,0)}]
         \fill[gray!30] (1, 0) rectangle (3, 1);
         \fill[gray!30] (1, 3) rectangle (3, 4);
 
         \fill[gray!30] (0, 1) rectangle (1, 3);
         \fill[gray!30] (3, 1) rectangle (4, 3);
 
-        \draw[thick] (0,0) rectangle (2,2);
-        \draw[thick] (0,2) rectangle (2,4);
-        \draw[thick] (2,0) rectangle (4,2);
-        \draw[thick] (2,2) rectangle (4,4);
-        \draw[dashed] (1,0) -- (1,4);
-        \draw[dashed] (0,1) -- (4,1);
-        \draw[dashed] (3,0) -- (3,4);
-        \draw[dashed] (0,3) -- (4,3);
+        \draw[dashed] (0,0) rectangle (4,4);
 
-        \draw[<->] (0.75,0.75) -- (1.25,1.25);
-        \draw[<->] (1.25,0.75) -- (0.75,1.25);
+        \draw[dashed] (2,0) -- (2,4);
+        \draw[dashed] (0,2) -- (4,2);
 
-        \draw[<->] (2.75,0.75) -- (3.25,1.25);
-        \draw[<->] (3.25,0.75) -- (2.75,1.25);
+        \draw[thick] (1,0) -- (1,4);
+        \draw[thick] (0,1) -- (4,1);
+        \draw[thick] (3,0) -- (3,4);
+        \draw[thick] (0,3) -- (4,3);
 
-        \draw[<->] (0.75,2.75) -- (1.25,3.25);
-        \draw[<->] (1.25,2.75) -- (0.75,3.25);
+        \node at (0.5,3.5) {$\Omega_6$};
+        \node at (1.5,3.5) {$\Omega_5$};
+        \node at (0.5,2.5) {$\Omega_2$};
+        \node at (1.5,2.5) {$\Omega_1$};
 
-        \draw[<->] (2.75,2.75) -- (3.25,3.25);
-        \draw[<->] (3.25,2.75) -- (2.75,3.25);
+        \node at (2.5,3.5) {$\Omega_8$};
+        \node at (3.5,3.5) {$\Omega_7$};
+        \node at (2.5,2.5) {$\Omega_4$};
+        \node at (3.5,2.5) {$\Omega_3$};
 
-        \node at (0.5,3.5) {$\Omega_1$};
-        \node at (1.5,3.5) {$\Omega_2$};
-        \node at (0.5,2.5) {$\Omega_5$};
-        \node at (1.5,2.5) {$\Omega_6$};
+        \node at (0.5,1.5) {$\Omega_{14}$};
+        \node at (1.5,1.5) {$\Omega_{13}$};
+        \node at (0.5,0.5) {$\Omega_{10}$};
+        \node at (1.5,0.5) {$\Omega_{9}$};
 
-        \node at (2.5,3.5) {$\Omega_3$};
-        \node at (3.5,3.5) {$\Omega_4$};
-        \node at (2.5,2.5) {$\Omega_7$};
-        \node at (3.5,2.5) {$\Omega_8$};
+        \node at (2.5,1.5) {$\Omega_{16}$};
+        \node at (3.5,1.5) {$\Omega_{15}$};
+        \node at (2.5,0.5) {$\Omega_{12}$};
+        \node at (3.5,0.5) {$\Omega_{11}$};
+    \end{scope}
+\end{tikzpicture}
+\caption{\enquote{Tobulo} maišymo transformacija ant praplėstų pradinių sąlygų}
+\label{perfect-4x4-mix}
+\end{figure}
 
-        \node at (0.5,1.5) {$\Omega_9$};
-        \node at (1.5,1.5) {$\Omega_{10}$};
-        \node at (0.5,0.5) {$\Omega_{13}$};
-        \node at (1.5,0.5) {$\Omega_{14}$};
+\ref{perfect-4x4-mix}-ame pavyzdyje matome kaip atrodo \enquote{tobulas} išmaišymas praplėstų pradinių sąlygų atveju. Punktyrinės linijos žymi skirtingų medžiagų bendras sieneles t. y. tas sieneles, ties kuriomis aktyviai vyksta medžiagų reakcija. Paprastos linijos žymi sieneles, ties kuriomis susiduria tos pačios medžiagos sritys arba sieneles, kurios yra nukreiptos į išorę. Toks išmaišymas žymiai padidina reakcijos greitį todėl, kad visos sienelės tarp skirtingų medžiagų yra dar nesureagavusios ir turi dideli koncentracijų kontrastą.
 
-        \node at (2.5,1.5) {$\Omega_{11}$};
-        \node at (3.5,1.5) {$\Omega_{12}$};
-        \node at (2.5,0.5) {$\Omega_{15}$};
-        \node at (3.5,0.5) {$\Omega_{16}$};
+\newpage
 
-        % Arrow
-        \draw[->, thick] (4.5,2) -- (5.5,2);
-    
-        % Transformed Grid
-        \begin{scope}[shift={(6,0)}]
-            \fill[gray!30] (1, 0) rectangle (3, 1);
-            \fill[gray!30] (1, 3) rectangle (3, 4);
-    
-            \fill[gray!30] (0, 1) rectangle (1, 3);
-            \fill[gray!30] (3, 1) rectangle (4, 3);
-    
-            \draw[dashed] (0,0) rectangle (4,4);
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../paper/assets/mix-end-large-1.png}
 
-            \draw[dashed] (2,0) -- (2,4);
-            \draw[dashed] (0,2) -- (4,2);
+    \caption{Reakcijos pabaigos laiko priklausomybė nuo išmaišymo laiko, kai modeliuojamos praplėstos pradinės sąlygos \eqref{large-initial-conditions}. }
 
-            \draw[thick] (1,0) -- (1,4);
-            \draw[thick] (0,1) -- (4,1);
-            \draw[thick] (3,0) -- (3,4);
-            \draw[thick] (0,3) -- (4,3);
-    
-            \node at (0.5,3.5) {$\Omega_6$};
-            \node at (1.5,3.5) {$\Omega_5$};
-            \node at (0.5,2.5) {$\Omega_2$};
-            \node at (1.5,2.5) {$\Omega_1$};
-    
-            \node at (2.5,3.5) {$\Omega_8$};
-            \node at (3.5,3.5) {$\Omega_7$};
-            \node at (2.5,2.5) {$\Omega_4$};
-            \node at (3.5,2.5) {$\Omega_3$};
-    
-            \node at (0.5,1.5) {$\Omega_{14}$};
-            \node at (1.5,1.5) {$\Omega_{13}$};
-            \node at (0.5,0.5) {$\Omega_{10}$};
-            \node at (1.5,0.5) {$\Omega_{9}$};
-    
-            \node at (2.5,1.5) {$\Omega_{16}$};
-            \node at (3.5,1.5) {$\Omega_{15}$};
-            \node at (2.5,0.5) {$\Omega_{12}$};
-            \node at (3.5,0.5) {$\Omega_{11}$};
-        \end{scope}
-    \end{tikzpicture}
-    \caption{\enquote{Tobulo} maišymo transformacija ant praplėstų pradinių sąlygų}
-    \label{perfect-4x4-mix}
-    \end{figure}
+    \label{mix-end-large}
+\end{figure}
 
-    \ref{perfect-4x4-mix}-ame pavyzdyje matome kaip atrodo \enquote{tobulas} išmaišymas praplėstų pradinių sąlygų atveju. Punktyrinės linijos žymi skirtingų medžiagų bendras sieneles t. y. tas sieneles, ties kuriomis aktyviai vyksta medžiagų reakcija. Paprastos linijos žymi sieneles, ties kuriomis susiduria tos pačios medžiagos sritys arba sieneles, kurios yra nukreiptos į išorę. Toks išmaišymas žymiai padidina reakcijos greitį todėl, kad visos sienelės tarp skirtingų medžiagų yra dar nesureagavusios ir turi dideli koncentracijų kontrastą.
-
-    \newpage
-
-    \begin{figure}[h!]
-        \centering
-        \includegraphics[width=0.5\textwidth]{../paper/assets/mix-end-large-1.png}
-    
-        \caption{Kompiuterinio modelio rezultatai - reakcijos pabaigos laiko priklausomybė nuo išmaišymo laiko. }
-    
-        \label{mix-end-large}
-    \end{figure}
+\ref{mix-end-large}-ame matome, kad priklausomybė beveik tokia pati kaip \ref{mix-end}-ame pavyzdyje su nežymiai skirtumais. Kai išmaišymas nevyksta, reakcijos pabaigos laikas yra $11h\,25min$, skirtumas tarp šio ir rezultato su įprastomis pradinėmis sąlygomis yra $5min$. Optimalus išmaišymo laikas šiuo atveju yra $1h\,36min$, skirtumas - $6min$. Reakcijos pabaigos laikas kai medžiagos išmaišomos optimaliu laiku - $9h\,29min$, skirtumas - $4min$.
