@@ -7,10 +7,10 @@ solver_config = {
   'dt': None,
 
   # reaction parameters
-  'W': 2.154434690031884,
-  'H': 2.154434690031884,
-  'N': 80,
-  'M': 80,
+  'W': 2 * 2.154434690031884,
+  'H': 2 * 2.154434690031884,
+  'N': 2 * 80,
+  'M': 2 * 80,
   'D': 28e-6,
   'k': 192,
   'c0': 1e-6,
@@ -20,9 +20,9 @@ solver_config = {
   'T': None,
   
   # mixing parameters
-  'B': 2,
-  't_mix': [ 1.99 * 3600 ],
-  'optimal_mix': True,
+  'B': 4,
+  't_mix': None, #[0],
+  'optimal_mix': True, # no effect on larger configurations
 }
 
 def solver_config_id():

@@ -70,8 +70,12 @@ def mix(
 
   # best theoretical mix for 2x2
   if optimal_mix and 2 == B:
-    rotations = np.array([0, 0, 0, 0])
+    rotations = np.zeros(B ** 2)
     block_order = np.array([3, 2, 1, 0])
+
+  if optimal_mix and 4 == B:
+    rotations = np.zeros(B ** 2)
+    block_order = np.array([5, 4, 7, 6, 1, 0, 3, 2, 13, 12, 15, 14, 9, 8, 11, 10])
 
   # mix each block
   return [ mix_single(g, rotations, block_order, B, debug) for g in grids ]

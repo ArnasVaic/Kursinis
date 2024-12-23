@@ -20,8 +20,6 @@ dt = get_upper_dt_bound_from_config(solver_config)
 
 vmax = [ 3 * c0, 5 * c0, c[2].max() ]
 
-
-# %%
 plt.rcParams['mathtext.fontset'] = 'stix'
 plt.rcParams['font.family'] = 'STIXGeneral'
 
@@ -33,7 +31,7 @@ FIG_HEIGHT, FIG_CNT = 3, 4
 FIG_SIZE = (FIG_CNT * FIG_HEIGHT, FIG_HEIGHT)
 
 # timestamps to visualize (hours)
-timestamps = np.array([ 0.0, 0.9, 1.01, 1.5 ])
+timestamps = np.array([ 0.1, 1.5, 3, 5 ])
 
 assert len(timestamps) == FIG_CNT
 

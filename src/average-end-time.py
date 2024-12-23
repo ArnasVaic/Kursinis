@@ -17,10 +17,10 @@ solver_config = {
   'dt': None,
 
   # reaction parameters
-  'W': 2.154434690031884,
-  'H': 2.154434690031884,
-  'N': 80,
-  'M': 80,
+  'W': 2 * 2.154434690031884,
+  'H': 2 * 2.154434690031884,
+  'N': 2 * 80,
+  'M': 2 * 80,
   'D': 28e-6,
   'k': 192,
   'c0': 1e-6,
@@ -30,7 +30,7 @@ solver_config = {
   'T': None,
   
   # mixing parameters
-  'B': 2,
+  'B': 4,
   't_mix': None,
   'optimal_mix': True
 }
@@ -46,7 +46,7 @@ print(f"Reaction end time (no mixing): {t_end}")
 
 sample_size = 20
 
-ts_mix = 3600 * np.array([ 5.99 , 6.99, 7.99, 8.99, 9.99 ])
+ts_mix = 3600 * np.arange(0.99, 9.99, 1)
 
 for t_mix in ts_mix:
 
