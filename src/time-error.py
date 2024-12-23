@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import solver
 from solver_config import *
-from initial_config import get_c_init
 
 dts = [
   solver.get_upper_dt_bound_from_config(solver_config),
@@ -62,7 +61,7 @@ for dt_index, dt in enumerate(dts):
       zorder=dt_index, 
       lw=3, 
       label=f'$\Delta t = {dt:.4g}s$')
-    axis.set_title(f'$q_{{{i + 1}, n}}$')
+    axis.set_title(f'Medžiagos $c_{{{i + 1}}}$ kiekio\npriklausomybė nuo laiko')
 
 plt.legend()
 plt.tight_layout()

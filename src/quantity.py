@@ -16,10 +16,10 @@ solver_config = {
   'dt': None,
 
   # reaction parameters
-  'W': 2 * 2.154434690031884,
-  'H': 2 * 2.154434690031884,
-  'N': 2 * 80,
-  'M': 2 * 80,
+  'W': 2.154434690031884,
+  'H': 2.154434690031884,
+  'N': 80,
+  'M': 80,
   'D': 28e-6,
   'k': 192,
   'c0': 1e-6,
@@ -29,16 +29,16 @@ solver_config = {
   'T': None,
   
   # mixing parameters
-  'B': 4,
+  'B': 2,
   't_mix': None,
-  'optimal_mix': True,
+  'optimal_mix': False,
 }
 
 dt = solver.get_upper_dt_bound_from_config(solver_config)
 
 t, c = solver.solvec(solver_config)
 
-solver_config['t_mix'] = [ 0 * 3600 ]
+solver_config['t_mix'] = [ 2.99 * 3600 ]
 
 t_mixed, c_mixed = solver.solvec(solver_config)
 

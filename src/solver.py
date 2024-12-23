@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 from scipy.signal import convolve2d
-from initial_config import get_larger_c_init
+from initial_config import get_c_init
 from mixer import mix
 
 def get_upper_dt_bound_from_config(config):
@@ -183,7 +183,7 @@ def solvec(config, debug=False):
   frame_stride = config['frame_stride']
   optimal_mix = config['optimal_mix']
 
-  c_init = get_larger_c_init(N, M, c0)
+  c_init = get_c_init(N, M, c0)
 
   return solve(W, H, N, M, D, c0, k, *c_init,
     threshold=threshold,

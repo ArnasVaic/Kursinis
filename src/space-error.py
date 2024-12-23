@@ -15,10 +15,7 @@ for s in [80, 40, 20, 10]:
   solver_config['N'] = s
   solver_config['M'] = s
 
-  t, c = solver.solvec(
-    solver_config, c_init, 
-    stop_threshold=None, 
-    debug=True)
+  t, c = solver.solvec(solver_config, debug=True)
 
   dir = '../assets/saves/space-error'
   np.save(f'{dir}/{solver_config_id()}.npy', c)
@@ -35,7 +32,6 @@ plt.rcParams['font.family'] = 'STIXGeneral'
 plt.figure(dpi=1200)
 
 fig, ax = plt.subplots(1, 3, figsize=(9, 3))
-dt = solver_config['dt']
 dir = '../assets/saves/space-error'
 
 ax[1].set_xlabel('$t\quad [h]$')
@@ -47,12 +43,14 @@ for s in [80, 40, 20, 10]:
     solver_config['N'] = s
     solver_config['M'] = s
 
+    dt = solver.get_upper_dt_bound_from_config(solver_config)
+
     c = np.load(f'{dir}/{solver_config_id()}.npy')
-    n = np.load(f'{dir}/{solver_config_id()}-t.npy')
+    t = np.load(f'{dir}/{solver_config_id()}-t.npy')
     q = c[i].sum(axis=(1, 2)) / (s ** 2)
-    ax[i].plot(n * dt / 3600, q, label=f'$N = M = {s}$')
+    ax[i].plot(t * dt / 3600, q, label=f'$N = M = {s}$')
     
-    ax[i].set_title(f'$q_{{{i + 1}, n}}$')
+    ax[i].set_title(f'Medžiagos $c_{{{i + 1}}}$ kiekio\npriklausomybė nuo laiko')
 
 plt.legend()
 plt.tight_layout()
