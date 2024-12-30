@@ -202,6 +202,19 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Atsitiktinio maišymo rezultatai}
+    \centering
+    \includegraphics[width=12cm]{../paper/assets/random-mix-example-c0-1.png} \\
+    \includegraphics[width=12cm]{../paper/assets/random-mix-example-c2-1.png}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Atsitiktinio maišymo rezultatai}
+    \centering
+    \includegraphics[width=10cm]{../paper/assets/bad-mix-qnt-compare-1.png}
+\end{frame}
+
+\begin{frame}
 \frametitle{\enquote{Tobulas} Maišymas}
 \centering
 \begin{tikzpicture}[scale=1.5]
@@ -237,6 +250,133 @@
         \node at (1.5,0.5) {$\Omega_1$};
     \end{scope}
 \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{\enquote{Tobulo} maišymo rezultatai}
+\centering
+\includegraphics[width=10cm]{../paper/assets/optimal-mix-qnt-1.png}
+\end{frame}
+
+\begin{frame}
+    \frametitle{\enquote{Tobulo} maišymo rezultatai}
+    \centering
+    \includegraphics[width=10cm]{../paper/assets/mix-end-1.png}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Maišymas didesnėje erdvėje}
+    \centering
+    \begin{tikzpicture}
+        % Original Grid
+    
+        \fill[gray!30] (1, 0) rectangle (3, 1);
+        \fill[gray!30] (1, 3) rectangle (3, 4);
+    
+        \fill[gray!30] (0, 1) rectangle (1, 3);
+        \fill[gray!30] (3, 1) rectangle (4, 3);
+    
+        \draw[thick] (0,0) rectangle (2,2);
+        \draw[thick] (0,2) rectangle (2,4);
+        \draw[thick] (2,0) rectangle (4,2);
+        \draw[thick] (2,2) rectangle (4,4);
+        \draw[dashed] (1,0) -- (1,4);
+        \draw[dashed] (0,1) -- (4,1);
+        \draw[dashed] (3,0) -- (3,4);
+        \draw[dashed] (0,3) -- (4,3);
+    
+        \draw[<->] (0.75,0.75) -- (1.25,1.25);
+        \draw[<->] (1.25,0.75) -- (0.75,1.25);
+    
+        \draw[<->] (2.75,0.75) -- (3.25,1.25);
+        \draw[<->] (3.25,0.75) -- (2.75,1.25);
+    
+        \draw[<->] (0.75,2.75) -- (1.25,3.25);
+        \draw[<->] (1.25,2.75) -- (0.75,3.25);
+    
+        \draw[<->] (2.75,2.75) -- (3.25,3.25);
+        \draw[<->] (3.25,2.75) -- (2.75,3.25);
+    
+        \node at (0.5,3.5) {$\Omega_1$};
+        \node at (1.5,3.5) {$\Omega_2$};
+        \node at (0.5,2.5) {$\Omega_5$};
+        \node at (1.5,2.5) {$\Omega_6$};
+    
+        \node at (2.5,3.5) {$\Omega_3$};
+        \node at (3.5,3.5) {$\Omega_4$};
+        \node at (2.5,2.5) {$\Omega_7$};
+        \node at (3.5,2.5) {$\Omega_8$};
+    
+        \node at (0.5,1.5) {$\Omega_9$};
+        \node at (1.5,1.5) {$\Omega_{10}$};
+        \node at (0.5,0.5) {$\Omega_{13}$};
+        \node at (1.5,0.5) {$\Omega_{14}$};
+    
+        \node at (2.5,1.5) {$\Omega_{11}$};
+        \node at (3.5,1.5) {$\Omega_{12}$};
+        \node at (2.5,0.5) {$\Omega_{15}$};
+        \node at (3.5,0.5) {$\Omega_{16}$};
+    
+        % Arrow
+        \draw[->, thick] (4.5,2) -- (5.5,2);
+    
+        % Transformed Grid
+        \begin{scope}[shift={(6,0)}]
+            \fill[gray!30] (1, 0) rectangle (3, 1);
+            \fill[gray!30] (1, 3) rectangle (3, 4);
+    
+            \fill[gray!30] (0, 1) rectangle (1, 3);
+            \fill[gray!30] (3, 1) rectangle (4, 3);
+    
+            \draw[dashed] (0,0) rectangle (4,4);
+    
+            \draw[dashed] (2,0) -- (2,4);
+            \draw[dashed] (0,2) -- (4,2);
+    
+            \draw[thick] (1,0) -- (1,4);
+            \draw[thick] (0,1) -- (4,1);
+            \draw[thick] (3,0) -- (3,4);
+            \draw[thick] (0,3) -- (4,3);
+    
+            \node at (0.5,3.5) {$\Omega_6$};
+            \node at (1.5,3.5) {$\Omega_5$};
+            \node at (0.5,2.5) {$\Omega_2$};
+            \node at (1.5,2.5) {$\Omega_1$};
+    
+            \node at (2.5,3.5) {$\Omega_8$};
+            \node at (3.5,3.5) {$\Omega_7$};
+            \node at (2.5,2.5) {$\Omega_4$};
+            \node at (3.5,2.5) {$\Omega_3$};
+    
+            \node at (0.5,1.5) {$\Omega_{14}$};
+            \node at (1.5,1.5) {$\Omega_{13}$};
+            \node at (0.5,0.5) {$\Omega_{10}$};
+            \node at (1.5,0.5) {$\Omega_{9}$};
+    
+            \node at (2.5,1.5) {$\Omega_{16}$};
+            \node at (3.5,1.5) {$\Omega_{15}$};
+            \node at (2.5,0.5) {$\Omega_{12}$};
+            \node at (3.5,0.5) {$\Omega_{11}$};
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Maišymas didesnėje erdvėje}
+    \centering
+    \includegraphics[width=10cm]{../paper/assets/mix-end-large-1.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Išvados}
+\begin{itemize}
+    \item Atsitiktinio maišymo modelio rezultatai neatitinka realybėje pastebimų rezultatų, kai reakcija modeliuojama mažoje srityje, kurioje susiduria tik 4-ios mikrodalelės. Norint iš šio modelio išgauti tikrovę atitinkančius rezultatus yra būtina modeliuoti didesnę erdvės sritį.
+
+    \item \enquote{Tobulo} išmaišymo modelio rezultatai atitinka realybėje pastebimą reakcijos pagreitėjimą.
+    
+    \item Modeliuojant didesnę erdvės sritį, \enquote{tobulo} išmaišymo modelio rezultatai kinta gana nežymiai, todėl maišymo modeliavimui užtenka modeliuoti mažą reakcijos erdvės sritį su 4-iom skirtingų medžiagų mikrodalelėmis
+
+\end{itemize}
 \end{frame}
 
 \end{document}
