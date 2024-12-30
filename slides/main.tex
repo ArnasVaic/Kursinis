@@ -1,0 +1,147 @@
+\documentclass{beamer}
+
+\usepackage[version=4]{mhchem}
+\usepackage{tikz}
+
+\usetheme{Copenhagen}
+
+%Information to be included in the title page:
+\title{Sample title}
+\author{Anonymous}
+\institute{Overleaf}
+\date{2025}
+
+\title[]
+{Medžiagų maišymo modeliavimas cheminėse reakcijose}
+
+\subtitle{Modelling the mixing of reagents in chemical reactions}
+
+\author[Arnas Vaicekauskas]
+{
+    A.~Vaicekauskas\inst{1}\\ 
+    \small Darbo vadovas: Asist. Dr. R.~Astrauskas\inst{1}
+}
+
+\institute[MIF]
+{
+  \inst{1}
+  Matematikos ir informatikos fakultetas\\
+  Vilniaus Universitetas
+}
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Ytrio aliuminio granatas (YAG)}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{assets/nd:yag.png}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+               
+    \end{minipage}
+\end{figure}
+
+\begin{itemize}
+    \item Plačiausiai naudojama medžiaga lazerių aktyviosioms terpėms gaminti
+    \item YAG lazeriai naudojami medicinos bei gamybos srityse
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{YAG cheminė reakcija}
+
+\centering
+\begin{align*}
+    \ce{3Y_2O_3 + 5Al_2O_3 -> 2Y_3Al_5O_{12}}
+\end{align*}    
+\begin{itemize}
+\item YAG kristalai sintezuojami kaitinant Aliuminio ir Itrio oksidų mišinį
+\item Reakcija gali užtrukti keliolika valandų
+\item Chemikai vykstant reakcijai periodiškai išmaišo reagentus, kad reakcijos laikas sutrumpėtų
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Darbo apimtis}
+\textbf{Tikslas} - sukurti kompiuterinį YAG reakcijos maišymo modelį ir jį ištirti.
+
+\textbf{Uždaviniai:}
+\begin{enumerate}
+\item Sukurti kompiuterinį YAG reakcijos modelį
+\item Patikrinti kompiuterinio modelio rezultatų korektiškumą
+\item Papildyti kompiuterinį modelį su maišymo procesu
+\item Ištirti kompiuterinio modelio rezultatus
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Matematinis modelis (Ivanauskas et al)}
+
+\begin{align*}
+    \frac{\partial c_1}{\partial t} & =-3kc_1c_2+D\left(\frac{\partial^2c_1}{\partial x^2}+\frac{\partial^2c_1}{\partial y^2}\right) \\
+    \frac{\partial c_2}{\partial t} & =-5kc_1c_2+D\left(\frac{\partial^2c_2}{\partial x^2}+\frac{\partial^2c_2}{\partial y^2}\right)\\
+    \frac{\partial c_3}{\partial t} & =2kc_1c_2
+\end{align*}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Pradinės ir kraštinės sąlygos}
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}[scale=2.0]
+            \draw[fill=white] (0,0) rectangle (1,1);
+            \draw[fill=white] (1,1) rectangle (2,2);
+            \draw[fill=gray!50] (0,1) rectangle (1,2);
+            \draw[fill=gray!50] (1,0) rectangle (2,1);
+    
+            % Draw the boundary of the square
+            \draw[thick] (0,0) rectangle (2,2);
+    
+            % Draw axes
+            \draw[->] (-0.5, 0) -- (2.5, 0) node[anchor=north west] {$x$};
+            \draw[->] (0, -0.5) -- (0, 2.5) node[anchor=north east] {$y$};
+    
+            % Mark the origin
+            \node[anchor=north east] at (0,0) {$(0, 0)$};
+    
+            % Mark the side length
+            \draw[-] (2,0) -- (2,2);
+            \draw[-] (0,2) -- (2,2);
+
+            \node at (2.1, 0.75) {$H$};
+            \node at (0.75, 2.1) {$W$};
+            
+            \draw (0.5, 1.5) node[anchor=center] {$5c_0$};
+            \draw (1.5, 0.5) node[anchor=center] {$5c_0$};
+            \draw (1.5, 1.5) node[anchor=center] {$3c_0$};
+            \draw (0.5, 0.5) node[anchor=center] {$3c_0$};
+
+            % boundary conditions
+            \draw[->] (-0.05,1) -- (-0.55,1);
+            \node at (-0.55, 1.5) {$\frac{dc_m}{dx} = 0$};
+
+            \draw[->] (2.05,1) -- (2.55,1);
+            \node at (2.55, 1.5) {$\frac{dc_m}{dx} = 0$};
+
+            \draw[->] (1, -0.05) -- (1, -0.55);
+            \node at (1.5, -0.25) {$\frac{dc_m}{dy} = 0$};
+
+            \draw[->] (1, 2.05) -- (1, 2.55);
+            \node at (1.5, 2.25) {$\frac{dc_m}{dy} = 0$};
+
+        \end{tikzpicture}
+    \end{figure}
+\end{frame}
+
+\end{document}
