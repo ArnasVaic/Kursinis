@@ -43,8 +43,8 @@ jobs:
           latexmk_use_lualatex: true
 
       - name: Prepare dist directory
-        run: mv main.pdf dist
-        
+        run: mv main.pdf slides/dist
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
