@@ -1,8 +1,12 @@
 \documentclass{beamer}
 
-\usepackage[version=4]{mhchem}
-\usepackage{biblatex}
+\usepackage[version=4]{mhchem}  
 \usepackage{tikz}
+\usepackage[
+    backend=biber,
+    style=numeric,
+    sorting=ynt
+]{biblatex}
 
 \bibliography{bibliografija}
 
@@ -377,6 +381,11 @@
     \item Modeliuojant didesnę erdvės sritį, \enquote{tobulo} išmaišymo modelio rezultatai kinta gana nežymiai, todėl maišymo modeliavimui užtenka modeliuoti mažą reakcijos erdvės sritį su 4-iom skirtingų medžiagų mikrodalelėmis
 
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Literatūros šaltiniai}
+\printbibliography
 \end{frame}
 
 \end{document}

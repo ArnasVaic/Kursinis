@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BUILD_PATH: "." # default value when not using subfolders
+  BUILD_PATH: "slides" # default value when not using subfolders
   # BUILD_PATH: subfolder
 
 jobs:
@@ -31,16 +31,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
           root_file: slides/main.tex
           latexmk_use_lualatex: true
+
       - name: Prepare dist directory
         run: mv main.pdf dist
+        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
