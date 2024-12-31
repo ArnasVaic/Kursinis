@@ -38,6 +38,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: slides/main.tex
+          latexmk_use_lualatex: true
       - name: Prepare dist directory
         run: mv main.pdf dist
       - name: Upload artifact
