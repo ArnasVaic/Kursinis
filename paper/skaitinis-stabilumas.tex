@@ -13,7 +13,7 @@ Tada pertvarkome dviejų dimensijų skaitinį modelį \eqref{numerical-eqs} taip
   c^{n+1}_{3,i,j}&=c^n_{3,i,j}+2k\Delta tc^{n}_{1,i,j}c^{n}_{2,i,j} \label{r-coefs3}
   \end{align}
 \end{subequations}
-Baziniu atveju, kai $n=0$, medžiagų koncentracija visuose taškuose yra ne neigiama, kaip numatyta pradinėje sąlygoje \eqref{intial-cond}. Darome indukcijos hipotezės prielaidą, kad medžiagų koncentracija visuose diskretizuotos erdvės taškuose, laiko momentu $n$ bus ne neigiama:
+Baziniu atveju, kai $n=0$, medžiagų koncentracija visuose taškuose yra ne neigiama, kaip numatyta pradinėse sąlygose \eqref{intial-cond}. Darome indukcijos hipotezės prielaidą, kad medžiagų koncentracija visuose diskretizuotos erdvės taškuose, laiko momentu $n$ bus ne neigiama:
 \begin{align} \label{induction-assumption}
   c^n_{m,i,j} \geqslant 0, \quad m=1,2,3,\quad i=0,1,\dots,N-1,\quad j=0,1,\dots,M-1
 \end{align}
@@ -79,7 +79,7 @@ Tai reiškia, kad maksimalios pirmos ir antros medžiagų reikšmės bus laiko m
 \begin{align}
   \Delta t \leqslant \left(\max(3kc^{0}_{2,i,j}, 5kc^{0}_{1,i,j})+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
 \end{align}
-Laiko žingsnis čia vis dar priklauso nuo diskretizuotos erdvės koordinatės $(i, j)$, tačiau tai nesunku pastebėti, kad užtenka parinkti didžiausią reikšmę iš kiekvienos pradinės sąlygos -- tokiu būdu laiko žingsnis gausis mažiausias. Iš pradinės sąlygos \eqref{intial-cond} turime:
+Laiko žingsnis čia vis dar priklauso nuo diskretizuotos erdvės koordinatės $(i, j)$, tačiau nesunku pastebėti, kad užtenka parinkti didžiausią reikšmę iš kiekvienos pradinės sąlygos -- tokiu būdu laiko žingsnis gausis mažiausias. Iš pradinės sąlygos \eqref{intial-cond} turime:
 \begin{align*}
 \max c^0_{1,i,j}=3c_0,\quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1\\
 \max c^0_{2,i,j}=5c_0,\quad i=0,1,\dots,N-1, \quad j=0,1,\dots,M-1
