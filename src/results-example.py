@@ -31,7 +31,7 @@ FIG_HEIGHT, FIG_CNT = 3, 4
 FIG_SIZE = (FIG_CNT * FIG_HEIGHT, FIG_HEIGHT)
 
 # timestamps to visualize (hours)
-timestamps = np.array([ 0.1, 1.5, 3, 5 ])
+timestamps = np.array([ 0.1, 1.49, 1.5, 3 ])
 
 assert len(timestamps) == FIG_CNT
 

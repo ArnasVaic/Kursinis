@@ -1,6 +1,7 @@
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
+from solver_config import solver_config_id
 import solver
 
 # pretty font
@@ -38,9 +39,12 @@ dt = solver.get_upper_dt_bound_from_config(solver_config)
 
 t, c = solver.solvec(solver_config)
 
-solver_config['t_mix'] = [ 2.99 * 3600 ]
+solver_config['t_mix'] = [ 1.5 * 3600 ]
 
 t_mixed, c_mixed = solver.solvec(solver_config)
+
+np.save(f'../assets/saves/{solver_config_id()}.npy', c_mixed)
+np.save(f'../assets/saves/T-{solver_config_id()}.npy', t_mixed)
 
 W, H = solver_config['W'], solver_config['H'] 
 T, N, M = c[2].shape

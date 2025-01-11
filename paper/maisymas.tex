@@ -126,9 +126,9 @@ Maišymas praktikoje yra chaotiškas procesas, todėl sudarydami kompiuterinį m
 \end{figure}
 \ref{bad-mix-qnt-example}-ame pavyzdyje puikiai matosi, kad išmaišymas nepagreitino reakcijos, o ją sulėtino. Reakcijos laikas su išmaišymu yra apytiksliai dvejom su puse valandom ilgesnis. Ši problema atsiranda todėl, kad mes modeliuojame ypač mažą reakcijos erdvės sritį, kurioje susiduria tik 4 mikrodalelės, dėl to nėra daug skirtingų išdėstymų, kada viena sienele galėtų dalintis skirtingų medžiagų dalelės, prie to žinoma prisideda ir faktas, kad šis modelis yra dviejų dimensijų. Eksperimentas parodė, kad nesuveiktų ir statistinis bandymas - vidutinis atsitiktinis išmaišymas taip pat neduoda geresnių rezultatų negu reakcijos modelis be išmaišymų. Dėl šios priežasties apsvarstysime alternatyvų išmaišymo metoda.
 
-\subsection{\enquote{Tobulas} maišymas}
+\subsection{Tobulas maišymas}
 
-Kad išspręstume atsitiktinio maišymo problemą, modeliuosime \enquote{tobulą} teorinį išmaišymą, kuris turės didžiausią poveikį reakcijos greičiui. Pats maišymo modelis išliks toks pat, tačiau sritis $\Omega_i$ sudėliosime ne atsitiktinai, o sukeisime įstrižai. \enquote{Tobulas} išmaišymas aišku priklauso nuo pradinių sąlygų, o šis galioja tik duotoms pradinėms sąlygoms \eqref{intial-cond}.
+Kad išspręstume atsitiktinio maišymo problemą, modeliuosime tobulą teorinį išmaišymą, kuris turės didžiausią poveikį reakcijos greičiui. Pats maišymo modelis išliks toks pat, tačiau sritis $\Omega_i$ sudėliosime ne atsitiktinai, o sukeisime įstrižai. Tobulas išmaišymas aišku priklauso nuo pradinių sąlygų, o šis galioja tik duotoms pradinėms sąlygoms \eqref{intial-cond}.
 
 \begin{figure}[!h]
 \centering
@@ -165,7 +165,7 @@ Kad išspręstume atsitiktinio maišymo problemą, modeliuosime \enquote{tobulą
         \node at (1.5,0.5) {$\Omega_1$};
     \end{scope}
 \end{tikzpicture}
-\caption{\enquote{Tobulo} maišymo transformacija}
+\caption{Tobulo maišymo transformacija}
 \label{perfect-2x2-mix}
 \end{figure}
 \ref{perfect-2x2-mix}-ame pavyzdyje matoma prieš tai apibūdintą transformacija. Punktyrinės linijos kairėje pusėje žymi sieneles ties kuriomis vyksta reakcija. Šiuo atveju po išmaišymo nėra sričių, kurios turėtų bendrą punktyrinę sienelę, o tai reiškia, kad tokiu būdu sumaišius sritis, visos vidinės sienelės turės didžiausią įmanomą skirtingų medžiagų kontrastą, kuris lems didžiausią įmanomą reakcijos pagreitėjimą.
@@ -174,12 +174,12 @@ Kad išspręstume atsitiktinio maišymo problemą, modeliuosime \enquote{tobulą
     \centering
     \includegraphics[width=0.5\textwidth]{../paper/assets/optimal-mix-qnt-1.png}
 
-    \caption{Kompiuterinio modelio rezultatų palyginimas tarp reakcijos be išmaišymo ir reakcijos su \enquote{tobulu} išmaišymu.  }
+    \caption{Kompiuterinio modelio rezultatų palyginimas tarp reakcijos be išmaišymo ir reakcijos su tobulu išmaišymu.  }
 
     \label{optimal-mix-qnt}
 \end{figure}
 
-Šiuo atveju, \ref{optimal-mix-qnt}-ame pavyzdyje matome, kad dėl \enquote{tobulo} išmaišymo galime matyti šuolį medžiagos kiekyje. Toks maišymas turi teigiamą poveikį reakcijos pabaigos laikui ir labiau atitinka eksperimentinius rezultatus negu atsitiktinis išmaišymas.
+Šiuo atveju, \ref{optimal-mix-qnt}-ame pavyzdyje matome, kad dėl tobulo išmaišymo galime matyti šuolį medžiagos kiekyje. Toks maišymas turi teigiamą poveikį reakcijos pabaigos laikui ir labiau atitinka eksperimentinius rezultatus negu atsitiktinis išmaišymas.
 Čia galime pasamprotauti, kaip reakcijos pabaigos laikas priklauso nuo išmaišymo laiko - jei išmaišome pradinę konfigūraciją pačioje reakcijos pradžioje, rezultatams tai neturės jokios įtakos ir gausime reakcijos modelį be išmaišymo. Lygiai tas pats nutiktų jei išmaišymas įvyktų ką tik prieš reakcijos pabaigą, tačiau išmaišymas kitais laiko momentais, kaip jau matėme, gali sutrumpinti reakcijos pabaigos laiką. Jei pavaizduotume reakcijos pabaigos laiko priklausomybę nuo išmaišymo laiko, gautume štai tokį grafiką:
 
 \begin{figure}[h!]
@@ -246,7 +246,7 @@ Modeliuoti mažą visos reakcijos erdvės sritį užtenka norint gauti tikslias 
 \label{large-initial-conditions}
 \end{figure}
 
-Kadangi prieš tai apibrėžtas maišymo modelis yra tinkamas tik įprastoms pradinėms \hbox{sąlygoms \eqref{intial-cond}}, praplėstoms pradinėms sąlygoms reikės atskirai apibrėžti išmaišymą. Eksperimentas parodė, kad net su praplėstomis pradinėmis sąlygomis, atsitiktinio maišymo problema nedingsta - išmaišymas dažniausiai pailgina reakcijos pabaigos laiką. Dėl šios priežasties praplėsime \enquote{tobulo} išmaišymo modelį analogiškai atkartodami jį veidrodžio principu kaip ir pradines sąlygas. 
+Kadangi prieš tai apibrėžtas maišymo modelis yra tinkamas tik įprastoms pradinėms \hbox{sąlygoms \eqref{intial-cond}}, praplėstoms pradinėms sąlygoms reikės atskirai apibrėžti išmaišymą. Eksperimentas parodė, kad net su praplėstomis pradinėmis sąlygomis, atsitiktinio maišymo problema nedingsta - išmaišymas dažniausiai pailgina reakcijos pabaigos laiką. Dėl šios priežasties praplėsime tobulo išmaišymo modelį analogiškai atkartodami jį veidrodžio principu kaip ir pradines sąlygas. 
 
 \begin{figure}[!h]
 \centering
@@ -342,11 +342,11 @@ Kadangi prieš tai apibrėžtas maišymo modelis yra tinkamas tik įprastoms pra
         \node at (3.5,0.5) {$\Omega_{11}$};
     \end{scope}
 \end{tikzpicture}
-\caption{\enquote{Tobulo} maišymo transformacija ant praplėstų pradinių sąlygų}
+\caption{Tobulo maišymo transformacija ant praplėstų pradinių sąlygų}
 \label{perfect-4x4-mix}
 \end{figure}
 
-\ref{perfect-4x4-mix}-ame pavyzdyje matome kaip atrodo \enquote{tobulas} išmaišymas praplėstų pradinių sąlygų atveju. Punktyrinės linijos žymi skirtingų medžiagų bendras sieneles t. y. tas sieneles, ties kuriomis aktyviai vyksta medžiagų reakcija. Paprastos linijos žymi sieneles, ties kuriomis susiduria tos pačios medžiagos sritys arba sieneles, kurios yra nukreiptos į išorę. Toks išmaišymas žymiai padidina reakcijos greitį todėl, kad visos sienelės tarp skirtingų medžiagų yra dar nesureagavusios ir turi didelį koncentracijų kontrastą.
+\ref{perfect-4x4-mix}-ame pavyzdyje matome kaip atrodo tobulas išmaišymas praplėstų pradinių sąlygų atveju. Punktyrinės linijos žymi skirtingų medžiagų bendras sieneles t. y. tas sieneles, ties kuriomis aktyviai vyksta medžiagų reakcija. Paprastos linijos žymi sieneles, ties kuriomis susiduria tos pačios medžiagos sritys arba sieneles, kurios yra nukreiptos į išorę. Toks išmaišymas žymiai padidina reakcijos greitį todėl, kad visos sienelės tarp skirtingų medžiagų yra dar nesureagavusios ir turi didelį koncentracijų kontrastą.
 
 \newpage
 

@@ -20,9 +20,9 @@ solver_config = {
   'T': None,
   
   # mixing parameters
-  'B': 4,
-  't_mix': None, #[0],
-  'optimal_mix': True, # no effect on larger configurations
+  'B': 2,
+  't_mix': [ 1.5 * 3600 ],
+  'optimal_mix': False, # no effect on larger configurations
 }
 
 def solver_config_id():
