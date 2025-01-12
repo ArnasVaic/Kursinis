@@ -69,4 +69,3 @@ plt.scatter(
 plt.legend()
 plt.tight_layout()
 plt.savefig('optimal-mix-qnt.pdf')
- # %%

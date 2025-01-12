@@ -104,23 +104,53 @@ Maišymas praktikoje yra chaotiškas procesas, todėl sudarydami kompiuterinį m
 \newpage
 \subsection{Atsitiktinio maišymo rezultatai}
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c0-1.png} \\
-\includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c1-1.png} \\
-\includegraphics[width=\textwidth]{../paper/assets/random-mix-example-c2-1.png}
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[width=\textwidth]{assets/rnd-mix-c0-1.png} \\
+% \includegraphics[width=\textwidth]{assets/rnd-mix-c1-1.png} \\
+% \includegraphics[width=\textwidth]{assets/rnd-mix-c2-1.png}
 
-\caption{Kompiuterinio modelio rezultatai - medžiagų koncentracijos per laiką, kai vyksta išmaišymas. Išmaišymo laikas $t^1_\text{mix} = 1h$ }
+% \caption{Kompiuterinio modelio rezultatai - medžiagų koncentracijos per laiką, kai vyksta išmaišymas. Išmaišymo laikas $t^1_\text{mix} = 1h\,30min$ }
 
-\label{mix-example}
+% \label{mix-example}
+% \end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}[c]{0.40\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/rnd-mix-left-c0-1.png}\\
+        \includegraphics[width=\textwidth]{assets/rnd-mix-left-c1-1.png}\\
+        \includegraphics[width=\textwidth]{assets/rnd-mix-left-c2-1.png}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[c]{0.1\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \draw[->] (0,0.5) -- (1,0.5);
+            \node[above] at (0.5, 0.5) {maišymas};
+        \end{tikzpicture}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[c]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/rnd-mix-right-c0-1.png}\\
+        \includegraphics[width=\textwidth]{assets/rnd-mix-right-c1-1.png}\\
+        \includegraphics[width=\textwidth]{assets/rnd-mix-right-c2-1.png}
+    \end{minipage}
+
+    \caption{Kompiuterinio modelio rezultatai - medžiagų koncentracijos per laiką, kai vyksta išmaišymas. Išmaišymo laikas $t^1_\text{mix} = 1h\,30min$ }
+
+    \label{mix-example}
+
 \end{figure}
 
-\ref{mix-example}-ame pavyzdyje matome kaip atrodo reakcijos eiga, kada vyksta išmaišymas. Trečiame stulpelyje ir ypatingai trečios medžiagos koncentracijoje matome ryškių artefaktų. Taip yra todėl, kad nuo išmaišymo praejo labai mažai laiko ir medžiagos nespėjo sureaguoti. Čia galime pastebėti tam tikrą problemą su atsitiktiniu išmaišymu - šiuo atveju, po išmaišymo, susidarė tik viena viena sienelė, ties kuria susiduria dar nesureagavusios skirtingų medžiagų mikrodalelės, ir dėl to tarp laiko momentų $t=1h$ ir $t=1h\,30min$ matome labai nežymų pokytį trečios medžiagos $c_3$ koncentracijoje. Daugiau informacijos apie tokio išmaišymo efektus būtų galima matyti medžiagos kiekio grafike.
+\ref{mix-example}-ame pavyzdyje matome kaip atrodo reakcijos eiga, kada vyksta išmaišymas. Trečiame stulpelyje ir ypatingai trečios medžiagos koncentracijoje matome ryškių artefaktų. Taip yra todėl, kad nuo išmaišymo praejo labai mažai laiko ir medžiagos nespėjo sureaguoti naujoje aplinkoje. Tarp laiko momentų $t=1h\,30min$ ir $t=5h\,59min$ trečios medžiagos $c_3$ koncentracija daugiausiai keitėsi tose vietose, kuriose iš pradžių vyko reakcija, tačiau galime matyti ir visiškai naujos sienelės susidaryma ties srities viduriu. Norint geriau suprasti kokį poveikį toks išmaišymas turi reakcijos pabaigos lakui reikėtų ištirti trečios medžiagos koncentracijos priklausomybę nuo laiko.
 
 \newpage
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{../paper/assets/bad-mix-qnt-compare-1.png}
+    \includegraphics[width=0.5\textwidth]{assets/bad-mix-qnt-1.png}
     \caption{Kompiuterinio modelio rezultatų palyginimas, kai išmaišymas vyksta ir nevyksta.  }
     \label{bad-mix-qnt-example}
 \end{figure}

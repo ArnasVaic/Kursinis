@@ -27,11 +27,11 @@ def index_of_nearest(array, value):
   array = np.asarray(array)
   return (np.abs(array - value)).argmin()
 
-FIG_HEIGHT, FIG_CNT = 3, 4
+FIG_HEIGHT, FIG_CNT = 3, 2
 FIG_SIZE = (FIG_CNT * FIG_HEIGHT, FIG_HEIGHT)
 
 # timestamps to visualize (hours)
-timestamps = np.array([ 0.1, 1.49, 1.5, 3 ])
+timestamps = np.array([ 1.5, 6 ])
 
 assert len(timestamps) == FIG_CNT
 
@@ -84,6 +84,6 @@ for element_id in range(3):
   normalizer = Normalize(0, vmax[element_id])
   im = cm.ScalarMappable(norm=normalizer)
   fig.colorbar(cc, ax=ax.ravel().tolist())
-  plt.savefig(f'random-mix-example-c{element_id}.pdf')
+  plt.savefig(f'rnd-mix-right-c{element_id}.pdf')
 
 # %%

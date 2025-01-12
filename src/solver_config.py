@@ -21,7 +21,7 @@ solver_config = {
   
   # mixing parameters
   'B': 2,
-  't_mix': [ 1.5 * 3600 ],
+  't_mix': None, #[ 1.5 * 3600 ],
   'optimal_mix': False, # no effect on larger configurations
 }
 
