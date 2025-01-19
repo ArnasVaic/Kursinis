@@ -1,5 +1,9 @@
 # Kursinis
 
+## Skaidrės
+
+https://arnasvaic.github.io/Kursinis/main.pdf
+
 ## Tvarkaraštis
 
 4 paskaitos per semestra, po vieną per mėnesį.
