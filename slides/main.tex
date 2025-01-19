@@ -2,15 +2,23 @@
 
 \usepackage[version=4]{mhchem}  
 \usepackage{tikz}
+\usepackage{caption}
+%\usepackage[lithuanian,english]{babel}
+\usepackage{polyglossia}
+\setmainlanguage{lithuanian}
 \usepackage[
     backend=biber,
     style=numeric,
     sorting=ynt
 ]{biblatex}
 
-% \bibliography{bibliografija}
+%\setmainlanguage{lithuanian}
+
+\bibliography{bibliografija}
 
 \usetheme{Copenhagen}
+
+\setbeamertemplate{caption}[numbered]
 
 %Information to be included in the title page:
 \title{Sample title}
@@ -48,7 +56,8 @@
     \centering
     \begin{minipage}{.5\textwidth}
         \centering
-        \includegraphics[width=0.8\textwidth]{slides/assets/nd:yag.png}
+        \includegraphics[width=0.8\textwidth]{assets/nd:yag.png}
+        \caption{Apdoroti YAG kristalai \cite{NdYAGCrystals}}
     \end{minipage}%
     \begin{minipage}{.5\textwidth}
                
@@ -94,13 +103,14 @@
 \begin{frame}
 \frametitle{Matematinis modelis}
 
+YAG Reakcijos--difuzijos sistema
+
 \begin{align*}
     \frac{\partial c_1}{\partial t} & =-3kc_1c_2+D\left(\frac{\partial^2c_1}{\partial x^2}+\frac{\partial^2c_1}{\partial y^2}\right) \\
     \frac{\partial c_2}{\partial t} & =-5kc_1c_2+D\left(\frac{\partial^2c_2}{\partial x^2}+\frac{\partial^2c_2}{\partial y^2}\right)\\
-    \frac{\partial c_3}{\partial t} & =2kc_1c_2
+    \frac{\partial c_3}{\partial t} & =2kc_1c_2\\
+    (x, y, t)&\in(0, W)\times(0, H)\times[0, T]
 \end{align*}
-
-$(x, y)\in(0, W)\times(0, H)\times[0, T]$
 
 \end{frame}
 
@@ -150,26 +160,40 @@ $(x, y)\in(0, W)\times(0, H)\times[0, T]$
             \node at (1.5, 2.25) {$\frac{dc_m}{dy} = 0$};
 
         \end{tikzpicture}
+        \caption{Pradinės ir kraštinės sąlygos modeliui.}
+        \label{initial-boundary-condition}
     \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Stabilumas}
+    Galima parodyti, kad modelis bus stabilus tada, kai tenkinama ši nelygybė:
     \begin{align*}
         \Delta t \leqslant \left(15kc_0+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
     \end{align*}
+    Čia $k$ - reakcijos greitis, $D$ - difuzijos konstanta, $\Delta x, \Delta y$ - diskretūs erdvės žingsniai, $c_0$ - pradinių medžiagų koncentracijų didžiausias bendras daliklis.
 \end{frame}
 
 \begin{frame}
-    \frametitle{Reakcijos modelio rezultatai}
+    \frametitle{Reakcijos--difuzijos modelio rezultatai}
+    Modelio evoliucija laike su pradinėmis ir kraštinėmis sąlygomis \eqref{initial-boundary-condition}
     \centering
-    \includegraphics[width=12cm]{paper/assets/example-0.png} \\ 
-    \includegraphics[width=12cm]{paper/assets/example-2.png}
+    \includegraphics[width=12cm]{../paper/assets/example-0.png} \\ 
+    \includegraphics[width=12cm]{../paper/assets/example-2.png}
 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Reakcijos stabdymo sąlyga}
+    \begin{align*}
+        q(t_\text{stop})=0.03q(0)
+    \end{align*}
+    Čia $q(t)$ yra pirmos ir antros medžiagų kiekis sistemoje. Reakcija stabdoma tada, kai pirmų dviejų medžiagų kiekis sistemoje pasiekia 3\% pradinio kiekio.
 \end{frame}
 
 \begin{frame}
 \frametitle{Atsitiktinis maišymas}
+\begin{figure}
 \centering
 \begin{tikzpicture}[scale=1.5]
 
@@ -205,23 +229,33 @@ $(x, y)\in(0, W)\times(0, H)\times[0, T]$
         \node at (1.5,0.5) {\rotatebox{90}{$\Omega_2$}};  % 90° rotation
     \end{scope}
 \end{tikzpicture}
+\caption{Atsitiktinio išmaišymo metu metu reakcijos erdvės sritys yra atsitiktinai pasukamos ir susikeičiamos vietomis. }
+\label{random-mix}
+\end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Atsitiktinio maišymo rezultatai}
-    \centering
-    \includegraphics[width=12cm]{paper/assets/random-mix-example-c0-1.png} \\
-    \includegraphics[width=12cm]{paper/assets/random-mix-example-c2-1.png}
+    \begin{figure}
+        \centering
+        \includegraphics[width=12cm]{../paper/assets/random-mix-example-c0-1.png} \\
+        \includegraphics[width=12cm]{../paper/assets/random-mix-example-c2-1.png}
+        \caption{Modelio evoliucija laike su pradinėmis ir kraštinėmis sąlygomis \eqref{initial-boundary-condition}, kai naudojamas atsitiktinio išmaišymo modelis \eqref{random-mix}.}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Atsitiktinio maišymo rezultatai}
-    \centering
-    \includegraphics[width=10cm]{paper/assets/bad-mix-qnt-compare-1.png}
+    \begin{figure}
+        \centering
+        \includegraphics[width=7cm]{../paper/assets/bad-mix-qnt-compare-1.png}
+        \caption{Atsitiktinio išmaišymo modelio \eqref{random-mix} problema - gali ženkliai prailginti reakcijos pabaigos laiką. Tokio modelio poveiki reikia matuoti statistiniu bandymu arba pilnu perrinkimu. }
+    \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Tobulas maišymas}
+\begin{figure}
 \centering
 \begin{tikzpicture}[scale=1.5]
     % Original Grid
@@ -256,22 +290,32 @@ $(x, y)\in(0, W)\times(0, H)\times[0, T]$
         \node at (1.5,0.5) {$\Omega_1$};
     \end{scope}
 \end{tikzpicture}
+\caption{Tobulo išmaišymo metu metu reakcijos erdvės sritys yra susikeičiamos vietomis įstrižai, tokiu būdu reakcijos greitis padidėja daugiausiai. }
+\label{perfect-mix}
+\end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Tobulo maišymo rezultatai}
+\begin{figure}
 \centering
-\includegraphics[width=10cm]{paper/assets/optimal-mix-qnt-1.png}
+\includegraphics[width=7cm]{../paper/assets/optimal-mix-qnt-1.png}
+\caption{Tobulas maišymas deterministinis ir tikroviškiau atspindi išmaišymo pasekmes.}
+\end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Tobulo maišymo rezultatai}
-    \centering
-    \includegraphics[width=10cm]{paper/assets/mix-end-1.png}
+    \begin{figure}
+        \centering
+        \includegraphics[width=7cm]{../paper/assets/mix-end-1.png}
+        \caption{Reakcijos pabaigos laiko priklausomybė nuo išmaišymo laiko, kai naudojamas tobulo išmaišymo modelis \eqref{perfect-mix}.}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Maišymas didesnėje erdvėje}
+    \begin{figure}
     \centering
     \begin{tikzpicture}
         % Original Grid
@@ -365,12 +409,30 @@ $(x, y)\in(0, W)\times(0, H)\times[0, T]$
             \node at (3.5,0.5) {$\Omega_{11}$};
         \end{scope}
     \end{tikzpicture}
+    \caption{Tobulo maišymo modelis didesnėje erdvėje analogiškas modeliui \eqref{perfect-mix} atkartojant jį periodiškai.}
+    \label{large-perfect-mix}
+\end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Maišymas didesnėje erdvėje}
+    \begin{figure}
     \centering
-    \includegraphics[width=10cm]{paper/assets/mix-end-large-1.png}
+    \includegraphics[width=7cm]{../paper/assets/mix-end-large-1.png}
+    \caption{Reakcijos pabaigos laiko priklausomybė nuo išmaišymo laiko, kai naudojamas tobulo išmaišymo modelis didesnėje erdvėje \eqref{large-perfect-mix}.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Rezultatai}
+\begin{itemize}
+    \item Sukurtas kompiuterinis YAG reakcijos modelis. 
+    \item Teoriškai parodyta skaitinio modelio stabilumo sąlyga
+    \item Kompiuterinio modelio rezultatai buvo analizuojami ir buvo užtikrinta, kad modelis veikia korektiškai
+    \item Pasiūlyti du maišymo modeliai - atsitiktinis ir tobulas
+    \item Išmaišymo modeliai integruoti į kompiuterinį YAG reakcijos modelį
+    \item Atlikta papildyto kompiuterinio modelio rezultatų analizė
+\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -387,7 +449,7 @@ $(x, y)\in(0, W)\times(0, H)\times[0, T]$
 
 \begin{frame}
 \frametitle{Literatūros šaltiniai}
-% \printbibliography
+\printbibliography
 \end{frame}
 
 \end{document}
