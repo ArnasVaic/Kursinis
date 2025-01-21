@@ -1,3 +1,5 @@
+\PassOptionsToPackage{draft}{graphicx}
+
 \documentclass{beamer}
 
 \usepackage[version=4]{mhchem}  
@@ -23,6 +25,9 @@
 \author{Anonymous}
 \institute{Overleaf}
 \date{2025}
+
+%\section{Medžiagų maišymo modeliavimas cheminėse reakcijose}
+\setbeamertemplate{headline}{}
 
 \title[]
 {Medžiagų maišymo modeliavimas cheminėse reakcijose}
@@ -85,7 +90,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Darbo apimtis}
+\frametitle{Darbo tikslas ir uždaviniai}
 \textbf{Tikslas} - sukurti kompiuterinį YAG reakcijos maišymo modelį ir jį ištirti.
 
 \textbf{Uždaviniai:}
@@ -165,7 +170,7 @@ YAG Reakcijos--difuzijos sistema
 
 \begin{frame}
     \frametitle{Stabilumas}
-    Galima parodyti, kad modelis bus stabilus tada, kai tenkinama ši nelygybė:
+    Galima parodyti, kad skaitinis sprendinys bus stabilus tada, kai tenkinama ši nelygybė:
     \begin{align*}
         \Delta t \leqslant \left(15kc_0+2D\left((\Delta x)^{-2}+(\Delta y)^{-2}\right)\right)^{-1}
     \end{align*}
